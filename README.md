@@ -23,8 +23,9 @@ docker-compose up
 
 - Create an administrator user
 
+```bash
 docker exec -it opensilex ./bin/opensilex.sh user add --admin --email=admin@opensilex.org --lang=fr --firstName=firstName --lastName=lastName --password=admin
-
+```
 ### Test application
 
 Wait few seconds and try to load http://localhost/app  Opensilex application home page
