@@ -1,0 +1,21 @@
+ontologies:
+    baseURI:  http://www.opensilex.org/
+    baseURIAlias: os
+    sparql:
+        config:
+            serverURI: http://rdf4j:8080/rdf4j-server/
+            repository: opensilex
+
+file-system:
+    fs:
+        config:
+            basePath: /home/opensilex/data
+    
+big-data:   
+    mongodb:
+        config:
+            host: mongodb
+            port: 27017
+            database: opensilex
+server:
+    publicURI: http://localhost/
