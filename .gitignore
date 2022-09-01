@@ -1,3 +1,4 @@
 logs/nginx/log/access.log
 logs/nginx/log/error.log
 logs/opensilex/opensilex.log
+logs/opensilex/**
