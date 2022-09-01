@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Remove nginx container
 - Update Readme
 - Upgrade opensilex version to 1.0.0-rc+4.1
-- Downgrade rdf4j versions MacOS compatibility issue to from 3.7.6 to 3.7.4 
+- Downgrade rdf4j version MacOS compatibility issue to from 3.7.6 to 3.7.4
 
 ## [1.0.0-rc3.1] - 2022-06-08
 
