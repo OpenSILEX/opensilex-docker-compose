@@ -3,7 +3,7 @@ version: "3.5"
 services:
   mongo:
     container_name: mongodb 
-    image : mongo:5.0.9
+    image : mongo:5.0.11
     restart: always
     volumes:
       - persist_mongo_data:/data 
@@ -20,17 +20,18 @@ services:
 
   rdf4j:
     container_name: rdf4j
-    image: eclipse/rdf4j-workbench:3.7.6
+    image: eclipse/rdf4j-workbench:3.7.4
     env_file: opensilex.env
     volumes:
       - persist_rdf4j_data:/var/rdf4j
-
+    ports:
+      - "8080:8080"
   opensilex:
     container_name: opensilex
     build:
       context: .
       args:
-        RELEASE_TAG: 1.0.0-rc+3
+        RELEASE_TAG: 1.0.0-rc+4.1
       dockerfile: opensilex-build-step.docker
     env_file: opensilex.env
     depends_on:
@@ -40,23 +41,13 @@ services:
       - ./config:/home/opensilex/config
       - ./logs/opensilex:/home/opensilex/logs
       - persist_opensilex:/home/opensilex/data 
+    ports:
+      - "8081:8081"
     command: >
           bash -c "
             ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install) 
             ./bin/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081
           "
-  nginx:
-    container_name: nginx
-    image: nginx:1.17
-    env_file: opensilex.env
-    volumes:
-      - ./nginx.conf:/tmp/nginx.conf
-      - ./logs/nginx/log:/var/log/nginx
-    depends_on:
-      - opensilex
-    ports:
-      - "80:80"
-    command: /bin/bash -c "envsubst < /tmp/nginx.conf > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
 
 volumes:
   persist_rdf4j_data:
