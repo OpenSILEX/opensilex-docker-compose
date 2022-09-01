@@ -12,7 +12,7 @@ Docker compose environnent to deploy opensilex stack based on a previous work en
 - Clone this repository :
 
 ```bash
- git clone --branch 1.0.0-rc+3.1 https://github.com/OpenSILEX/opensilex-docker-compose
+ git clone --branch 1.0.0-rc+4.1 https://github.com/OpenSILEX/opensilex-docker-compose
 ```
   
 You must run docker compose up command :
