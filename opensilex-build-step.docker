@@ -1,6 +1,6 @@
 FROM tomcat:jre11-openjdk-slim
 
-ARG RELEASE_TAG=1.0.0-rc+3 
+ARG RELEASE_TAG=1.0.0-rc+4.1 
 
 ENV RELEASE https://github.com/OpenSILEX/opensilex/releases/download/$RELEASE_TAG/opensilex-release-$RELEASE_TAG.zip
 RUN apt-get -y update && apt-get install -y wget zip 

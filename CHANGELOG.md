@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
   
+- Add HAProxy container as reverse proxy
+- Update Readme
+- Downgrade opensilex version to 1.0.0-rc+3
+  
+## [1.0.0-rc4.1] - 2022-09-01
+
+### Changed
+  
 - Remove nginx container
 - Update Readme
 - Upgrade opensilex version to 1.0.0-rc+4.1

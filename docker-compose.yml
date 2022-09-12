@@ -1,9 +1,25 @@
 version: "3.5"
 
 services:
+  haproxy:
+    container_name: haproxy
+    image: haproxy:alpine
+    restart: always
+    build:
+      context: . 
+      dockerfile: haproxy-build-step.docker
+    depends_on:
+      - opensilex
+    ports:
+      - "80:80"
+    volumes:
+      - haproxy_conf:/usr/local/etc/haproxy
+    networks:
+      - default
+        
   mongo:
     container_name: mongodb 
-    image : mongo:5.0.11
+    image : mongo:4.2.2
     restart: always
     volumes:
       - persist_mongo_data:/data 
@@ -11,23 +27,26 @@ services:
           bash -c "
           (
             sleep 3 &&
-            mongo --eval \"rs.initiate({'_id':'opensilex','members':[{'_id':0,'host':'mongo:27017'}]})\" &&
+            mongo --eval \"rs.initiate({'_id':'opensilex','members':[{'_id':0,'host':'mongodb:27017'}]})\" &&
             wait
           ) & docker-entrypoint.sh --replSet opensilex
           "
     ports:
       - 27017:27017
-
+    networks:
+      - default
   rdf4j:
-    container_name: rdf4j
+    container_name: rdf4jdb
     image: eclipse/rdf4j-workbench:3.7.4
     env_file: opensilex.env
     volumes:
       - persist_rdf4j_data:/var/rdf4j
     ports:
       - "8080:8080"
+    networks:
+      - default
   opensilex:
-    container_name: opensilex
+    container_name: opensilexapp
     build:
       context: .
       args:
@@ -41,15 +60,17 @@ services:
       - ./config:/home/opensilex/config
       - ./logs/opensilex:/home/opensilex/logs
       - persist_opensilex:/home/opensilex/data 
-    ports:
-      - "8081:8081"
     command: >
           bash -c "
-            ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install) 
-            ./bin/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081
+            ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install  --DEBUG) 
+            ./bin/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 --DEBUG
           "
-
+    networks:
+      - default
+    ports:
+      - "8081:8081"
 volumes:
   persist_rdf4j_data:
   persist_mongo_data:
   persist_opensilex:
+  haproxy_conf:
