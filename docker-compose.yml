@@ -62,8 +62,8 @@ services:
       - persist_opensilex:/home/opensilex/data 
     command: >
           bash -c "
-            ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install  --DEBUG) 
-            ./bin/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 --DEBUG
+            ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install --CONFIG_FILE=./config/opensilex.yml --DEBUG) 
+            ./bin/opensilex.sh server start --host=localhost --CONFIG_FILE=./config/opensilex.yml --port=8081 --adminPort=4081 --DEBUG
           "
     networks:
       - default
