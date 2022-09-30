@@ -5,6 +5,7 @@ services:
     container_name: haproxy
     image: haproxy:alpine
     restart: always
+    env_file: opensilex.env
     build:
       context: . 
       dockerfile: haproxy-build-step.docker
@@ -14,8 +15,6 @@ services:
       - "80:80"
     volumes:
       - haproxy_conf:/usr/local/etc/haproxy
-    networks:
-      - default
         
   mongo:
     container_name: mongodb 
@@ -33,8 +32,18 @@ services:
           "
     ports:
       - 27017:27017
-    networks:
-      - default
+
+  # mongo-express:
+  #   image: mongo-express
+  #   container_name: mongoexpress
+  #   restart: always
+  #   ports:
+  #     - "28081:8081"
+  #   environment:
+  #     ME_CONFIG_MONGODB_SERVER: mongo
+  #     ME_CONFIG_MONGODB_URL: mongo://mongodb:27017/ 
+  #   depends_on:
+  #     - mongo
   rdf4j:
     container_name: rdf4jdb
     image: eclipse/rdf4j-workbench:3.7.4
@@ -43,14 +52,12 @@ services:
       - persist_rdf4j_data:/var/rdf4j
     ports:
       - "8080:8080"
-    networks:
-      - default
   opensilex:
     container_name: opensilexapp
     build:
       context: .
       args:
-        RELEASE_TAG: 1.0.0-rc+4.1
+        RELEASE_TAG: 1.0.0-rc+5.1
       dockerfile: opensilex-build-step.docker
     env_file: opensilex.env
     depends_on:
@@ -62,11 +69,9 @@ services:
       - persist_opensilex:/home/opensilex/data 
     command: >
           bash -c "
-            ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install --CONFIG_FILE=./config/opensilex.yml --DEBUG) 
-            ./bin/opensilex.sh server start --host=localhost --CONFIG_FILE=./config/opensilex.yml --port=8081 --adminPort=4081 --DEBUG
+            ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install --DEBUG) 
+            ./bin/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 --DEBUG
           "
-    networks:
-      - default
     ports:
       - "8081:8081"
 volumes:
