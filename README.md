@@ -10,7 +10,7 @@ Docker compose environnent to deploy opensilex stack based on a previous work en
     - [Create an administrator user](#create-an-administrator-user)
     - [Add a reverse proxy (Optional)](#add-a-reverse-proxy-optional)
     - [Add a gui for mongodb (Optional)](#add-a-gui-for-mongodb-optional)
-    - [Test application containers and volumesry to load <http://localhost:8081/opensilex/app> Opensilex application home page](#test-application-containers-and-volumesry-to-load-httplocalhost8081opensilexapp-opensilex-application-home-page)
+    - [Test application](#test-application)
       - [Without reverse proxy](#without-reverse-proxy)
       - [With reverse proxy](#with-reverse-proxy)
     - [Debug installation](#debug-installation)
@@ -86,7 +86,7 @@ This will start the mongo express server that helps you do explore your mongo da
 docker-compose run --rm start_opensilex_stack_mongogui
 ```
 
-### Test application containers and volumesry to load <http://localhost:8081/opensilex/app> Opensilex application home page
+### Test application 
 
 By default, differents availables services can be found at these adresses :
 
@@ -112,12 +112,14 @@ If you have installed [reverse proxy](#add-a-reverse-proxy-optional)
   - MongoDB port : <http://localhost:27017>
   - MongoDB express : <http://localhost:28018>
 
-### Debug installation 
+### Debug installation
 
 This command will give you stack trace of the docker build.
+
 ```bash
 docker-compose up --build --force-recreate > debug.log
 ```
+
 ### Stop docker stack
 
 This command will stop the stack.
@@ -125,6 +127,7 @@ This command will stop the stack.
 ```bash
 docker-compose down
 ```
+
 ### Stop docker stack and erase all data (Be sure to delete all data )
 
 This command will give you stack trace of the docker build.
@@ -132,6 +135,7 @@ This command will give you stack trace of the docker build.
 ```bash
 docker-compose down --volumes
 ```
+
 ### Customize docker port
 
 Configure  ``docker-compose.yml`` file to configure opensilex stack ports
