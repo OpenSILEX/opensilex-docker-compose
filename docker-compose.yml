@@ -3,7 +3,6 @@ version: "3.5"
 services:
   haproxy:
     container_name: haproxy
-    image: haproxy:alpine
     restart: always
     env_file: opensilex.env
     build:
@@ -11,8 +10,6 @@ services:
       dockerfile: haproxy-build-step.docker
     depends_on:
       - opensilex
-    ports:
-      - "80:80"
     volumes:
       - haproxy_conf:/usr/local/etc/haproxy
         
@@ -32,18 +29,18 @@ services:
           "
     ports:
       - 27017:27017
-
-  # mongo-express:
-  #   image: mongo-express
-  #   container_name: mongoexpress
-  #   restart: always
-  #   ports:
-  #     - "28081:8081"
-  #   environment:
-  #     ME_CONFIG_MONGODB_SERVER: mongo
-  #     ME_CONFIG_MONGODB_URL: mongo://mongodb:27017/ 
-  #   depends_on:
-  #     - mongo
+ 
+  mongoexpress:
+    image: mongo-express
+    container_name: mongoexpressgui
+    restart: always
+    ports:
+      - "28081:8081"
+    environment:
+      ME_CONFIG_MONGODB_SERVER: mongodb
+      ME_CONFIG_MONGODB_URL: mongo://mongodb:27017/ 
+    depends_on:
+      - mongo
   rdf4j:
     container_name: rdf4jdb
     image: eclipse/rdf4j-workbench:3.7.4
@@ -52,6 +49,7 @@ services:
       - persist_rdf4j_data:/var/rdf4j
     ports:
       - "8080:8080"
+  
   opensilex:
     container_name: opensilexapp
     build:
@@ -70,10 +68,29 @@ services:
     command: >
           bash -c "
             ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install --DEBUG) 
-            ./bin/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 --DEBUG
+            ./bin/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081
           "
     ports:
       - "8081:8081"
+  start_opensilex_stack:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - mongo
+      - rdf4j
+      - opensilex
+    command: mongo:27017 rdf4j:8080 opensilex:8081
+
+  start_opensilex_stack_mongogui:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - mongoexpress
+    command: mongoexpress:8081
+
+  start_opensilex_stack_proxy:
+    image: dadarek/wait-for-dependencies
+    depends_on:
+      - haproxy
+    command:  haproxy:80
 volumes:
   persist_rdf4j_data:
   persist_mongo_data:
