@@ -1,27 +1,42 @@
 ontologies:
-    baseURI:  http://www.opensilex.org/
+    baseURI: http://www.opensilex.org/
     baseURIAlias: opensilex
     sparql:
         config:
             serverURI: http://rdf4j:8080/rdf4j-server/
             repository: opensilex
 
+# Configuration for module: FileStorageModule (FileStorageConfig)
 file-system:
+    # File storage service (FileStorageService)
     fs:
         config:
-            defaultFS: local
+            # Default file system storage (String)
+            defaultFS: gridfs
+            # Map of file storage connection definition by identifier (Map<String,FileStorageConnection>)
             connections:
+                gridfs:
+                    # Service implementation class for: gridfs (FileStorageConnection)
+                    implementation: org.opensilex.fs.gridfs.GridFSConnection
+                    config:
+                        # MongoDB main host (String)
+                        host: mongodb
+                        # MongoDB main host port (int)
+                        port: 27017
+                        database: opensilex
                 local:
+                    # Service implementation class for: local (FileStorageConnection)
                     implementation: org.opensilex.fs.local.LocalFileSystemConnection
                     config:
-                        basePath: /home/opensilex/data
-    
-big-data:   
+                        # Base path for file storage (String)
+                        basePath: ../../opensilex-data
+
+big-data:
     mongodb:
         config:
             host: mongodb
             port: 27017
             database: opensilex
-server: 
+server:
     pathPrefix: /opensilex
-    publicURI: http://localhost
+    publicURI: http://localhost:$HAPROXY_PORT

@@ -1,4 +1,3 @@
-
 # Minimalist opensilex docker compose environment
 
 Docker compose environnent to deploy opensilex stack based on a previous work environment variables [opensilex-phis-igepp](https://github.com/p2m2/opensilex-phis-igepp)
@@ -34,7 +33,7 @@ git clone --branch 1.0.0-rc+5.1 https://github.com/OpenSILEX/opensilex-docker-co
 
 ### Run docker stack compose command
 
-- Go to  the following directory
+- Go to the following directory
 
 ```bash
 cd opensilex-docker-compose
@@ -60,7 +59,7 @@ Creating opensilexapp ... done
 Waiting for mongo to listen on 27017...
 Waiting for rdf4j to listen on 8080...
 Waiting for opensilex to listen on 8081...
-sleeping 
+sleeping
 [until it stars]
 ```
 
@@ -75,7 +74,7 @@ docker exec -it opensilexapp ./bin/opensilex.sh user add --admin --email=admin@o
 This will start the haproxy as reverse proxy for opensilex instance on port 80
 
 ```bash
-docker-compose run --rm start_opensilex_stack_proxy
+docker compose --env-file opensilex.env run --rm start_opensilex_stack_proxy
 ```
 
 ### Add a gui for mongodb (Optional)
@@ -83,10 +82,10 @@ docker-compose run --rm start_opensilex_stack_proxy
 This will start the mongo express server that helps you do explore your mongo data on port 28018. You can also use your own robo3t or Mongo Compass App.
 
 ```bash
-docker-compose run --rm start_opensilex_stack_mongogui
+docker compose --env-file opensilex.env run --rm start_opensilex_stack_mongogui
 ```
 
-### Test application 
+### Test application
 
 By default, differents availables services can be found at these adresses :
 
@@ -96,8 +95,8 @@ If you haven't installed [reverse proxy](#add-a-reverse-proxy-optional)
 
 - Web :
   - Opensilex web application : <http://localhost:8081/opensilex/app>
-  - Opensilex API :  <http://localhost:8081/opensilex/api-docs>
-  - RDF4J Workbench  : <http://localhost:8080/rdf4j-workbench>
+  - Opensilex API : <http://localhost:8081/opensilex/api-docs>
+  - RDF4J Workbench : <http://localhost:8080/rdf4j-workbench>
   - MongoDB port : <http://localhost:27017>
   - MongoDB express : <http://localhost:28018>
 
@@ -108,7 +107,7 @@ If you have installed [reverse proxy](#add-a-reverse-proxy-optional)
 - Web :
   - Opensilex web application : <http://localhost/opensilex/app>
   - Opensilex API : <http://localhost/opensilex/api-docs>
-  - RDF4J Workbench  : <http://localhost/rdf4j-workbench>
+  - RDF4J Workbench : <http://localhost/rdf4j-workbench>
   - MongoDB port : <http://localhost:27017>
   - MongoDB express : <http://localhost:28018>
 
@@ -117,7 +116,7 @@ If you have installed [reverse proxy](#add-a-reverse-proxy-optional)
 This command will give you stack trace of the docker build.
 
 ```bash
-docker-compose up --build --force-recreate > debug.log
+docker compose --env-file opensilex.env up --build --force-recreate > debug.log
 ```
 
 ### Stop docker stack
@@ -125,7 +124,7 @@ docker-compose up --build --force-recreate > debug.log
 This command will stop the stack.
 
 ```bash
-docker-compose down
+docker compose --env-file opensilex.env down
 ```
 
 ### Stop docker stack and erase all data (Be sure to delete all data )
@@ -133,23 +132,23 @@ docker-compose down
 This command will give you stack trace of the docker build.
 
 ```bash
-docker-compose down --volumes
+docker compose --env-file opensilex.env down --volumes
 ```
 
 ### Customize docker port
 
-Configure  ``docker-compose.yml`` file to configure opensilex stack ports
-*TODO : Add exemples*
+Configure `docker-compose.yml` file to configure opensilex stack ports
+_TODO : Add exemples_
 
 ### Customize config file
 
 Configure config/opensilex.yml file to configure opensilex stack
-*TODO : Add exemples*
+_TODO : Add exemples_
 
 ### Customize hostname
 
-Update host parameters if needeed on docker-compose.yml and  opensilex.env files.
-*TODO*
+Update host parameters if needeed on docker-compose.yml and opensilex.env files.
+_TODO_
 
 ## Manage docker
 
