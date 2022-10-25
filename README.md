@@ -176,11 +176,6 @@ RDF4J_EXPOSED_PORT=28887
 MONGO_EXPOSED_PORT=28888
 MONGO_EXPRESS_EXPOSED_PORT=28889
 
-# VOLUMES  # can be a folder on host or a docker volume
-RDF4J_VOLUME="/home/charlero/test_docker"
-MONGO_VOLUME="persist_mongo_data"
-MONGO_VOLUME="persist_opensilex"
-
 ```
 
 _TODO : Add exemples_
