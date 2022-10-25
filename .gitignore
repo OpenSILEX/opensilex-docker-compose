@@ -2,3 +2,6 @@ logs/nginx/log/access.log
 logs/nginx/log/error.log
 logs/opensilex/opensilex.log
 logs/opensilex/**
+docker_logs/debug.log
+.gitignore
+config/opensilex.yml
