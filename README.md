@@ -19,6 +19,7 @@ Docker compose environnent to deploy opensilex stack based on a previous work en
     - [Stop docker stack](#stop-docker-stack)
   - [Customize docker configuration](#customize-docker-configuration)
   - [Manage docker](#manage-docker)
+  - [Danger Zone](#danger-zone-)
     - [Stop docker stack and erase all data (Be sure to delete all data)](#stop-docker-stack-and-erase-all-data-be-sure-to-delete-all-data)
   - [Acknowledgments](#acknowledgments)
 
@@ -183,7 +184,8 @@ _TODO : Add exemples_
 ## Manage docker
 
 In order to manage your docker stack via an web interface, we suggest you to use [Portainer CE edition](https://docs.portainer.io/start/install/server/docker/linux#deployment)
-## Danger Zone
+
+## Danger Zone !!!!!!
 
 ### Stop docker stack and erase all data (Be sure to delete all data)
 
