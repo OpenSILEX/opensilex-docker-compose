@@ -5,18 +5,20 @@ Docker compose environnent to deploy opensilex stack based on a previous work en
 - [Minimalist opensilex docker compose environment](#minimalist-opensilex-docker-compose-environment)
   - [Stack software name with associated versions](#stack-software-name-with-associated-versions)
   - [Installation steps](#installation-steps)
-    - [From previous version before 1.0.0-rc+5.2 (compose v1)](#from-previous-version-before-100-rc52-compose-v1)
+    - [Migrations step from previous versions](#migrations-step-from-previous-versions)
+      - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
+      - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
     - [Fresh new install](#fresh-new-install)
   - [Run minimal opensilex docker stack compose](#run-minimal-opensilex-docker-stack-compose)
     - [(First install only) Create an administrator user](#first-install-only-create-an-administrator-user)
+  - [Stop docker stack](#stop-docker-stack)
   - [Other tools or customizations](#other-tools-or-customizations)
     - [(Optional) Add a gui for mongodb](#optional-add-a-gui-for-mongodb)
     - [(Optional) Add a reverse proxy](#optional-add-a-reverse-proxy)
   - [Debug installation](#debug-installation)
-  - [Stop docker stack](#stop-docker-stack)
   - [Customize docker configuration](#customize-docker-configuration)
   - [Manage docker](#manage-docker)
-  - [Danger Zone !!!!!!](#danger-zone-)
+  - [Danger Zone](#danger-zone)
     - [Stop docker stack and erase all data (Be sure to delete all data)](#stop-docker-stack-and-erase-all-data-be-sure-to-delete-all-data)
   - [Acknowledgments](#acknowledgments)
 
@@ -34,18 +36,35 @@ Docker compose environnent to deploy opensilex stack based on a previous work en
 
 ## Installation steps
 
-### From previous version before 1.0.0-rc+5.2 (compose v1)
+This docker version is related to [1.0.0+rc+5.2 OpenSILEX version](https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B5.2).
+
+### Migrations step from previous versions
+
+#### From previous version 1.0.0-rc+5.1 (compose v1)
 
 If you had a previous installation go to the directory where the project have been clone.
 And execute the following command to remove previous docker stack :
 
 ```bash
-git pull
-cd old-compose-v1
-docker-compose down
+# Remove old containers
+docker stop mongodb && docker rm mongodb
+docker stop opensilexapp && docker rm opensilexapp
+docker stop rdf4jdb && docker rm rdf4jdb
+docker stop haproxy && docker rm haproxy
+docker stop mongoexpressgui && docker rm mongoexpressgui
 ```
 
-This docker version is related to [1.0.0+rc+5.2 OpenSILEX version](https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B5.2).
+#### From previous version before 1.0.0-rc+5.1 (compose v1)
+
+If you had a previous installation go to the directory where the project have been clone.
+And execute the following command to remove previous docker stack :
+
+```bash
+# Remove old containers
+docker stop mongodb && docker rm mongodb
+docker stop opensilex && docker rm opensilex
+docker stop rdf4j && docker rm rdf4j
+```
 
 ### Fresh new install
 
@@ -100,6 +119,14 @@ By default, different available services can be found at these adresses :
 - RDF4J Workbench : <http://localhost:28887/rdf4j-workbench>
 - MongoDB port : <http://localhost:28888>
 
+## Stop docker stack
+
+This command will stop the stack.
+
+```bash
+docker compose --env-file opensilex.env down
+```
+
 ## Other tools or customizations
 
 ### (Optional) Add a gui for mongodb
@@ -109,6 +136,8 @@ This will start the mongo express server that helps you do explore your mongo da
 ```bash
 docker compose --env-file opensilex.env run --rm start_opensilex_stack_mongogui
 ```
+
+![mongo-express-image](./images/mongo-express.png)
 
 ### (Optional) Add a reverse proxy
 
@@ -142,14 +171,6 @@ This command will give you stack trace of the docker build.
 docker compose --env-file opensilex.env build > docker_logs/debug.log
 ```
 
-## Stop docker stack
-
-This command will stop the stack.
-
-```bash
-docker compose --env-file opensilex.env down
-```
-
 ## Customize docker configuration
 
 Configure `opensilex.env` file to configure opensilex sparql config, applications ports, applciations volumes
@@ -177,7 +198,9 @@ _TODO : Add exemples_
 
 In order to manage your docker stack via an web interface, we suggest you to use [Portainer Community edition edition](https://docs.portainer.io/start/install/server/docker/linux#deployment)
 
-## Danger Zone !!!!!!
+![portainer-image](./images/portainer.png)
+
+## Danger Zone
 
 ### Stop docker stack and erase all data (Be sure to delete all data)
 

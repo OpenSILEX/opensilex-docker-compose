@@ -17,7 +17,7 @@ services:
       - "$HAPROXY_EXPOSED_PORT:80"
   mongo:
     container_name: mongodb
-    image: mongo:4.2.2
+    image: mongo:4.4.6
     restart: always
     volumes:
       - $MONGO_VOLUME:/data
@@ -91,7 +91,7 @@ services:
     image: dadarek/wait-for-dependencies
     depends_on:
       - mongoexpress
-    command: mongoexpress:28889
+    command: mongoexpress:8081
 
   start_opensilex_stack_proxy:
     image: dadarek/wait-for-dependencies
