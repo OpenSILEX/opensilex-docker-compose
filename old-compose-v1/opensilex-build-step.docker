@@ -1,9 +1,9 @@
 FROM tomcat:jre11-openjdk-slim
 
-ARG RELEASE_TAG=1.0.0-rc+5.2 
+ARG RELEASE_TAG=1.0.0-rc+5.1 
 
 ENV RELEASE https://github.com/OpenSILEX/opensilex/releases/download/$RELEASE_TAG/opensilex-release-$RELEASE_TAG.zip
-RUN apt-get -y update && apt-get install -y wget zip gettext-base
+RUN apt-get -y update && apt-get install -y wget zip 
 
 RUN mkdir -p /home/opensilex
 WORKDIR /home/opensilex/bin
@@ -12,5 +12,6 @@ RUN unzip $( basename ${RELEASE} )
 RUN ls
 COPY ./bin/opensilex.sh /home/opensilex/bin/
 COPY ./bin/logback.xml /home/opensilex/bin/
-COPY ./config/opensilex-template.yml /home/opensilex/config/ 
+COPY ./config/opensilex.yml /home/opensilex/config/
+
 WORKDIR /home/opensilex

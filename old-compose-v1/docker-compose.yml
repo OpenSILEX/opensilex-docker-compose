@@ -6,79 +6,72 @@ services:
     restart: always
     env_file: opensilex.env
     build:
-      context: .
+      context: . 
       dockerfile: haproxy-build-step.docker
-
     depends_on:
       - opensilex
     volumes:
       - haproxy_conf:/usr/local/etc/haproxy
-    ports:
-      - "$HAPROXY_EXPOSED_PORT:80"
+        
   mongo:
-    container_name: mongodb
-    image: mongo:4.2.2
+    container_name: mongodb 
+    image : mongo:4.2.2
     restart: always
     volumes:
-      - $MONGO_VOLUME:/data
+      - persist_mongo_data:/data 
     command: >
-      bash -c "
-      (
-        sleep 3 &&
-        mongo --eval \"rs.initiate({'_id':'opensilex','members':[{'_id':0,'host':'mongodb:27017'}]})\" &&
-        wait
-      ) & docker-entrypoint.sh --replSet opensilex
-      "
+          bash -c "
+          (
+            sleep 3 &&
+            mongo --eval \"rs.initiate({'_id':'opensilex','members':[{'_id':0,'host':'mongodb:27017'}]})\" &&
+            wait
+          ) & docker-entrypoint.sh --replSet opensilex
+          "
     ports:
-      - "$MONGO_EXPOSED_PORT:27017"
-
-  rdf4j:
-    container_name: rdf4jdb
-    image: eclipse/rdf4j-workbench:3.7.4
-    env_file: opensilex.env
-    volumes:
-      - $RDF4J_VOLUME:/var/rdf4j
-    ports:
-      - "$RDF4J_EXPOSED_PORT:8080"
-
+      - 27017:27017
+ 
   mongoexpress:
     image: mongo-express
     container_name: mongoexpressgui
     restart: always
     ports:
-      - "$MONGO_EXPRESS_EXPOSED_PORT:8081"
+      - "28081:8081"
     environment:
       ME_CONFIG_MONGODB_SERVER: mongodb
-      ME_CONFIG_MONGODB_URL: mongo://mongodb:27017/
+      ME_CONFIG_MONGODB_URL: mongo://mongodb:27017/ 
     depends_on:
       - mongo
-
+  rdf4j:
+    container_name: rdf4jdb
+    image: eclipse/rdf4j-workbench:3.7.4
+    env_file: opensilex.env
+    volumes:
+      - persist_rdf4j_data:/var/rdf4j
+    ports:
+      - "8080:8080"
+  
   opensilex:
     container_name: opensilexapp
     build:
       context: .
       args:
-        RELEASE_TAG: 1.0.0-rc+5.2 # can be modify to change version
+        RELEASE_TAG: 1.0.0-rc+5.1
       dockerfile: opensilex-build-step.docker
     env_file: opensilex.env
     depends_on:
       - mongo
       - rdf4j
     volumes:
-      - $OPENSILEX_CONFIG_VOLUME:/home/opensilex/config
-      - $OPENSILEX_LOGS_VOLUME:/home/opensilex/logs
-      - $OPENSILEX_DATA_VOLUME:/home/opensilex/data
+      - ./config:/home/opensilex/config
+      - ./logs/opensilex:/home/opensilex/logs
+      - persist_opensilex:/home/opensilex/data 
     command: >
-      bash -c "
-        printenv &&
-        envsubst < /home/opensilex/config/opensilex-template.yml | more &&
-        echo 'test' &&
-        envsubst < /home/opensilex/config/opensilex-template.yml > /home/opensilex/config/opensilex.yml &&
-        ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install --DEBUG) 
-        ./bin/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081
-      "
+          bash -c "
+            ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install --DEBUG) 
+            ./bin/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081
+          "
     ports:
-      - "$OPENSILEX_EXPOSED_PORT:8081"
+      - "8081:8081"
   start_opensilex_stack:
     image: dadarek/wait-for-dependencies
     depends_on:
@@ -91,14 +84,13 @@ services:
     image: dadarek/wait-for-dependencies
     depends_on:
       - mongoexpress
-    command: mongoexpress:28889
+    command: mongoexpress:8081
 
   start_opensilex_stack_proxy:
     image: dadarek/wait-for-dependencies
     depends_on:
       - haproxy
-      - opensilex
-    command: haproxy:80 opensilex:8081
+    command:  haproxy:80
 volumes:
   persist_rdf4j_data:
   persist_mongo_data:

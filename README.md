@@ -175,7 +175,7 @@ _TODO : Add exemples_
 
 ## Manage docker
 
-In order to manage your docker stack via an web interface, we suggest you to use [Portainer CE edition](https://docs.portainer.io/start/install/server/docker/linux#deployment)
+In order to manage your docker stack via an web interface, we suggest you to use [Portainer Community edition edition](https://docs.portainer.io/start/install/server/docker/linux#deployment)
 
 ## Danger Zone !!!!!!
 

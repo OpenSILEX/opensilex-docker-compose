@@ -1,4 +1,4 @@
-FROM haproxy:2.6.6
+FROM haproxy:2.6.4
 USER root
 RUN mkdir /run/haproxy  && chown haproxy:haproxy /run/haproxy && chmod 2775 /run/haproxy 
 USER haproxy
