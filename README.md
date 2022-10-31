@@ -58,7 +58,7 @@ cd opensilex-docker-compose
 
 ## Run minimal opensilex docker stack compose
 
-- Go to the project directory
+- With a terminal go to the project directory (where this readme is located).
 - You must run docker compose up command to start your installation:
 
 ```bash
