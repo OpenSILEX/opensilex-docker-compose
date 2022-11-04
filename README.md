@@ -7,9 +7,6 @@ Docker compose environnent to deploy opensilex stack based on a previous work en
   - [Check your installed softwares](#check-your-installed-softwares)
   - [Stack software name with associated versions](#stack-software-name-with-associated-versions)
   - [Installation steps](#installation-steps)
-    - [Migrations step from previous versions](#migrations-step-from-previous-versions)
-      - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
-      - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
     - [Fresh new install (compose v2)](#fresh-new-install-compose-v2)
   - [Run minimal opensilex docker stack compose](#run-minimal-opensilex-docker-stack-compose)
     - [(First install only) Create an administrator user](#first-install-only-create-an-administrator-user)
@@ -17,10 +14,12 @@ Docker compose environnent to deploy opensilex stack based on a previous work en
   - [Other tools or customizations](#other-tools-or-customizations)
     - [(Optional) Add a gui for mongodb](#optional-add-a-gui-for-mongodb)
     - [(Optional) Add a reverse proxy](#optional-add-a-reverse-proxy)
-  - [Debug installation](#debug-installation)
+    - [Migration steps from previous versions](#migration-steps-from-previous-versions)
+      - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
+      - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
   - [Customize docker configuration](#customize-docker-configuration)
   - [Manage docker](#manage-docker)
-  - [Danger Zone](#danger-zone)
+  - [Debug installation](#debug-installation)
     - [Stop docker stack and erase all data (Be sure to delete all data)](#stop-docker-stack-and-erase-all-data-be-sure-to-delete-all-data)
   - [Acknowledgments](#acknowledgments)
 
@@ -28,9 +27,9 @@ Docker compose environnent to deploy opensilex stack based on a previous work en
 
 First you need to have these software installed, you can check if they are [installed](#check-your-installed-softwares) :
 
-- [Git 2.17.1+](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [docker 20.10.21+](https://docs.docker.com/install/)
-- [Docker Compose v2.12.2+](https://docs.docker.com/compose/install/)
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [docker](https://docs.docker.com/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
 
 ## Check your installed softwares
 
@@ -58,43 +57,6 @@ Following commands should work from everywhere in your system without errors:
 
 This docker version is related to [1.0.0-rc+5.2 OpenSILEX version](https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B5.2).
 
-### Migrations step from previous versions
-
-First, go to the previous directory and get the actual version of the repository.
-
-```bash
-# Go inside opensilex-docker-compose directory
-# Update repository version
-git fetch
-git checkout 1.0.0-rc+5.2
-```
-
-#### From previous version 1.0.0-rc+5.1 (compose v1)
-
-If you had a previous installation go to the directory where the project have been clone.
-And execute the following command to remove previous docker stack :
-
-```bash
-# Remove old containers
-docker stop mongodb && docker rm mongodb
-docker stop opensilexapp && docker rm opensilexapp
-docker stop rdf4jdb && docker rm rdf4jdb
-docker stop haproxy && docker rm haproxy
-docker stop mongoexpressgui && docker rm mongoexpressgui
-```
-
-#### From previous version before 1.0.0-rc+5.1 (compose v1)
-
-If you had a previous installation go to the directory where the project have been clone.
-And execute the following command to remove previous docker stack :
-
-```bash
-# Remove old containers
-docker stop mongodb && docker rm mongodb
-docker stop opensilex && docker rm opensilex
-docker stop rdf4j && docker rm rdf4j
-```
-
 ### Fresh new install (compose v2)
 
 Clone the repository to in order to get the project.
@@ -103,6 +65,8 @@ Clone the repository to in order to get the project.
 git clone --branch 1.0.0-rc+5.2 https://github.com/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
+
+For migration steps from previous versions, take a look to the [Migration steps from previous version](#migration-steps-from-previous-versions) section
 
 ## Run minimal opensilex docker stack compose
 
@@ -143,8 +107,8 @@ After opensilex start you will be able to access to the application on port [loc
 
 By default, different available services can be found at these adresses :
 
-- Opensilex web application : <http://localhost:8081/opensilex/app>
-- Opensilex API : <http://localhost:8081/opensilex/api-docs>
+- OpenSILEX web application : <http://localhost:8081/opensilex/app>
+- OpenSILEX API : <http://localhost:8081/opensilex/api-docs>
 - RDF4J Workbench : <http://localhost:28887/rdf4j-workbench>
 - MongoDB port : <http://localhost:28888>
 
@@ -183,8 +147,8 @@ If you have installed [optional reverse proxy](#optional-add-a-reverse-proxy)
 By default, different available services can be found at these adresses. The port might be change depending on your `./opensilex.env` configuration file.
 
 - Web :
-  - Opensilex web application : <http://localhost/opensilex/app>
-  - Opensilex API : <http://localhost/opensilex/api-docs>
+  - OpenSILEX web application : <http://localhost/opensilex/app>
+  - OpenSILEX API : <http://localhost/opensilex/api-docs>
   - RDF4J Workbench : <http://localhost/rdf4j-workbench>
   - MongoDB port : <http://localhost:28888>
 
@@ -192,17 +156,44 @@ if you add installed [(Optional) Add a gui for mongodb](#optional-add-a-gui-for-
 
 - MongoDB express : <http://localhost/mongoadmin>
 
-## Debug installation
+### Migration steps from previous versions
 
-This command will give you stack trace of the docker build.
+First, go to the previous directory and get the actual version of the repository.
 
 ```bash
-docker compose --env-file opensilex.env build > docker_logs/debug.log
+# Go inside opensilex-docker-compose directory
+git checkout 1.0.0-rc+5.2
+```
+
+#### From previous version 1.0.0-rc+5.1 (compose v1)
+
+If you had a previous installation go to the directory where the project have been clone.
+And execute the following command to remove previous docker stack :
+
+```bash
+# Remove old containers
+docker stop mongodb && docker rm mongodb
+docker stop opensilexapp && docker rm opensilexapp
+docker stop rdf4jdb && docker rm rdf4jdb
+docker stop haproxy && docker rm haproxy
+docker stop mongoexpressgui && docker rm mongoexpressgui
+```
+
+#### From previous version before 1.0.0-rc+5.1 (compose v1)
+
+If you had a previous installation go to the directory where the project have been clone.
+And execute the following command to remove previous docker stack :
+
+```bash
+# Remove old containers
+docker stop mongodb && docker rm mongodb
+docker stop opensilex && docker rm opensilex
+docker stop rdf4j && docker rm rdf4j
 ```
 
 ## Customize docker configuration
 
-Configure `opensilex.env` file to configure opensilex sparql config, applications ports, applciations volumes
+Configure `opensilex.env` file to configure opensilex sparql config, applications ports, applications volumes
 
 ```bash
 # CAN BE MODIFIED
@@ -222,6 +213,7 @@ MONGO_EXPRESS_EXPOSED_PORT=28889
 ```
 
 _TODO : Add exemples_
+<span style="color:blue"><span style="color:blue">
 
 ## Manage docker
 
@@ -229,7 +221,17 @@ In order to manage your docker stack via an web interface, we suggest you to use
 
 ![portainer-image](./images/portainer.png)
 
-## Danger Zone
+## Debug installation
+
+This command will give you stack trace of the docker build.
+
+```bash
+docker compose --env-file opensilex.env build > docker_logs/debug.log
+```
+
+<span style="color:red">
+ <h2>Danger Zone</h2>
+</span>
 
 ### Stop docker stack and erase all data (Be sure to delete all data)
 
@@ -242,3 +244,5 @@ docker compose --env-file opensilex.env down --volumes
 ## Acknowledgments
 
 Olivier Fangi & Co - [P2M2 Team](https://github.com/p2m2)
+
+<base target="_blank">
