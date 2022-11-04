@@ -1,5 +1,9 @@
 # Minimalist opensilex docker compose environment
 
+<head>
+  <base target="_blank">
+</head>
+
 Docker compose environnent to deploy opensilex stack based on a previous work environment variables [opensilex-phis-igepp](https://github.com/p2m2/opensilex-phis-igepp)
 
 - [Minimalist opensilex docker compose environment](#minimalist-opensilex-docker-compose-environment)
@@ -245,4 +249,4 @@ docker compose --env-file opensilex.env down --volumes
 
 Olivier Fangi & Co - [P2M2 Team](https://github.com/p2m2)
 
-<base target="_blank">
+<
