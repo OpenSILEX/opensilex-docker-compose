@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.0.0-rc5.1] - 2022-10-04
 
+### Changed
+
 - Update opensilex version to 1.0.0-rc+5.1
 
 ## [1.0.0-rc4.1] - 2022-09-01

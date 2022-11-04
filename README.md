@@ -64,6 +64,8 @@ First, go to the previous directory and get the actual version of the repository
 
 ```bash
 # Go inside opensilex-docker-compose directory
+# Update repository version
+git fetch
 git checkout 1.0.0-rc+5.2
 ```
 
