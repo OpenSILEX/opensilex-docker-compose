@@ -25,6 +25,7 @@ Docker compose environnent to deploy opensilex stack based on a previous work en
   - [Customize docker configuration](#customize-docker-configuration)
   - [Manage docker](#manage-docker)
   - [Debug installation](#debug-installation)
+  - [$\color{red}{Danger\ Zone}$](#colorreddanger-zone)
     - [Stop docker stack and erase all data (Be sure to delete all data)](#stop-docker-stack-and-erase-all-data-be-sure-to-delete-all-data)
   - [Acknowledgments](#acknowledgments)
 
@@ -233,7 +234,7 @@ This command will give you stack trace of the docker build.
 docker compose --env-file opensilex.env build > docker_logs/debug.log
 ```
 
-<h2 style="color:red">Danger Zone</h2>
+## $\color{red}{Danger\ Zone}$
 
 ### Stop docker stack and erase all data (Be sure to delete all data)
 
