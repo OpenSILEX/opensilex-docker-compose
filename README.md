@@ -3,12 +3,14 @@
 Docker compose environnent to deploy opensilex stack based on a previous work environment variables [opensilex-phis-igepp](https://github.com/p2m2/opensilex-phis-igepp)
 
 - [Minimalist opensilex docker compose environment](#minimalist-opensilex-docker-compose-environment)
+  - [Pre-requesite softwares](#pre-requesite-softwares)
+  - [Check your installed softwares](#check-your-installed-softwares)
   - [Stack software name with associated versions](#stack-software-name-with-associated-versions)
   - [Installation steps](#installation-steps)
     - [Migrations step from previous versions](#migrations-step-from-previous-versions)
       - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
       - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
-    - [Fresh new install](#fresh-new-install)
+    - [Fresh new install (compose v2)](#fresh-new-install-compose-v2)
   - [Run minimal opensilex docker stack compose](#run-minimal-opensilex-docker-stack-compose)
     - [(First install only) Create an administrator user](#first-install-only-create-an-administrator-user)
   - [Stop docker stack](#stop-docker-stack)
@@ -22,12 +24,30 @@ Docker compose environnent to deploy opensilex stack based on a previous work en
     - [Stop docker stack and erase all data (Be sure to delete all data)](#stop-docker-stack-and-erase-all-data-be-sure-to-delete-all-data)
   - [Acknowledgments](#acknowledgments)
 
+## Pre-requesite softwares
+
+First you need to have these software installed, you can check if they are [installed](#check-your-installed-softwares) :
+
+- [Git 2.17.1+](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [docker 20.10.21+](https://docs.docker.com/install/)
+- [Docker Compose v2.12.2+](https://docs.docker.com/compose/install/)
+
+## Check your installed softwares
+
+Following commands should work from everywhere in your system without errors:
+
+`git --version`
+
+`docker --version`
+
+`docker compose version`
+
 ## Stack software name with associated versions
 
 - Mandatory softwares :
 
   - RDF4J - 3.7.4
-  - MongoDB - 4.2.2
+  - MongoDB - 4.4.6
   - OpenSILEX - 1.0.0-rc+5.2
 
 - Other managements softwares :
@@ -36,9 +56,16 @@ Docker compose environnent to deploy opensilex stack based on a previous work en
 
 ## Installation steps
 
-This docker version is related to [1.0.0+rc+5.2 OpenSILEX version](https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B5.2).
+This docker version is related to [1.0.0-rc+5.2 OpenSILEX version](https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B5.2).
 
 ### Migrations step from previous versions
+
+First, go to the previous directory and get the actual version of the repository.
+
+```bash
+# Go inside opensilex-docker-compose directory
+git checkout 1.0.0-rc+5.2
+```
 
 #### From previous version 1.0.0-rc+5.1 (compose v1)
 
@@ -66,7 +93,7 @@ docker stop opensilex && docker rm opensilex
 docker stop rdf4j && docker rm rdf4j
 ```
 
-### Fresh new install
+### Fresh new install (compose v2)
 
 Clone the repository to in order to get the project.
 

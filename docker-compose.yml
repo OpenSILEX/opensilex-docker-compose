@@ -70,9 +70,6 @@ services:
       - $OPENSILEX_DATA_VOLUME:/home/opensilex/data
     command: >
       bash -c "
-        printenv &&
-        envsubst < /home/opensilex/config/opensilex-template.yml | more &&
-        echo 'test' &&
         envsubst < /home/opensilex/config/opensilex-template.yml > /home/opensilex/config/opensilex.yml &&
         ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install --DEBUG) 
         ./bin/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081
