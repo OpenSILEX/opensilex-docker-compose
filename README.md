@@ -1,5 +1,6 @@
 # Minimalist opensilex docker compose environment
 
+<!-- add _target to all external link -->
 <head>
   <base target="_blank">
 </head>
@@ -217,7 +218,6 @@ MONGO_EXPRESS_EXPOSED_PORT=28889
 ```
 
 _TODO : Add exemples_
-<span style="color:blue"><span style="color:blue">
 
 ## Manage docker
 
@@ -233,9 +233,7 @@ This command will give you stack trace of the docker build.
 docker compose --env-file opensilex.env build > docker_logs/debug.log
 ```
 
-<span style="color:red">
- <h2>Danger Zone</h2>
-</span>
+<h2 style="color:red">Danger Zone</h2>
 
 ### Stop docker stack and erase all data (Be sure to delete all data)
 
@@ -248,5 +246,3 @@ docker compose --env-file opensilex.env down --volumes
 ## Acknowledgments
 
 Olivier Fangi & Co - [P2M2 Team](https://github.com/p2m2)
-
-<
