@@ -9,10 +9,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- Update opensilex version to 1.0.0-rc+5.2
 - Upgrade docker instance
 - Add environment config fiLe
 
 ## [1.0.0-rc5.1] - 2022-10-04
+
+- Update opensilex version to 1.0.0-rc+5.1
 
 ## [1.0.0-rc4.1] - 2022-09-01
 
