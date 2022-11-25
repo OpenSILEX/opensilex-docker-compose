@@ -5,28 +5,22 @@
   <base target="_blank">
 </head>
 
-Docker compose environnent to deploy opensilex stack based on a previous work environment variables [opensilex-phis-igepp](https://github.com/p2m2/opensilex-phis-igepp)
+Docker compose environnent to deploy opensilex stack based on a previous work <a href="https://github.com/p2m2/opensilex-phis-igepp" target="_blank">opensilex-phis-igepp</a>.
 
-- [Minimalist opensilex docker compose environment](#minimalist-opensilex-docker-compose-environment)
   - [Pre-requesite softwares](#pre-requesite-softwares)
   - [Check your installed softwares](#check-your-installed-softwares)
   - [Stack software name with associated versions](#stack-software-name-with-associated-versions)
   - [Installation steps](#installation-steps)
-    - [Fresh new install (compose v2)](#fresh-new-install-compose-v2)
   - [Run minimal opensilex docker stack compose](#run-minimal-opensilex-docker-stack-compose)
-    - [(First install only) Create an administrator user](#first-install-only-create-an-administrator-user)
   - [Stop docker stack](#stop-docker-stack)
   - [Other tools or customizations](#other-tools-or-customizations)
-    - [(Optional) Add a gui for mongodb](#optional-add-a-gui-for-mongodb)
+    - [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
     - [(Optional) Add a reverse proxy](#optional-add-a-reverse-proxy)
     - [Migration steps from previous versions](#migration-steps-from-previous-versions)
-      - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
-      - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
   - [Customize docker configuration](#customize-docker-configuration)
   - [Manage docker](#manage-docker)
   - [Debug installation](#debug-installation)
   - [Danger Zone](#danger-zone)
-    - [Stop docker stack and erase all data (Be sure to delete all data)](#stop-docker-stack-and-erase-all-data-be-sure-to-delete-all-data)
   - [Acknowledgments](#acknowledgments)
 
 ## Pre-requesite softwares
@@ -57,18 +51,18 @@ Following commands should work from everywhere in your system without errors:
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
-  - haproxy (web server used as reverse proxy) - 2.4.6
+  - haproxy (web server used as reverse proxy) - 2.6.6
 
 ## Installation steps
 
-This docker version is related to [1.0.0-rc+5.2 OpenSILEX version](https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B5.2).
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B5.2" target="_blank">1.0.0-rc+5.2 OpenSILEX version</a>
 
 ### Fresh new install (compose v2)
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.0.0-rc+5.2 https://github.com/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.0.0-rc+5.2.1 https://github.com/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
@@ -87,11 +81,11 @@ docker compose --env-file opensilex.env run --rm start_opensilex_stack
 
 ```bash
 [+] Running 3/0
- ⠿ Container rdf4jdb       Running                                                                                                                                              0.0s
- ⠿ Container mongodb       Running                                                                                                                                              0.0s
- ⠿ Container opensilexapp  Recreated                                                                                                                                            0.0s
+ ⠿ Container opensilex-docker-rdf4j       Running                                                                                                                                              0.0s
+ ⠿ Container opensilex-docker-mongodb       Running                                                                                                                                              0.0s
+ ⠿ Container opensilex-docker-opensilexapp  Recreated                                                                                                                                            0.0s
 [+] Running 1/1
- ⠿ Container opensilexapp  Started                                                                                                                                              0.4s
+ ⠿ Container opensilex-docker-opensilexapp  Started                                                                                                                                              0.4s
 Waiting for mongo to listen on 27017...
 Waiting for rdf4j to listen on 8080...
 Waiting for opensilex to listen on 8081..
@@ -101,22 +95,30 @@ sleeping
 [wait until it starts]
 ```
 
+This previous action will block your terminal. When the terminal will be accessible again the opensilex app process will be started and ready.
+
 ### (First install only) Create an administrator user
 
 Docker volumes are persistent until you remove them. You only need to create once an user.
 
 ```bash
-docker exec -it opensilexapp ./bin/opensilex.sh user add --admin --email=admin@opensilex.org --lang=fr --firstName=firstName --lastName=lastName --password=admin
+docker exec -it opensilex-docker-opensilexapp ./bin/opensilex.sh user add --admin --email=admin@opensilex.org --lang=fr --firstName=firstName --lastName=lastName --password=admin
 ```
 
-After opensilex start you will be able to access to the application on port [localhost:8081/opensilex/app](http://localhost:8081/opensilex/app).
+After opensilex start you will be able to access to the application on port <a href="http://localhost:8081/opensilex/app" target="_blank">localhost:8081/opensilex/app</a>.
 
 By default, different available services can be found at these adresses :
 
-- OpenSILEX web application : <http://localhost:8081/opensilex/app>
-- OpenSILEX API : <http://localhost:8081/opensilex/api-docs>
-- RDF4J Workbench : <http://localhost:28887/rdf4j-workbench>
-- MongoDB port : <http://localhost:28888>
+- OpenSILEX web application : <a href="<http://localhost:8081/opensilex/app>" target="_blank">http://localhost:8081/opensilex/app</a>
+- OpenSILEX API : <a href="<http://localhost:8081/opensilex/api-docs>" target="_blank">http://localhost:8081/opensilex/api-docs</a>
+- MongoDB port : <a href="<http://localhost:28888>" target="_blank">http://localhost:28888</a>
+- RDF4J Workbench : <a href="<http://localhost:28887/rdf4j-workbench>" target="_blank">http://localhost:28887/rdf4j-workbench</a>
+
+_PS: At the first connection, you will need to change rdf4j server port to 8080 (internal docker port) in order to access to rdf4j repositories._
+
+Expected configuration :
+
+![rdf4j_first_connection](./images/rdf4j_first_connection.png)
 
 ## Stop docker stack
 
@@ -128,7 +130,7 @@ docker compose --env-file opensilex.env down
 
 ## Other tools or customizations
 
-### (Optional) Add a gui for mongodb
+### (Optional) Add a gui for opensilex-docker-mongodb
 
 This will start the mongo express server that helps you do explore your mongo data on port [localhost:28889](http://localhost:28889). You can also use your own robo3t or Mongo Compass App.
 
@@ -142,7 +144,7 @@ docker compose --env-file opensilex.env run --rm start_opensilex_stack_mongogui
 
 This will start the haproxy as reverse proxy for opensilex instance on port that you want to expose.
 
-It can be configure in the `./opensilex.env` with the variable `HAPROXY_EXPOSED_PORT` (Default to port 80 equivalent to [localhost](http://localhost).
+It can be configure in the `./opensilex.env` with the variable `HAPROXY_EXPOSED_PORT` (Default to port 80 equivalent to <a href="<http://localhost>" target="_blank">http://localhost</a>.
 
 ```bash
 docker compose --env-file opensilex.env run --rm start_opensilex_stack_proxy
@@ -153,14 +155,13 @@ If you have installed [optional reverse proxy](#optional-add-a-reverse-proxy)
 By default, different available services can be found at these adresses. The port might be change depending on your `./opensilex.env` configuration file.
 
 - Web :
-  - OpenSILEX web application : <http://localhost/opensilex/app>
-  - OpenSILEX API : <http://localhost/opensilex/api-docs>
-  - RDF4J Workbench : <http://localhost/rdf4j-workbench>
-  - MongoDB port : <http://localhost:28888>
+  - OpenSILEX web application : <a href="<http://localhost/opensilex/app>" target="_blank">http://localhost/opensilex/app</a>
+  - OpenSILEX API : <a href="<http://localhost/opensilex/api-docs>" target="_blank">http://localhost/opensilex/api-docs</a>
+  - RDF4J Workbench : <a href="<http://localhost/rdf4j-workbench>" target="_blank">http://localhost/rdf4j-workbench</a>
 
-if you add installed [(Optional) Add a gui for mongodb](#optional-add-a-gui-for-mongodb)
+if you add installed [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
 
-- MongoDB express : <http://localhost/mongoadmin>
+- MongoDB express : <a href="<http://localhost/mongoadmin>" target="_blank">http://localhost/mongoadmin</a>
 
 ### Migration steps from previous versions
 
@@ -168,7 +169,21 @@ First, go to the previous directory and get the actual version of the repository
 
 ```bash
 # Go inside opensilex-docker-compose directory
-git checkout 1.0.0-rc+5.2
+git checkout 1.0.0-rc+5.2.1
+```
+
+#### From previous version 1.0.0-rc+5.2 (compose v2)
+
+If you had a previous installation go to the directory where the project have been clone.
+And execute the following command to remove previous docker stack :
+
+```bash
+# Remove old containers
+docker stop mongodb && docker rm mongodb
+docker stop opensilexapp && docker rm opensilexapp
+docker stop rdf4jdb && docker rm rdf4jdb
+docker stop haproxy && docker rm haproxy
+docker stop mongoexpressgui && docker rm mongoexpressgui
 ```
 
 #### From previous version 1.0.0-rc+5.1 (compose v1)
@@ -218,11 +233,58 @@ MONGO_EXPOSED_PORT=28888
 MONGO_EXPRESS_EXPOSED_PORT=28889
 ```
 
-_TODO : Add exemples_
+_TODO : Add exemples
+
+## Manage data
+
+### Dump
+
+- Dump db
+
+```bash
+
+# Step 1
+#docker exec -i --env-file opensilex.env opensilex-docker-mongodb bash -c 'rm -rf /dump_db_latest && mkdir -p /dump_db_latest && /usr/bin/mongodump --numParallelCollections=1 --db=${REPOSITORIES_NAME} --out=/dump_db_latest/ && mv /dump_db_latest/${REPOSITORIES_NAME} /dump_db_latest/$REPOSITORIES_NAME-`date +"%Y-%m-%d"`'
+
+# Step 2
+docker cp opensilex-docker-mongodb:/dump_db_latest <directory_path>
+# Ex : docker cp opensilex-docker-mongodb:/dump_db_latest ~/Downloads
+#   
+#  ~/Downloads/dump_db_latest
+# └── opensilex-docker-db-2022-11-18
+#     ├── fs.files.bson
+#     ├── fs.files.metadata.json
+#     ├── provenance.bson
+#     └── provenance.metadata.json
+```
+
+#### Restore
+
+```bash
+# Step 1
+docker exec -i --env-file opensilex.env opensilex-docker-mongodb bash -c 'rm -rf /restore && mkdir -p /restore'
+
+# Step 2
+docker cp <directory_path> opensilex-docker-mongodb:/restore
+#  ~/Downloads/dump_db_latest
+# └── opensilex-docker-db-2022-11-18
+#     ├── fs.files.bson
+#     ├── fs.files.metadata.json
+#     ├── provenance.bson
+#     └── provenance.metadata.json
+# docker cp ~/Downloads/dump_db_latest/ opensilex-docker-mongodb:/dump
+
+# Step 3
+docker exec -i --env-file opensilex.env opensilex-docker-mongodb bash -c 'cd /restore/ && files=(*) && /usr/bin/mongorestore  --numParallelCollections=1 --db=${REPOSITORIES_NAME} /restore/${files[0]}/*'
+```
+
+
+### Dump RDF4J
+
 
 ## Manage docker
 
-In order to manage your docker stack via an web interface, we suggest you to use [Portainer Community edition edition](https://docs.portainer.io/start/install/server/docker/linux#deployment)
+In order to manage your docker stack via an web interface, we suggest you to use <a href="https://docs.portainer.io/start/install/server/docker/linux#deployment" target="_blank">Portainer Community edition edition</a>
 
 ![portainer-image](./images/portainer.png)
 
@@ -248,4 +310,4 @@ docker compose --env-file opensilex.env down --volumes
 
 ## Acknowledgments
 
-Olivier Fangi & Co - [P2M2 Team](https://github.com/p2m2)
+Olivier Fangi & Co - <a href="https://github.com/p2m2" target="_blank">P2M2 Team</a>

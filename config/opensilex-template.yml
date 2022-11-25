@@ -3,7 +3,7 @@ ontologies:
     baseURIAlias: $BASEURIALIAS
     sparql:
         config:
-            serverURI: http://rdf4j:8080/rdf4j-server/
+            serverURI: http://$RDF4J_DOCKER_NAME:8080/rdf4j-server/
             repository: $REPOSITORIES_NAME
 
 # Configuration for module: FileStorageModule (FileStorageConfig)
@@ -20,7 +20,7 @@ file-system:
                     implementation: org.opensilex.fs.gridfs.GridFSConnection
                     config:
                         # MongoDB main host (String)
-                        host: mongodb
+                        host: $MONGO_DOCKER_NAME
                         # MongoDB main host port (int)
                         port: 27017
                         database: $REPOSITORIES_NAME
@@ -34,7 +34,7 @@ file-system:
 big-data:
     mongodb:
         config:
-            host: mongodb
+            host: $MONGO_DOCKER_NAME
             port: 27017
             database: $REPOSITORIES_NAME
 server:
