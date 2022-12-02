@@ -43,7 +43,8 @@ services:
         RDF4J_IMAGE_VERSION: $RDF4J_IMAGE_VERSION
       dockerfile: rdf4j-build-step.docker
     volumes:
-      - $RDF4J_VOLUME:/var/rdf4j
+      - $RDF4J_DATA_VOLUME:/var/rdf4j
+      - $RDF4J_LOGS_VOLUME:/usr/local/tomcat/logs
     ports:
       - "$RDF4J_EXPOSED_PORT:8080"
 
