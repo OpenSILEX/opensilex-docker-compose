@@ -109,6 +109,7 @@ services:
     command: haproxy:80 opensilex:8081
 volumes:
   persist_rdf4j_data:
+  persist_rdf4j_logs:
   persist_mongo_data:
   persist_opensilex:
   haproxy_conf:
