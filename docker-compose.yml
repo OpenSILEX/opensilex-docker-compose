@@ -37,11 +37,12 @@ services:
   rdf4j:
     container_name: $RDF4J_DOCKER_NAME
     env_file: opensilex.env
-    build:
-      context: .
-      args:
-        RDF4J_IMAGE_VERSION: $RDF4J_IMAGE_VERSION
-      dockerfile: rdf4j-build-step.docker
+    image: eclipse/rdf4j-workbench:$RDF4J_IMAGE_VERSION
+    # build:
+    #   context: .
+    #   args:
+    #     RDF4J_IMAGE_VERSION: $RDF4J_IMAGE_VERSION
+    #   dockerfile: rdf4j-build-step.docker
     volumes:
       - $RDF4J_DATA_VOLUME:/var/rdf4j
       - $RDF4J_LOGS_VOLUME:/usr/local/tomcat/logs
