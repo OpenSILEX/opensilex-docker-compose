@@ -16,17 +16,27 @@ else
   exit 1
 fi
 
-if [ ! -d "$1" ]; then
-    echo "$1 not exists on your filesystem."
+if [ ! -d "$1/mongodb" ]; then
+    echo "$1/mongodb not exists on your filesystem."
     mkdir -p "$1" 
     exit 0;
 fi
 
+if [ ! -d "$1/rdf4j" ]; then
+    echo "$1/rdf4j not exists on your filesystem."
+    mkdir -p "$1" 
+    exit 0;
+fi
+
+if [ ! -d "$DIRECTORY" ]
+then
+    echo "$DIRECTORY exists on your filesystem."
+fi
 
 docker exec -i --env-file $SCRIPT_DIR/../opensilex.env opensilex-docker-mongodb bash -c 'echo $CONTAINER_RESTORE_DIR && rm -rf $CONTAINER_RESTORE_DIR && mkdir -p $CONTAINER_RESTORE_DIR'
 docker cp $1/mongodb opensilex-docker-mongodb:$CONTAINER_RESTORE_DIR
 echo "Preparing opensilex-docker-mongodb data"
-docker exec -i --env-file $SCRIPT_DIR/../opensilex.env opensilex-docker-mongodb bash -c 'mongo redirect --eval "db.getSiblingDB(\"${REPOSITORIES_NAME}\");db.dropDatabase();db.getSiblingDB(\"${REPOSITORIES_NAME}\")"' 
+docker exec -i --env-file $SCRIPT_DIR/../opensilex.env opensilex-docker-mongodb bash -c 'mongo ${REPOSITORIES_NAME} --eval "db.dropDatabase()"'
 echo "Importing data to opensilex-docker-mongodb "
 docker exec -i --env-file $SCRIPT_DIR/../opensilex.env opensilex-docker-mongodb bash -c ' cd $CONTAINER_RESTORE_DIR && files=(*) && echo $CONTAINER_RESTORE_DIR && echo $CONTAINER_RESTORE_DIR/${files[0]} && /usr/bin/mongorestore  --numParallelCollections=1 --db=${REPOSITORIES_NAME} $CONTAINER_RESTORE_DIR/${files[0]}/* '
 echo "Importation to opensilex-docker-mongodb done"

@@ -7,20 +7,30 @@
 
 Docker compose environnent to deploy opensilex stack based on a previous work <a href="https://github.com/p2m2/opensilex-phis-igepp" target="_blank">opensilex-phis-igepp</a>.
 
+- [Minimalist opensilex docker compose environment](#minimalist-opensilex-docker-compose-environment)
   - [Pre-requesite softwares](#pre-requesite-softwares)
   - [Check your installed softwares](#check-your-installed-softwares)
   - [Stack software name with associated versions](#stack-software-name-with-associated-versions)
   - [Installation steps](#installation-steps)
+    - [Fresh new install (compose v2)](#fresh-new-install-compose-v2)
   - [Run minimal opensilex docker stack compose](#run-minimal-opensilex-docker-stack-compose)
+    - [(First install only) Create an administrator user](#first-install-only-create-an-administrator-user)
   - [Stop docker stack](#stop-docker-stack)
   - [Other tools or customizations](#other-tools-or-customizations)
     - [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
     - [(Optional) Add a reverse proxy](#optional-add-a-reverse-proxy)
     - [Migration steps from previous versions](#migration-steps-from-previous-versions)
+      - [From previous version 1.0.0-rc+5.2 (compose v2)](#from-previous-version-100-rc52-compose-v2)
+      - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
+      - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
   - [Customize docker configuration](#customize-docker-configuration)
+  - [Manage data](#manage-data)
+    - [Dump (Experimental)](#dump-experimental)
+      - [Restore (Experimental)](#restore-experimental)
   - [Manage docker](#manage-docker)
   - [Debug installation](#debug-installation)
   - [Danger Zone](#danger-zone)
+    - [Stop docker stack and erase all data (Be sure to delete all data)](#stop-docker-stack-and-erase-all-data-be-sure-to-delete-all-data)
   - [Acknowledgments](#acknowledgments)
 
 ## Pre-requesite softwares
@@ -45,7 +55,7 @@ Following commands should work from everywhere in your system without errors:
 
 - Mandatory softwares :
 
-  - RDF4J - 3.7.4
+  - RDF4J - 3.7.7
   - MongoDB - 4.4.6
   - OpenSILEX - 1.0.0-rc+5.2
 
@@ -125,14 +135,14 @@ Expected configuration :
 This command will stop the stack.
 
 ```bash
-docker compose --env-file opensilex.env down
+docker compose --env-file opensilex.env stop
 ```
 
 ## Other tools or customizations
 
 ### (Optional) Add a gui for opensilex-docker-mongodb
 
-This will start the mongo express server that helps you do explore your mongo data on port [localhost:28889](http://localhost:28889). You can also use your own robo3t or Mongo Compass App.
+This will start the mongo express server that helps you do explore your mongo data on port [localhost:28889/mongoexpress](http://localhost:28889/mongoexpress). You can also use your own robo3t or Mongo Compass App.
 
 ```bash
 docker compose --env-file opensilex.env run --rm start_opensilex_stack_mongogui
@@ -237,49 +247,34 @@ _TODO : Add exemples
 
 ## Manage data
 
-### Dump
+### Dump (Experimental)
 
 - Dump db
 
 ```bash
 
 # Step 1
-#docker exec -i --env-file opensilex.env opensilex-docker-mongodb bash -c 'rm -rf /dump_db_latest && mkdir -p /dump_db_latest && /usr/bin/mongodump --numParallelCollections=1 --db=${REPOSITORIES_NAME} --out=/dump_db_latest/ && mv /dump_db_latest/${REPOSITORIES_NAME} /dump_db_latest/$REPOSITORIES_NAME-`date +"%Y-%m-%d"`'
-
-# Step 2
-docker cp opensilex-docker-mongodb:/dump_db_latest <directory_path>
-# Ex : docker cp opensilex-docker-mongodb:/dump_db_latest ~/Downloads
-#   
-#  ~/Downloads/dump_db_latest
-# └── opensilex-docker-db-2022-11-18
-#     ├── fs.files.bson
-#     ├── fs.files.metadata.json
-#     ├── provenance.bson
-#     └── provenance.metadata.json
+cd <opensilex-docker-compose-dir>/dumps scripts
+# Example directory structure <opensilex-docker-compose-dir>/dump_scripts/dump_example_structure
+# ├── mongodb
+# │   └── opensilex-docker-db-2022-11-21
+# └── rdf4j
+#     └── opensilex-docker-db-2022-11-21
+sh export_data.sh <path_to_data>    
 ```
 
-#### Restore
+#### Restore (Experimental)
 
 ```bash
 # Step 1
-docker exec -i --env-file opensilex.env opensilex-docker-mongodb bash -c 'rm -rf /restore && mkdir -p /restore'
-
-# Step 2
-docker cp <directory_path> opensilex-docker-mongodb:/restore
-#  ~/Downloads/dump_db_latest
-# └── opensilex-docker-db-2022-11-18
-#     ├── fs.files.bson
-#     ├── fs.files.metadata.json
-#     ├── provenance.bson
-#     └── provenance.metadata.json
-# docker cp ~/Downloads/dump_db_latest/ opensilex-docker-mongodb:/dump
-
-# Step 3
-docker exec -i --env-file opensilex.env opensilex-docker-mongodb bash -c 'cd /restore/ && files=(*) && /usr/bin/mongorestore  --numParallelCollections=1 --db=${REPOSITORIES_NAME} /restore/${files[0]}/*'
+cd <opensilex-docker-compose-dir>/dumps scripts
+# Example directory structure <opensilex-docker-compose-dir>/dump_scripts/dump_example_structure
+# ├── mongodb
+# │   └── opensilex-dump-db-2022-11-21
+# └── rdf4j
+#     └── opensilex-dump-db-2022-11-21
+sh import.sh <path_to_data> 
 ```
-
-
-### Dump RDF4J
 
 
 ## Manage docker
@@ -305,7 +300,8 @@ $\color{red}{The\ following\ commands\ may\ produce\ a\ loss\ of\ data}$
 This command will give you stack trace of the docker build.
 
 ```bash
-docker compose --env-file opensilex.env down --volumes
+docker compose --env-file opensilex.env down --volumes 
+# this command will erase all the data
 ```
 
 ## Acknowledgments

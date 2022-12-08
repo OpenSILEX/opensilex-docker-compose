@@ -51,7 +51,7 @@ services:
 
   mongoexpress:
     image: mongo-express:$MONGO_EXPRESS_IMAGE_VERSION
-    container_name: opensilex-docker-mongoexpress
+    container_name: $MONGO_EXPRESS_DOCKER_NAME
     env_file: opensilex.env
     restart: always
     ports:
@@ -59,6 +59,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_SERVER: $MONGO_DOCKER_NAME
       ME_CONFIG_MONGODB_URL: mongo://$MONGO_DOCKER_NAME:27017/
+      ME_CONFIG_SITE_BASEURL: "/$MONGO_EXPRESS_HOST"
     depends_on:
       - mongo
 
@@ -77,17 +78,19 @@ services:
       - ./config:/home/opensilex/config
       - ./logs/opensilex:/home/opensilex/logs
       - persist_opensilex:/home/opensilex/data
+      - "$OPENSILEX_FILE_SYSTEM_VOLUME:$INTERNAL_DATA_DIRECTORY"
+
     command: >
       bash -c "
         rm -f /home/opensilex/config/opensilex.yml &&
         envsubst < /home/opensilex/config/opensilex-template.yml > /home/opensilex/config/opensilex.yml &&
         ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install --DEBUG) 
-        $OPENSILEX_START_CMD
+        $OPENSILEX_START_CMD $OPENSILEX_START_CMD_DEBUG
       "
     ports:
       - "$OPENSILEX_EXPOSED_PORT:8081"
 
-# Stack part to start
+  # Stack part to start
   start_opensilex_stack:
     image: dadarek/wait-for-dependencies
     depends_on:
@@ -108,6 +111,7 @@ services:
       - haproxy
       - opensilex
     command: haproxy:80 opensilex:8081
+
 volumes:
   persist_rdf4j_data:
   persist_rdf4j_logs:

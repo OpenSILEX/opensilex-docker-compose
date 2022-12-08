@@ -9,6 +9,9 @@ CONTAINER_DUMP_DIR="/tmp/dump_db_latest"
 # └── rdf4j
 #     └── opensilex-docker-db-2022-11-21
 
+mkdir -p $1/mongodb
+mkdir -p $1/rdf4j
+
 if [ ! -d "$1" ]; then
     echo "$1 not exists on your filesystem. Try to create it"
     mkdir -p "$1"
