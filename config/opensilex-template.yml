@@ -12,7 +12,7 @@ file-system:
     fs:
         config:
             # Default file system storage (String)
-            defaultFS: gridfs
+            defaultFS: $OPENSILEX_FILESYSTEM
             # Map of file storage connection definition by identifier (Map<String,FileStorageConnection>)
             connections:
                 gridfs:
@@ -29,7 +29,9 @@ file-system:
                     implementation: org.opensilex.fs.local.LocalFileSystemConnection
                     config:
                         # Base path for file storage (String)
-                        basePath: ../../opensilex-data
+                        basePath: $INTERNAL_DATA_DIRECTORY
+            customPath:
+                datafile/: local
 
 big-data:
     mongodb:
