@@ -69,6 +69,7 @@ services:
       context: .
       args:
         OPENSILEX_RELEASE_TAG: $OPENSILEX_RELEASE_TAG # can be modify to change version
+        INTERNAL_DATA_DIRECTORY: $INTERNAL_DATA_DIRECTORY
       dockerfile: opensilex-build-step.docker
     env_file: opensilex.env
     depends_on:
@@ -78,13 +79,13 @@ services:
       - ./config:/home/opensilex/config
       - ./logs/opensilex:/home/opensilex/logs
       - persist_opensilex:/home/opensilex/data
-      - "$OPENSILEX_FILE_SYSTEM_VOLUME:$INTERNAL_DATA_DIRECTORY"
-
+      - "$OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY:$INTERNAL_DATA_DIRECTORY"
     command: >
       bash -c "
         rm -f /home/opensilex/config/opensilex.yml &&
         envsubst < /home/opensilex/config/opensilex-template.yml > /home/opensilex/config/opensilex.yml &&
-        ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install --DEBUG) 
+        echo 'Running $OPENSILEX_START_CMD $OPENSILEX_START_CMD_DEBUG' &&
+        ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install --CONFIG_FILE=/home/opensilex/config/opensilex.yml --DEBUG) 
         $OPENSILEX_START_CMD $OPENSILEX_START_CMD_DEBUG
       "
     ports:

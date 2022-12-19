@@ -5,7 +5,6 @@ ontologies:
         config:
             serverURI: http://$RDF4J_DOCKER_NAME:8080/rdf4j-server/
             repository: $REPOSITORIES_NAME
-
 # Configuration for module: FileStorageModule (FileStorageConfig)
 file-system:
     # File storage service (FileStorageService)
@@ -31,8 +30,8 @@ file-system:
                         # Base path for file storage (String)
                         basePath: $INTERNAL_DATA_DIRECTORY
             customPath:
-                datafile/: local
-
+                datafile/: $DATAFILE_OPENSILEX_FILESYSTEM
+                documents/: $DOCUMENTS_OPENSILEX_FILESYSTEM
 big-data:
     mongodb:
         config:

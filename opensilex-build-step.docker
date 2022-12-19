@@ -1,16 +1,39 @@
 FROM tomcat:jre11-openjdk-slim
 
 ARG OPENSILEX_RELEASE_TAG=$OPENSILEX_RELEASE_TAG
+ARG INTERNAL_DATA_DIRECTORY=$INTERNAL_DATA_DIRECTORY
+ARG USERNAME=opensilex
+ARG UID=$UID
+ARG GID=$GID
+
+RUN groupadd --gid $GID $USERNAME \
+    && useradd --uid $UID --gid $GID -m $USERNAME \
+    #
+    # [Optional] Add sudo support. Omit if you don't need to install software after connecting.
+    && apt-get update \
+    && apt-get install -y sudo \
+    && echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME \
+    && chmod 0440 /etc/sudoers.d/$USERNAME
+
+
+# ********************************************************
+# * Anything else you want to do like clean up goes here *
+# ******************************************************** 
 
 ENV RELEASE https://github.com/OpenSILEX/opensilex/releases/download/$OPENSILEX_RELEASE_TAG/opensilex-release-$OPENSILEX_RELEASE_TAG.zip
 RUN apt-get -y update && apt-get install -y wget zip gettext-base
-
-RUN mkdir -p /home/opensilex
-WORKDIR /home/opensilex/bin
+RUN mkdir -p /home/$USERNAME
+RUN mkdir -p /home/$USERNAME/$INTERNAL_DATA_DIRECTORY
+RUN mkdir -p /home/$USERNAME/config
+RUN mkdir -p /home/$USERNAME/data
+RUN mkdir -p /home/$USERNAME/logs
+RUN chown $USERNAME:$USERNAME -R /home/$USERNAME 
+USER $USERNAME
+WORKDIR /home/$USERNAME/bin
 RUN wget -nv ${RELEASE}
 RUN unzip $( basename ${RELEASE} )
 RUN ls
-COPY ./bin/opensilex.sh /home/opensilex/bin/
-COPY ./bin/logback.xml /home/opensilex/bin/
-COPY ./config/opensilex-template.yml /home/opensilex/config/ 
-WORKDIR /home/opensilex
+COPY ./bin/opensilex.sh /home/$USERNAME/bin/
+COPY ./bin/logback.xml /home/$USERNAME/bin/
+COPY ./config/opensilex-template.yml /home/$USERNAME/config/ 
+WORKDIR /home/$USERNAME
