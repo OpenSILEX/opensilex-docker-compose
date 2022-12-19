@@ -5,3 +5,5 @@ logs/opensilex/**
 docker_logs/debug.log
 .gitignore
 config/opensilex.yml
+debug.log
+dump_scripts/**
