@@ -20,7 +20,7 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
     - [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
     - [(Optional) Add a reverse proxy](#optional-add-a-reverse-proxy)
     - [Migration steps from previous versions](#migration-steps-from-previous-versions)
-      - [From previous version 1.0.0-rc+5.2 (compose v2)](#from-previous-version-100-rc52-compose-v2)
+      - [From previous version 1.0.0-rc+6 (compose v2)](#from-previous-version-100-rc6-compose-v2)
       - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
       - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
   - [Customize docker configuration](#customize-docker-configuration)
@@ -56,8 +56,8 @@ Following commands should work from everywhere in your system without errors:
 - Mandatory softwares :
 
   - RDF4J - 3.7.7
-  - MongoDB - 4.4.6
-  - OpenSILEX - 1.0.0-rc+5.2
+  - MongoDB - 5.0.14
+  - OpenSILEX - 1.0.0-rc+6
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
@@ -65,14 +65,14 @@ Following commands should work from everywhere in your system without errors:
 
 ## Installation steps
 
-This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B5.2" target="_blank">1.0.0-rc+5.2 OpenSILEX version</a>
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B5.2" target="_blank">1.0.0-rc+6 OpenSILEX version</a>
 
 ### Fresh new install (compose v2)
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.0.0-rc+5.2.1 https://github.com/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.0.0-rc+6 https://github.com/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
@@ -84,6 +84,7 @@ For migration steps from previous versions, take a look to the [Migration steps 
 - You must run docker compose up command to start your installation:
 
 ```bash
+docker compose --env-file opensilex.env build --build-arg UID=$(id -u)  --build-arg GID=$(id -g)
 docker compose --env-file opensilex.env run --rm start_opensilex_stack
 ```
 
@@ -179,10 +180,10 @@ First, go to the previous directory and get the actual version of the repository
 
 ```bash
 # Go inside opensilex-docker-compose directory
-git checkout 1.0.0-rc+5.2.1
+git checkout 1.0.0-rc+6
 ```
 
-#### From previous version 1.0.0-rc+5.2 (compose v2)
+#### From previous version 1.0.0-rc+6 (compose v2)
 
 If you had a previous installation go to the directory where the project have been clone.
 And execute the following command to remove previous docker stack :
@@ -273,7 +274,7 @@ cd <opensilex-docker-compose-dir>/dumps scripts
 # │   └── opensilex-dump-db-2022-11-21
 # └── rdf4j
 #     └── opensilex-dump-db-2022-11-21
-sh import.sh <path_to_data> 
+sh import_data.sh <path_to_data> 
 ```
 
 
