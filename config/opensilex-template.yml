@@ -41,3 +41,6 @@ big-data:
 server:
     pathPrefix: /$OPENSILEX_PATH_PREFIX
     publicURI: "http://localhost:$HAPROXY_EXPOSED_PORT"
+
+front:
+    versionLabel: $VERSION_LABEL
