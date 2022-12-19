@@ -26,7 +26,7 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
   - [Customize docker configuration](#customize-docker-configuration)
   - [Manage data](#manage-data)
     - [Export (Experimental)](#export-experimental)
-      - [Import (Experimental)](#import-experimental)
+    - [Import (Experimental)](#import-experimental)
   - [Manage docker](#manage-docker)
   - [Debug installation](#debug-installation)
   - [Danger Zone](#danger-zone)
@@ -291,7 +291,7 @@ cd <opensilex-docker-compose-dir>/dump_scripts
 sh export_data.sh <path_to_data>  
 ```
 
-#### Import (Experimental)
+### Import (Experimental)
 
 This script will restore mongodb and rdf4j data in a directory with this structure.
 
