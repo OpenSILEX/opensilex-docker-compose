@@ -20,7 +20,7 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
     - [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
     - [(Optional) Add a reverse proxy](#optional-add-a-reverse-proxy)
     - [Migration steps from previous versions](#migration-steps-from-previous-versions)
-      - [From previous version 1.0.0-rc+6 (compose v2)](#from-previous-version-100-rc6-compose-v2)
+      - [From previous version 1.0.0-rc+5.2 (compose v2)](#from-previous-version-100-rc52-compose-v2)
       - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
       - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
   - [Customize docker configuration](#customize-docker-configuration)
@@ -183,7 +183,7 @@ First, go to the previous directory and get the actual version of the repository
 git checkout 1.0.0-rc+6
 ```
 
-#### From previous version 1.0.0-rc+6 (compose v2)
+#### From previous version 1.0.0-rc+5.2 (compose v2)
 
 If you had a previous installation go to the directory where the project have been clone.
 And execute the following command to remove previous docker stack :
