@@ -10,11 +10,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Update opensilex version to 1.0.0-rc+6
-- Upgrade docker creation
-- Add file system config file for local and gridfs filesystem
 - Upgrade Rdf4j to 3.7.7
 - Upgrade MongoDB to 5.0.14
+- Upgrade docker creation
+- Add file system config file for local and gridfs filesystem
 - Add opensilex user in docker container support for bind volumes
+- Remove specific rdf4j build specification
+- Update haproxy container name
 
 ## [1.0.0-rc+5.2] - 2022-10-25
 

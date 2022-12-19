@@ -25,8 +25,8 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
       - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
   - [Customize docker configuration](#customize-docker-configuration)
   - [Manage data](#manage-data)
-    - [Dump (Experimental)](#dump-experimental)
-      - [Restore (Experimental)](#restore-experimental)
+    - [Export (Experimental)](#export-experimental)
+      - [Import (Experimental)](#import-experimental)
   - [Manage docker](#manage-docker)
   - [Debug installation](#debug-installation)
   - [Danger Zone](#danger-zone)
@@ -34,6 +34,12 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
   - [Acknowledgments](#acknowledgments)
 
 ## Pre-requesite softwares
+
+Tested Operating system :
+
+[![Ubuntu22.04](https://img.shields.io/badge/Ubuntu-22.04-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://releases.ubuntu.com/22.04/)
+
+[![Debian11](https://img.shields.io/badge/Debian-11-E95420?style=for-the-badge&logo=debian&logoColor=white)](https://www.debian.org/releases/bullseye/releasenotes)
 
 First you need to have these software installed, you can check if they are [installed](#check-your-installed-softwares) :
 
@@ -120,10 +126,10 @@ After opensilex start you will be able to access to the application on port <a h
 
 By default, different available services can be found at these adresses :
 
-- OpenSILEX web application : <a href="<http://localhost:8081/opensilex/app>" target="_blank">http://localhost:8081/opensilex/app</a>
-- OpenSILEX API : <a href="<http://localhost:8081/opensilex/api-docs>" target="_blank">http://localhost:8081/opensilex/api-docs</a>
-- MongoDB port : <a href="<http://localhost:28888>" target="_blank">http://localhost:28888</a>
-- RDF4J Workbench : <a href="<http://localhost:28887/rdf4j-workbench>" target="_blank">http://localhost:28887/rdf4j-workbench</a>
+- OpenSILEX web application : <a href="http://localhost:8081/opensilex/app" target="_blank">http://localhost:8081/opensilex/app</a>
+- OpenSILEX API : <a href="http://localhost:8081/opensilex/api-docs" target="_blank">http://localhost:8081/opensilex/api-docs</a>
+- MongoDB port : <a href="http://localhost:28888" target="_blank">http://localhost:28888</a>
+- RDF4J Workbench : <a href="http://localhost:28887/rdf4j-workbench" target="_blank">http://localhost:28887/rdf4j-workbench</a>
 
 _PS: At the first connection, you will need to change rdf4j server port to 8080 (internal docker port) in order to access to rdf4j repositories._
 
@@ -155,7 +161,7 @@ docker compose --env-file opensilex.env run --rm start_opensilex_stack_mongogui
 
 This will start the haproxy as reverse proxy for opensilex instance on port that you want to expose.
 
-It can be configure in the `./opensilex.env` with the variable `HAPROXY_EXPOSED_PORT` (Default to port 80 equivalent to <a href="<http://localhost>" target="_blank">http://localhost</a>.
+It can be configure in the `./opensilex.env` with the variable `HAPROXY_EXPOSED_PORT` (Default to port 80 equivalent to <a href="http://localhost" target="_blank">http://localhost</a>.
 
 ```bash
 docker compose --env-file opensilex.env run --rm start_opensilex_stack_proxy
@@ -166,13 +172,13 @@ If you have installed [optional reverse proxy](#optional-add-a-reverse-proxy)
 By default, different available services can be found at these adresses. The port might be change depending on your `./opensilex.env` configuration file.
 
 - Web :
-  - OpenSILEX web application : <a href="<http://localhost/opensilex/app>" target="_blank">http://localhost/opensilex/app</a>
-  - OpenSILEX API : <a href="<http://localhost/opensilex/api-docs>" target="_blank">http://localhost/opensilex/api-docs</a>
-  - RDF4J Workbench : <a href="<http://localhost/rdf4j-workbench>" target="_blank">http://localhost/rdf4j-workbench</a>
+  - OpenSILEX web application : <a href="http://localhost/opensilex/app" target="_blank">http://localhost/opensilex/app</a>
+  - OpenSILEX API : <a href="http://localhost/opensilex/api-docs" target="_blank">http://localhost/opensilex/api-docs</a>
+  - RDF4J Workbench : <a href="http://localhost/rdf4j-workbench" target="_blank">http://localhost/rdf4j-workbench</a>
 
 if you add installed [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
 
-- MongoDB express : <a href="<http://localhost/mongoadmin>" target="_blank">http://localhost/mongoadmin</a>
+- MongoDB express : <a href="http://localhost/mongoexpress" target="_blank">http://localhost/mongoadmin</a>
 
 ### Migration steps from previous versions
 
@@ -228,47 +234,70 @@ docker stop rdf4j && docker rm rdf4j
 Configure `opensilex.env` file to configure opensilex sparql config, applications ports, applications volumes
 
 ```bash
-# CAN BE MODIFIED
+# CAN BE MODIFIED BY USER
+
+## START COMMAND can had debug option by uncommenting the following statment
+#OPENSILEX_START_CMD_DEBUG=--DEBUG
 
 # SPARQL
-BASEURI=http://www.opensilex.org/
-BASEURIALIAS=opensilex
-REPOSITORIES_NAME=opensilex-docker-db
+BASEURI=http://opensilex.test/
+BASEURIALIAS=opensilex-test
+# customize path prefix Ex : localhost:8081/opensilex or localhost:8081/phenotyping_si
 OPENSILEX_PATH_PREFIX=opensilex
 
-# PORTS EXPOSED
+# FILE SYSTEM
+# Default value is "gridfs" - Only gridfs or local are supported
+OPENSILEX_FILESYSTEM=gridfs
+DATAFILE_OPENSILEX_FILESYSTEM=gridfs
+DOCUMENTS_OPENSILEX_FILESYSTEM=gridfs   
+# If "local" file system is choosed OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY is mandatory if you choose gridfs local will be not used
+# File system configuration can be customized to opensilex-template.yml
+OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY=./opensilex_data
+#Ex :
+#OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY=/home/charlero/GIT/GITLAB/opensilex-docker-compose/dump_scripts/demo_dump/publictest
+
+# PORTS
 HAPROXY_EXPOSED_PORT=80
 OPENSILEX_EXPOSED_PORT=8081
 RDF4J_EXPOSED_PORT=28887
 MONGO_EXPOSED_PORT=28888
 MONGO_EXPRESS_EXPOSED_PORT=28889
-```
 
-_TODO : Add exemples
+# VERSIONS
+HAPROXY_IMAGE_VERSION=2.6.6
+OPENSILEX_RELEASE_TAG=1.0.0-rc+6
+RDF4J_IMAGE_VERSION=3.7.7
+MONGO_IMAGE_VERSION=5.0.14
+MONGO_EXPRESS_IMAGE_VERSION=1.0.0-alpha.4
+```
 
 ## Manage data
 
-### Dump (Experimental)
+File system management are not shown in the the following steps because local files are manage with bind volumes  or with gridfs. Other file systems are not managed in this version of opensilex docker.
 
-- Dump db
+### Export (Experimental)
+
+This script will dumps mongodb and rdf4j data in a directory with this structure.
 
 ```bash
 
 # Step 1
-cd <opensilex-docker-compose-dir>/dumps scripts
+cd <opensilex-docker-compose-dir>/dump_scripts
 # Example directory structure <opensilex-docker-compose-dir>/dump_scripts/dump_example_structure
 # ├── mongodb
 # │   └── opensilex-docker-db-2022-11-21
 # └── rdf4j
 #     └── opensilex-docker-db-2022-11-21
-sh export_data.sh <path_to_data>    
+sh export_data.sh <path_to_data>  
 ```
 
-#### Restore (Experimental)
+#### Import (Experimental)
+
+This script will restore mongodb and rdf4j data in a directory with this structure.
 
 ```bash
 # Step 1
-cd <opensilex-docker-compose-dir>/dumps scripts
+cd <opensilex-docker-compose-dir>/dump_scripts
 # Example directory structure <opensilex-docker-compose-dir>/dump_scripts/dump_example_structure
 # ├── mongodb
 # │   └── opensilex-dump-db-2022-11-21
@@ -276,7 +305,6 @@ cd <opensilex-docker-compose-dir>/dumps scripts
 #     └── opensilex-dump-db-2022-11-21
 sh import_data.sh <path_to_data> 
 ```
-
 
 ## Manage docker
 

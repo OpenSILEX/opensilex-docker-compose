@@ -1,7 +1,0 @@
-ARG RDF4J_IMAGE_VERSION=$RDF4J_IMAGE_VERSION
-
-FROM eclipse/rdf4j-workbench:$RDF4J_IMAGE_VERSION
-USER root 
-RUN chown -R tomcat:root /var/rdf4j
-
-USER tomcat

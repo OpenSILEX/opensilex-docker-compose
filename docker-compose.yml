@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   haproxy:
-    container_name: haproxy
+    container_name: $HAPROXY_DOCKER_NAME
     restart: always
     env_file: opensilex.env
     build:
@@ -38,11 +38,6 @@ services:
     container_name: $RDF4J_DOCKER_NAME
     env_file: opensilex.env
     image: eclipse/rdf4j-workbench:$RDF4J_IMAGE_VERSION
-    # build:
-    #   context: .
-    #   args:
-    #     RDF4J_IMAGE_VERSION: $RDF4J_IMAGE_VERSION
-    #   dockerfile: rdf4j-build-step.docker
     volumes:
       - persist_rdf4j_data:/var/rdf4j
       - persist_rdf4j_logs:/usr/local/tomcat/logs
@@ -68,7 +63,7 @@ services:
     build:
       context: .
       args:
-        OPENSILEX_RELEASE_TAG: $OPENSILEX_RELEASE_TAG # can be modify to change version
+        OPENSILEX_RELEASE_TAG: $OPENSILEX_RELEASE_TAG
         INTERNAL_DATA_DIRECTORY: $INTERNAL_DATA_DIRECTORY
       dockerfile: opensilex-build-step.docker
     env_file: opensilex.env
