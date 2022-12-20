@@ -176,7 +176,7 @@ By default, different available services can be found at these adresses. The por
   - OpenSILEX API : <a href="http://localhost/opensilex/api-docs" target="_blank">http://localhost/opensilex/api-docs</a>
   - RDF4J Workbench : <a href="http://localhost/rdf4j-workbench" target="_blank">http://localhost/rdf4j-workbench</a>
 
-if you add installed [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
+Mongo express will be automatically installed [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
 
 - MongoDB express : <a href="http://localhost/mongoexpress" target="_blank">http://localhost/mongoadmin</a>
 
