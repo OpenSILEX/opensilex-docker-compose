@@ -9,3 +9,4 @@ debug.log
 dump_scripts/**
 config/opensilex-template.yml
 opensilex.env
+modules/**
