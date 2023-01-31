@@ -24,6 +24,9 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
       - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
       - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
   - [Customize docker configuration](#customize-docker-configuration)
+  - [Multi modules](#multi-modules)
+    - [Modules directory](#modules-directory)
+    - [Configuration](#configuration)
   - [Manage data](#manage-data)
     - [Export (Experimental)](#export-experimental)
     - [Import (Experimental)](#import-experimental)
@@ -35,11 +38,15 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
 
 ## Pre-requesite softwares
 
-Tested Operating system :
+**Tested Operating system :**
 
 [![Ubuntu22.04](https://img.shields.io/badge/Ubuntu-22.04-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://releases.ubuntu.com/22.04/)
 
 [![Debian11](https://img.shields.io/badge/Debian-11-E95420?style=for-the-badge&logo=debian&logoColor=white)](https://www.debian.org/releases/bullseye/releasenotes)
+
+_Not working operating system :_
+
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
 
 First you need to have these software installed, you can check if they are [installed](#check-your-installed-softwares) :
 
@@ -86,7 +93,7 @@ For migration steps from previous versions, take a look to the [Migration steps 
 
 ## Run minimal opensilex docker stack compose
 
-- With a terminal go to the project directory (where this readme is located).
+- With a bash terminal go to the project directory (where this readme is located).
 - You must run docker compose up command to start your installation:
 
 ```bash
@@ -237,19 +244,20 @@ Configure `opensilex.env` file to configure opensilex sparql config, application
 # CAN BE MODIFIED BY USER
 
 ## START COMMAND can had debug option by uncommenting the following statment
-#OPENSILEX_START_CMD_DEBUG=--DEBUG
+OPENSILEX_START_CMD_DEBUG=--DEBUG
 
 # SPARQL
 BASEURI=http://opensilex.test/
 BASEURIALIAS=opensilex-test
 # customize path prefix Ex : localhost:8081/opensilex or localhost:8081/phenotyping_si
 OPENSILEX_PATH_PREFIX=opensilex
+VERSION_LABEL=test-version
 
 # FILE SYSTEM
-# Default value is "gridfs" - Only gridfs or local are supported
+# Default value is "gridfs" - Only "gridfs" or "local" are supported
 OPENSILEX_FILESYSTEM=gridfs
 DATAFILE_OPENSILEX_FILESYSTEM=gridfs
-DOCUMENTS_OPENSILEX_FILESYSTEM=gridfs   
+DOCUMENTS_OPENSILEX_FILESYSTEM=gridfs
 # If "local" file system is choosed OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY is mandatory if you choose gridfs local will be not used
 # File system configuration can be customized to opensilex-template.yml
 OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY=./opensilex_data
@@ -265,15 +273,54 @@ MONGO_EXPRESS_EXPOSED_PORT=28889
 
 # VERSIONS
 HAPROXY_IMAGE_VERSION=2.6.6
-OPENSILEX_RELEASE_TAG=1.0.0-rc+6
+OPENSILEX_RELEASE_TAG=1.0.0-rc+6.4
 RDF4J_IMAGE_VERSION=3.7.7
 MONGO_IMAGE_VERSION=5.0.14
 MONGO_EXPRESS_IMAGE_VERSION=1.0.0-alpha.4
+
+# THEME can be changed
+OPENSILEX_CONFIG_THEME=opensilex-front#phis
+OPENSILEX_CONFIG_HOMECOMPONENT=opensilex-DefaultHomeComponent
+OPENSILEX_CONFIG_LOGINCOMPONENT=opensilex-DefaultLoginComponent
+OPENSILEX_CONFIG_FOOTERCOMPONENT=opensilex-DefaultFooterComponent
+OPENSILEX_CONFIG_MENUCOMPONENT=opensilex-DefaultMenuComponent
+OPENSILEX_CONFIG_HEADERCOMPONENT=opensilex-DefaultHeaderComponent
+
+# Example of modification
+#OPENSILEX_CONFIG_THEME=inrae-sixtine-vigne#vigne
+#OPENSILEX_CONFIG_HOMECOMPONENT=inrae-sixtine-vigne-SixtineHomeComponent
+#OPENSILEX_CONFIG_LOGINCOMPONENT=inrae-sixtine-vigne-SixtineLoginComponent
+#OPENSILEX_CONFIG_FOOTERCOMPONENT=inrae-sixtine-vigne-SixtineFooterComponent
+#OPENSILEX_CONFIG_MENUCOMPONENT=inrae-sixtine-vigne-SixtineMenuComponent
+#OPENSILEX_CONFIG_HEADERCOMPONENT=inrae-sixtine-vigne-SixtineHeaderComponent
+```
+
+## Multi modules
+
+### Modules directory
+
+Module can be added to "modules" directory (opensilex-docker-compose/modules) in order to be used by opensilex stack.
+
+There is a module example working with sixtine vigne mobile that allow you to change ontology and instance front style.
+It is localised in opensilex-docker-compose/modules_examples/1.0.0-rc+6.4/sixtine-vigne.
+
+### Configuration
+
+By modifying opensilex.env file with this following configuration you will be able to change the theme.
+
+```bash
+# Example of modification
+OPENSILEX_CONFIG_THEME=inrae-sixtine-vigne#vigne
+OPENSILEX_CONFIG_HOMECOMPONENT=inrae-sixtine-vigne-SixtineHomeComponent
+OPENSILEX_CONFIG_LOGINCOMPONENT=inrae-sixtine-vigne-SixtineLoginComponent
+OPENSILEX_CONFIG_FOOTERCOMPONENT=inrae-sixtine-vigne-SixtineFooterComponent
+OPENSILEX_CONFIG_MENUCOMPONENT=inrae-sixtine-vigne-SixtineMenuComponent
+OPENSILEX_CONFIG_HEADERCOMPONENT=inrae-sixtine-vigne-SixtineHeaderComponent
 ```
 
 ## Manage data
 
-File system management are not shown in the the following steps because local files are manage with bind volumes  or with gridfs. Other file systems are not managed in this version of opensilex docker.
+File system management are not shown in the the following steps because local files are manage with bind volumes or with gridfs. Other file systems are not managed in this version of opensilex docker.
 
 ### Export (Experimental)
 
@@ -288,7 +335,7 @@ cd <opensilex-docker-compose-dir>/dump_scripts
 # │   └── opensilex-docker-db-2022-11-21
 # └── rdf4j
 #     └── opensilex-docker-db-2022-11-21
-sh export_data.sh <path_to_data>  
+sh export_data.sh <path_to_data>
 ```
 
 ### Import (Experimental)
@@ -303,7 +350,7 @@ cd <opensilex-docker-compose-dir>/dump_scripts
 # │   └── opensilex-dump-db-2022-11-21
 # └── rdf4j
 #     └── opensilex-dump-db-2022-11-21
-sh import_data.sh <path_to_data> 
+sh import_data.sh <path_to_data>
 ```
 
 ## Manage docker
@@ -329,7 +376,7 @@ $\color{red}{The\ following\ commands\ may\ produce\ a\ loss\ of\ data}$
 This command will give you stack trace of the docker build.
 
 ```bash
-docker compose --env-file opensilex.env down --volumes 
+docker compose --env-file opensilex.env down --volumes
 # this command will erase all the data
 ```
 

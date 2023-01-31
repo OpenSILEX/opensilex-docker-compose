@@ -27,6 +27,9 @@ RUN mkdir -p /home/$USERNAME/$INTERNAL_DATA_DIRECTORY
 RUN mkdir -p /home/$USERNAME/config
 RUN mkdir -p /home/$USERNAME/data
 RUN mkdir -p /home/$USERNAME/logs
+RUN mkdir -p /home/$USERNAME/bin/modules
+COPY ./modules/ /home/$USERNAME/bin/modules_to_import/
+
 RUN chown $USERNAME:$USERNAME -R /home/$USERNAME 
 USER $USERNAME
 WORKDIR /home/$USERNAME/bin
@@ -35,5 +38,6 @@ RUN unzip $( basename ${RELEASE} )
 RUN ls
 COPY ./bin/opensilex.sh /home/$USERNAME/bin/
 COPY ./bin/logback.xml /home/$USERNAME/bin/
-COPY ./config/opensilex-template.yml /home/$USERNAME/config/ 
+COPY ./config/opensilex-template.yml /home/$USERNAME/config/
+RUN cp /home/$USERNAME/bin/modules_to_import/* /home/$USERNAME/bin/modules
 WORKDIR /home/$USERNAME
