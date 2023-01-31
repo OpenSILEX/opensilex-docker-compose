@@ -70,7 +70,7 @@ Following commands should work from everywhere in your system without errors:
 
   - RDF4J - 3.7.7
   - MongoDB - 5.0.14
-  - OpenSILEX - 1.0.0-rc+6
+  - OpenSILEX - 1.0.0-rc+6.4
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
@@ -193,7 +193,7 @@ First, go to the previous directory and get the actual version of the repository
 
 ```bash
 # Go inside opensilex-docker-compose directory
-git checkout 1.0.0-rc+6
+git checkout 1.0.0-rc+6.4
 ```
 
 #### From previous version 1.0.0-rc+5.2 (compose v2)
@@ -279,20 +279,20 @@ MONGO_IMAGE_VERSION=5.0.14
 MONGO_EXPRESS_IMAGE_VERSION=1.0.0-alpha.4
 
 # THEME can be changed
-OPENSILEX_CONFIG_THEME=opensilex-front#phis
-OPENSILEX_CONFIG_HOMECOMPONENT=opensilex-DefaultHomeComponent
-OPENSILEX_CONFIG_LOGINCOMPONENT=opensilex-DefaultLoginComponent
-OPENSILEX_CONFIG_FOOTERCOMPONENT=opensilex-DefaultFooterComponent
-OPENSILEX_CONFIG_MENUCOMPONENT=opensilex-DefaultMenuComponent
-OPENSILEX_CONFIG_HEADERCOMPONENT=opensilex-DefaultHeaderComponent
+# OPENSILEX_CONFIG_THEME=opensilex-front#phis
+# OPENSILEX_CONFIG_HOMECOMPONENT=opensilex-DefaultHomeComponent
+# OPENSILEX_CONFIG_LOGINCOMPONENT=opensilex-DefaultLoginComponent
+# OPENSILEX_CONFIG_FOOTERCOMPONENT=opensilex-DefaultFooterComponent
+# OPENSILEX_CONFIG_MENUCOMPONENT=opensilex-DefaultMenuComponent
+# OPENSILEX_CONFIG_HEADERCOMPONENT=opensilex-DefaultHeaderComponent
 
 # Example of modification
-#OPENSILEX_CONFIG_THEME=inrae-sixtine-vigne#vigne
-#OPENSILEX_CONFIG_HOMECOMPONENT=inrae-sixtine-vigne-SixtineHomeComponent
-#OPENSILEX_CONFIG_LOGINCOMPONENT=inrae-sixtine-vigne-SixtineLoginComponent
-#OPENSILEX_CONFIG_FOOTERCOMPONENT=inrae-sixtine-vigne-SixtineFooterComponent
-#OPENSILEX_CONFIG_MENUCOMPONENT=inrae-sixtine-vigne-SixtineMenuComponent
-#OPENSILEX_CONFIG_HEADERCOMPONENT=inrae-sixtine-vigne-SixtineHeaderComponent
+OPENSILEX_CONFIG_THEME=inrae-sixtine-vigne#vigne
+OPENSILEX_CONFIG_HOMECOMPONENT=inrae-sixtine-vigne-SixtineHomeComponent
+OPENSILEX_CONFIG_LOGINCOMPONENT=inrae-sixtine-vigne-SixtineLoginComponent
+OPENSILEX_CONFIG_FOOTERCOMPONENT=inrae-sixtine-vigne-SixtineFooterComponent
+OPENSILEX_CONFIG_MENUCOMPONENT=inrae-sixtine-vigne-SixtineMenuComponent
+OPENSILEX_CONFIG_HEADERCOMPONENT=inrae-sixtine-vigne-SixtineHeaderComponent
 ```
 
 ## Multi modules
