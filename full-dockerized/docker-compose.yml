@@ -86,7 +86,6 @@ services:
       "
     ports:
       - "$OPENSILEX_EXPOSED_PORT:8081"
-    network_mode: "host"
 
   # Stack part to start
   start_opensilex_stack:

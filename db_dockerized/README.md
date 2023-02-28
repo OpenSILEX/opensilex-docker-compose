@@ -24,9 +24,9 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
       - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
       - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
   - [Customize docker configuration](#customize-docker-configuration)
-  - [Multi modules](#multi-modules)
-    - [Modules directory](#modules-directory)
-    - [Configuration](#configuration)
+  - [Modular extensions](#modular-extensions)
+    - [Explanation of modules directory](#explanation-of-modules-directory)
+    - [Configuration for inrae sixtine vigne](#configuration-for-inrae-sixtine-vigne)
   - [Manage data](#manage-data)
     - [Export (Experimental)](#export-experimental)
     - [Import (Experimental)](#import-experimental)
@@ -70,7 +70,7 @@ Following commands should work from everywhere in your system without errors:
 
   - RDF4J - 3.7.7
   - MongoDB - 5.0.14
-  - OpenSILEX - 1.0.0-rc+6.4
+  - OpenSILEX - 1.0.0-rc+6.5
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
@@ -78,14 +78,14 @@ Following commands should work from everywhere in your system without errors:
 
 ## Installation steps
 
-This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B5.2" target="_blank">1.0.0-rc+6 OpenSILEX version</a>
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B6.5" target="_blank">1.0.0-rc+6.5 OpenSILEX version</a>
 
 ### Fresh new install (compose v2)
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.0.0-rc+6 https://github.com/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.0.0-rc+6.5 https://github.com/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
@@ -94,10 +94,16 @@ For migration steps from previous versions, take a look to the [Migration steps 
 ## Run minimal opensilex docker stack compose
 
 - With a bash terminal go to the project directory (where this readme is located).
+
+```bash
+wget https://github.com/OpenSILEX/opensilex/releases/download/1.0.0-rc%2B6.5/opensilex-release-1.0.0-rc+6.5.zip -O opensilex/release.zip
+unzip opensilex/release.zip -d opensilex && rm opensilex/release.zip
+```
+
 - You must run docker compose up command to start your installation:
 
 ```bash
-docker compose --env-file opensilex.env build --build-arg UID=$(id -u)  --build-arg GID=$(id -g)
+docker compose --env-file opensilex.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
 docker compose --env-file opensilex.env run --rm start_opensilex_stack
 ```
 
@@ -112,8 +118,6 @@ docker compose --env-file opensilex.env run --rm start_opensilex_stack
  ⠿ Container opensilex-docker-opensilexapp  Started                                                                                                                                              0.4s
 Waiting for mongo to listen on 27017...
 Waiting for rdf4j to listen on 8080...
-Waiting for opensilex to listen on 8081..
-sleeping
 sleeping
 sleeping
 [wait until it starts]
@@ -121,12 +125,18 @@ sleeping
 
 This previous action will block your terminal. When the terminal will be accessible again the opensilex app process will be started and ready.
 
+```bash
+sh opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 --DEBUG
+sh opensilex.sh system install
+
+```
+
 ### (First install only) Create an administrator user
 
 Docker volumes are persistent until you remove them. You only need to create once an user.
 
 ```bash
-docker exec -it opensilex-docker-opensilexapp ./bin/opensilex.sh user add --admin --email=admin@opensilex.org --lang=fr --firstName=firstName --lastName=lastName --password=admin
+sh  opensilex.sh user add --admin --email=admin@opensilex.org --lang=fr --firstName=firstName --lastName=lastName --password=admin
 ```
 
 After opensilex start you will be able to access to the application on port <a href="http://localhost:8081/opensilex/app" target="_blank">localhost:8081/opensilex/app</a>.
@@ -193,7 +203,7 @@ First, go to the previous directory and get the actual version of the repository
 
 ```bash
 # Go inside opensilex-docker-compose directory
-git checkout 1.0.0-rc+6.4
+git checkout 1.0.0-rc+6.5
 ```
 
 #### From previous version 1.0.0-rc+5.2 (compose v2)
@@ -273,12 +283,12 @@ MONGO_EXPRESS_EXPOSED_PORT=28889
 
 # VERSIONS
 HAPROXY_IMAGE_VERSION=2.6.6
-OPENSILEX_RELEASE_TAG=1.0.0-rc+6.4
+OPENSILEX_RELEASE_TAG=1.0.0-rc+6.5
 RDF4J_IMAGE_VERSION=3.7.7
 MONGO_IMAGE_VERSION=5.0.14
 MONGO_EXPRESS_IMAGE_VERSION=1.0.0-alpha.4
 
-# THEME can be changed
+# THEME can be changed if a module that contains a theme has been loaded
 OPENSILEX_CONFIG_THEME=opensilex-front#phis
 OPENSILEX_CONFIG_HOMECOMPONENT=opensilex-DefaultHomeComponent
 OPENSILEX_CONFIG_LOGINCOMPONENT=opensilex-DefaultLoginComponent
@@ -295,21 +305,25 @@ OPENSILEX_CONFIG_HEADERCOMPONENT=opensilex-DefaultHeaderComponent
 #OPENSILEX_CONFIG_HEADERCOMPONENT=inrae-sixtine-vigne-SixtineHeaderComponent
 ```
 
-## Multi modules
+## Modular extensions
 
-### Modules directory
+### Explanation of modules directory
 
-Module can be added to "modules" directory (opensilex-docker-compose/modules) in order to be used by opensilex stack.
+Module (opensilex jar) can be added to _"modules"_ directory (opensilex-docker-compose/modules) in order to be deployed in opensilex stack.
 
-There is a module example working with sixtine vigne mobile that allow you to change ontology and instance front style.
-It is localised in opensilex-docker-compose/modules_examples/1.0.0-rc+6.4/sixtine-vigne.
+There is a module example directory working with _"inrae-sixtine-vigne"_ module (inrae-sixtine-vigne-1.1.0.jar) that allow you to change ontology and instance front style.
+It is localised in opensilex-docker-compose/modules_examples/1.0.0-rc+6.5/inrae-sixtine-vigne-1.1.0.jar.
 
-### Configuration
+**How to do it ?**
 
-By modifying opensilex.env file with this following configuration you will be able to change the theme.
+- To activate your module you must copy a module example that have been compiled for a specified opensilex version in _modules_ directory. (Ex : the module located in 1.0.0-rc+6.5/inrae-sixtine-vigne-1.1.0.jar has been compiled for opensilex version 1.0.0-rc+6.5). It's all.
+
+### Configuration for inrae sixtine vigne
+
+By modifying _opensilex.env_ file with this following configuration you will be able to change the theme.
 
 ```bash
-# Example of modification
+# Example of modification for sixtine vigne module
 OPENSILEX_CONFIG_THEME=inrae-sixtine-vigne#vigne
 OPENSILEX_CONFIG_HOMECOMPONENT=inrae-sixtine-vigne-SixtineHomeComponent
 OPENSILEX_CONFIG_LOGINCOMPONENT=inrae-sixtine-vigne-SixtineLoginComponent
@@ -364,7 +378,7 @@ In order to manage your docker stack via an web interface, we suggest you to use
 This command will give you stack trace of the docker build.
 
 ```bash
-docker compose --env-file opensilex.env build > docker_logs/debug.log
+docker compose --env-file opensilex.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g) > docker_logs/debug.log
 ```
 
 ## Danger Zone
