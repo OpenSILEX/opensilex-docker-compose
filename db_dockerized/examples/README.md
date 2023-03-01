@@ -29,8 +29,31 @@ sleeping
 
 This previous action will block your terminal. When the terminal will be accessible again the opensilex app process will be started and ready.
 
+## First install 
 ```bash
-sh opensilex_examples/vitis-explorer/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 --DEBUG
 sh opensilex_examples/vitis-explorer/opensilex.sh system install
 
+```
+
+## Run on port 8081 on localhost
+
+```bash
+sh opensilex_examples/vitis-explorer/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 -d
+```
+
+## Run in debug
+
+```bash
+sh opensilex_examples/vitis-explorer/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 --DEBUG
+```
+## Stop
+
+```bash
+sh opensilex_examples/vitis-explorer/opensilex.sh server stop   --adminPort=4081 --DEBUG
+```
+
+## Import files 
+
+```bash
+bash ../dump_scripts/import_data.sh ../examples/dumps/vitis-explorer-dev/2023-01-31
 ```

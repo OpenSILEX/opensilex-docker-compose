@@ -61,9 +61,9 @@ This docker version is related to <a href="https://github.com/OpenSILEX/opensile
 
 ### Full dockerized version
 
-This respository includes opensilex full stack (proxy, opensilex, mongodb, mongo express, rdf4j) in dockerized version.
+This [repository](full_dockerized) includes opensilex full stack (proxy, opensilex, mongodb, mongo express, rdf4j) in dockerized version.
 
 
 ### Db dockerized version
 
-This docker includes opensilex full stack ( opensilex, mongodb , rdf4j) in dockerized version and you are able to run java executable to manage opensilex.
+This  [repository](db_dockerized)  includes opensilex full stack ( opensilex, mongodb , rdf4j) in dockerized version and you are able to run java executable to manage opensilex.

@@ -1,4 +1,0 @@
-
-system:
-  ignoredModules:
-    opensilex.service.PhisWsModule: opensilex-phis.jar
