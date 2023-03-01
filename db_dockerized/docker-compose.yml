@@ -1,21 +1,7 @@
 version: "3.5"
 
 services:
-  haproxy:
-    container_name: $HAPROXY_DOCKER_NAME
-    restart: always
-    env_file: opensilex.env
-    build:
-      context: .
-      args:
-        HAPROXY_IMAGE_VERSION: $HAPROXY_IMAGE_VERSION
-      dockerfile: haproxy-build-step.docker
-    depends_on:
-      - opensilex
-    volumes:
-      - haproxy_conf:/usr/local/etc/haproxy
-    ports:
-      - "$HAPROXY_EXPOSED_PORT:80"
+ 
   mongo:
     container_name: $MONGO_DOCKER_NAME
     image: mongo:$MONGO_IMAGE_VERSION
@@ -92,5 +78,4 @@ volumes:
   persist_rdf4j_data:
   persist_rdf4j_logs:
   persist_mongo_data:
-  persist_opensilex:
-  haproxy_conf:
+  persist_opensilex: 

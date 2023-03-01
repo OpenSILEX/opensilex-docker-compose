@@ -18,7 +18,6 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
   - [Stop docker stack](#stop-docker-stack)
   - [Other tools or customizations](#other-tools-or-customizations)
     - [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
-    - [(Optional) Add a reverse proxy](#optional-add-a-reverse-proxy)
     - [Migration steps from previous versions](#migration-steps-from-previous-versions)
       - [From previous version 1.0.0-rc+5.2 (compose v2)](#from-previous-version-100-rc52-compose-v2)
       - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
@@ -74,7 +73,6 @@ Following commands should work from everywhere in your system without errors:
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
-  - haproxy (web server used as reverse proxy) - 2.6.6
 
 ## Installation steps
 
@@ -173,30 +171,6 @@ docker compose --env-file opensilex.env run --rm start_opensilex_stack_mongogui
 ```
 
 ![mongo-express-image](./images/mongo-express.png)
-
-### (Optional) Add a reverse proxy
-
-This will start the haproxy as reverse proxy for opensilex instance on port that you want to expose.
-
-It can be configure in the `./opensilex.env` with the variable `HAPROXY_EXPOSED_PORT` (Default to port 80 equivalent to <a href="http://localhost" target="_blank">http://localhost</a>.
-
-```bash
-docker compose --env-file opensilex.env run --rm start_opensilex_stack_proxy
-```
-
-If you have installed [optional reverse proxy](#optional-add-a-reverse-proxy)
-
-By default, different available services can be found at these adresses. The port might be change depending on your `./opensilex.env` configuration file.
-
-- Web :
-  - OpenSILEX web application : <a href="http://localhost/opensilex/app" target="_blank">http://localhost/opensilex/app</a>
-  - OpenSILEX API : <a href="http://localhost/opensilex/api-docs" target="_blank">http://localhost/opensilex/api-docs</a>
-  - RDF4J Workbench : <a href="http://localhost/rdf4j-workbench" target="_blank">http://localhost/rdf4j-workbench</a>
-
-Mongo express will be automatically installed [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
-
-- MongoDB express : <a href="http://localhost/mongoexpress" target="_blank">http://localhost/mongoadmin</a>
-
 ### Migration steps from previous versions
 
 First, go to the previous directory and get the actual version of the repository.
@@ -216,7 +190,6 @@ And execute the following command to remove previous docker stack :
 docker stop mongodb && docker rm mongodb
 docker stop opensilexapp && docker rm opensilexapp
 docker stop rdf4jdb && docker rm rdf4jdb
-docker stop haproxy && docker rm haproxy
 docker stop mongoexpressgui && docker rm mongoexpressgui
 ```
 
@@ -230,7 +203,6 @@ And execute the following command to remove previous docker stack :
 docker stop mongodb && docker rm mongodb
 docker stop opensilexapp && docker rm opensilexapp
 docker stop rdf4jdb && docker rm rdf4jdb
-docker stop haproxy && docker rm haproxy
 docker stop mongoexpressgui && docker rm mongoexpressgui
 ```
 
@@ -275,14 +247,12 @@ OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY=./opensilex_data
 #OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY=/home/charlero/GIT/GITLAB/opensilex-docker-compose/dump_scripts/demo_dump/publictest
 
 # PORTS
-HAPROXY_EXPOSED_PORT=80
 OPENSILEX_EXPOSED_PORT=8081
 RDF4J_EXPOSED_PORT=28887
 MONGO_EXPOSED_PORT=28888
 MONGO_EXPRESS_EXPOSED_PORT=28889
 
 # VERSIONS
-HAPROXY_IMAGE_VERSION=2.6.6
 OPENSILEX_RELEASE_TAG=1.0.0-rc+6.5
 RDF4J_IMAGE_VERSION=3.7.7
 MONGO_IMAGE_VERSION=5.0.14
