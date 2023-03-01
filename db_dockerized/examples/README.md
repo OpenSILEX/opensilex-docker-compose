@@ -1,5 +1,43 @@
 # VITIS EXPLORER
 
+## Pre-requesite softwares
+
+**Tested Operating system :**
+
+[![Ubuntu22.04](https://img.shields.io/badge/Ubuntu-22.04-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://releases.ubuntu.com/22.04/)
+
+[![Debian11](https://img.shields.io/badge/Debian-11-E95420?style=for-the-badge&logo=debian&logoColor=white)](https://www.debian.org/releases/bullseye/releasenotes)
+
+_Not working operating system :_
+
+![Windows](https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white)
+
+First you need to have these software installed, you can check if they are [installed](#check-your-installed-softwares) :
+
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- [docker](https://docs.docker.com/install/)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+
+## Check your installed softwares
+
+Following commands should work from everywhere in your system without errors:
+
+`git --version`
+
+`docker --version`
+
+`docker compose version`
+
+## Stack software name with associated versions
+
+- Mandatory softwares :
+
+  - RDF4J - 3.7.7
+  - MongoDB - 5.0.14
+  - OpenSILEX - 1.0.0-rc+6.5
+
+- Other managements softwares :
+  - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
 ## Run minimal opensilex docker stack compose
 
 - With a bash terminal go to the project directory (where this readme is located).
