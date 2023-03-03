@@ -6,7 +6,6 @@ db_dockerized/docker_logs/debug.log
 db_dockerized/config/opensilex.yml
 db_dockerized/debug.log
 db_dockerized/dump_scripts/**
-db_dockerized/config/opensilex-template.yml
 db_dockerized/modules/**
 
 
@@ -18,7 +17,6 @@ full-dockerized/docker_logs/debug.log
 full-dockerized/config/opensilex.yml
 full-dockerized/debug.log
 full-dockerized/dump_scripts/**
-full-dockerized/config/opensilex-template.yml
 full-dockerized/modules/**
 
 
