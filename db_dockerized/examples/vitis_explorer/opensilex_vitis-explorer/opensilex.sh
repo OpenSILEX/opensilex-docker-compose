@@ -2,7 +2,7 @@
 
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
-CONFIG_FILE="$SCRIPT_DIR/../../../config/opensilex.yml"
+CONFIG_FILE="$SCRIPT_DIR/../config/opensilex.yml"
 
 cd $SCRIPT_DIR
 

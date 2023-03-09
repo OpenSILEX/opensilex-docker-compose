@@ -1,0 +1,68 @@
+ontologies:
+    baseURI: http://vitis-explorer.inrae.fr/
+    baseURIAlias: vitis-explorer
+    sparql:
+        config:
+            serverURI: http://localhost:28887/rdf4j-server/
+            repository: opensilex-docker-db
+# Configuration for module: FileStorageModule (FileStorageConfig)
+file-system:
+    # File storage service (FileStorageService)
+    fs:
+        config:
+            # Default file system storage (String)
+            defaultFS: gridfs
+            # Map of file storage connection definition by identifier (Map<String,FileStorageConnection>)
+            connections:
+                gridfs:
+                    # Service implementation class for: gridfs (FileStorageConnection)
+                    implementation: org.opensilex.fs.gridfs.GridFSConnection
+                    config:
+                        # MongoDB main host (String)
+                        host: localhost
+                        # MongoDB main host port (int)
+                        port: 28888
+                        database: opensilex-docker-db
+                local:
+                    # Service implementation class for: local (FileStorageConnection)
+                    implementation: org.opensilex.fs.local.LocalFileSystemConnection
+                    config:
+                        # Base path for file storage (String)
+                        basePath: /home/opensilex/opensilex-data
+            customPath:
+                datafile/: gridfs
+                documents/: gridfs
+big-data:
+    mongodb:
+        config:
+            host: localhost
+            port: 28888
+            database: opensilex-docker-db
+server:
+    pathPrefix: /vitis-explorer
+    publicURI: "https://observatoire.plan-deperissement-vigne.fr"
+
+front:
+    versionLabel: test-version
+    theme: opensilex-front#phis
+    homeComponent: opensilex-DefaultHomeComponent
+    loginComponent: opensilex-DefaultLoginComponent
+    footerComponent: opensilex-DefaultFooterComponent
+    menuComponent: opensilex-DefaultMenuComponent
+    headerComponent: opensilex-DefaultHeaderComponent
+system:
+  ignoredModules:
+    opensilex.service.PhisWsModule: opensilex-phis.jar
+data-analysis:
+  scientificAppServer:
+    config:
+      enable: true
+      host: localhost
+      port: 8004
+      #landingPage: /proxy
+      # publicServerURL: https://vitioeno.mistea.inrae.fr/proxy
+      # serverServletContextPath: /proxy
+      # Docker container prefix name (multiple shinyproxy on same server) (String)
+      shinyProxyContainerPrefix: vitioeno
+      # Docker network name (String)
+      shinyProxyNetwork: vitioeno-shiny-proxy-network

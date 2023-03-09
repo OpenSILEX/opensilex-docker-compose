@@ -38,15 +38,17 @@ Following commands should work from everywhere in your system without errors:
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
+
+
 ## Run minimal opensilex docker stack compose
 
 - With a bash terminal go to the project directory (where this readme is located).
- 
+
 - You must run docker compose up command to start your installation:
 
 ```bash
-docker compose --env-file env_examples/vitisexplorer.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
-docker compose --env-file env_examples/vitisexplorer.env run --rm start_opensilex_stack
+docker compose --env-file vitisexplorer.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
+docker compose --env-file vitisexplorer.env run --rm start_opensilex_stack
 ```
 
 - Expected Output:
@@ -67,31 +69,40 @@ sleeping
 
 This previous action will block your terminal. When the terminal will be accessible again the opensilex app process will be started and ready.
 
-## First install 
-```bash
-sh opensilex_examples/vitis-explorer/opensilex.sh system install
+## First install
 
+```bash
+sh opensilex_vitis-explorer/opensilex.sh system install
 ```
 
 ## Run on port 8081 on localhost
 
 ```bash
-sh opensilex_examples/vitis-explorer/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 -d
+sh opensilex_vitis-explorer/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 -d
 ```
+
+The application will be deployed on [localhost:8081](http://localhost:8081/vitis-explorer) due to vitis explorer.env file
 
 ## Run in debug
 
 ```bash
-sh opensilex_examples/vitis-explorer/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 --DEBUG
+sh opensilex_vitis-explorer/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 --DEBUG
 ```
+
 ## Stop
 
 ```bash
-sh opensilex_examples/vitis-explorer/opensilex.sh server stop   --adminPort=4081 --DEBUG
+sh opensilex_vitis-explorer/opensilex.sh server stop   --adminPort=4081 --DEBUG
 ```
 
-## Import files 
+## Import databases
 
 ```bash
-bash ../dump_scripts/import_data.sh ../examples/dumps/vitis-explorer-dev/2023-01-31
+ bash ../../dump_scripts/import_data.sh dumps/vitis-explorer-dev/2023-01-31/ vitisexplorer.env
+```
+
+## Export databases
+
+```bash
+ bash ../../dump_scripts/export_data.sh dumps/vitis-explorer-dev/2023-01-31/ vitisexplorer.env
 ```

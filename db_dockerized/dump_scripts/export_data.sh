@@ -30,15 +30,22 @@ else
   exit 0
 fi
 
+if [ -n "$2" ]; then
+  echo "ENV_FILE set : $2"
+else
+  echo "Second parameter ENV_FILE not supplied. Ex : /home/{user}/dump_directory. DIRECTORY PATH TO RESTORE DUMP DATA - ONLY THE FIRST DIRECTORY OF EACH SUBDIRECTORY WILL BE USED . Ex : opensilex-docker-db-2022-11-21"
+  exit 1
+fi
+
 echo "Preparing opensilex-docker-mongodb data"
-docker exec -i --env-file $SCRIPT_DIR/../opensilex.env opensilex-docker-mongodb bash -c 'echo $CONTAINER_DUMP_DIR && rm -rf $CONTAINER_DUMP_DIR && mkdir -p $CONTAINER_DUMP_DIR && /usr/bin/mongodump --numParallelCollections=1 --db=${REPOSITORIES_NAME} --out=$CONTAINER_DUMP_DIR && mv ${CONTAINER_DUMP_DIR}/${REPOSITORIES_NAME} ${CONTAINER_DUMP_DIR}/$REPOSITORIES_NAME-`date +"%Y-%m-%d"`'
+docker exec -i --env-file $2 opensilex-docker-mongodb bash -c 'echo $CONTAINER_DUMP_DIR && rm -rf $CONTAINER_DUMP_DIR && mkdir -p $CONTAINER_DUMP_DIR && /usr/bin/mongodump --numParallelCollections=1 --db=${REPOSITORIES_NAME} --out=$CONTAINER_DUMP_DIR && mv ${CONTAINER_DUMP_DIR}/${REPOSITORIES_NAME} ${CONTAINER_DUMP_DIR}/$REPOSITORIES_NAME-`date +"%Y-%m-%d"`'
 echo "Exporting opensilex-docker-mongodb data"
 rm -rf $1/mongo
 docker cp opensilex-docker-mongodb:$CONTAINER_DUMP_DIR $1/mongodb
 echo "Done opensilex-docker-mongodb"
 
 echo "Preparing rdf4j data"
-docker exec -i --env-file $SCRIPT_DIR/../opensilex.env opensilex-docker-rdf4j bash -c 'rm -rf $CONTAINER_DUMP_DIR && mkdir -p $CONTAINER_DUMP_DIR && wget http://localhost:8080/rdf4j-workbench/repositories/${REPOSITORIES_NAME}/export?Accept=application%2Ftrig -O $CONTAINER_DUMP_DIR/$REPOSITORIES_NAME-`date +"%Y-%m-%d"`'
+docker exec -i --env-file $2 opensilex-docker-rdf4j bash -c 'rm -rf $CONTAINER_DUMP_DIR && mkdir -p $CONTAINER_DUMP_DIR && wget http://localhost:8080/rdf4j-workbench/repositories/${REPOSITORIES_NAME}/export?Accept=application%2Ftrig -O $CONTAINER_DUMP_DIR/$REPOSITORIES_NAME-`date +"%Y-%m-%d"`'
 echo "Exporting rdf4j data"
 rm -rf $1/rdf4j
 docker cp opensilex-docker-rdf4j:$CONTAINER_DUMP_DIR $1/rdf4j
