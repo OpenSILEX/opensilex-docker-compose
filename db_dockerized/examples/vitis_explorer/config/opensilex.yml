@@ -44,12 +44,12 @@ server:
 
 front:
     versionLabel: test-version
-    theme: opensilex-front#phis
-    homeComponent: opensilex-DefaultHomeComponent
-    loginComponent: opensilex-DefaultLoginComponent
-    footerComponent: opensilex-DefaultFooterComponent
-    menuComponent: opensilex-DefaultMenuComponent
-    headerComponent: opensilex-DefaultHeaderComponent
+    theme: inrae-sixtine-vigne#vigne
+    homeComponent: inrae-sixtine-vigne-SixtineHomeComponent
+    loginComponent: inrae-sixtine-vigne-SixtineLoginComponent
+    footerComponent: inrae-sixtine-vigne-SixtineFooterComponent
+    menuComponent: inrae-sixtine-vigne-SixtineMenuComponent
+    headerComponent: inrae-sixtine-vigne-SixtineHeaderComponent
 system:
   ignoredModules:
     opensilex.service.PhisWsModule: opensilex-phis.jar

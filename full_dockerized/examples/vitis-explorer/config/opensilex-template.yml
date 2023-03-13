@@ -1,0 +1,53 @@
+ontologies:
+    baseURI: $BASEURI
+    baseURIAlias: $BASEURIALIAS
+    sparql:
+        config:
+            serverURI: http://$RDF4J_DOCKER_NAME:8080/rdf4j-server/
+            repository: $REPOSITORIES_NAME
+# Configuration for module: FileStorageModule (FileStorageConfig)
+file-system:
+    # File storage service (FileStorageService)
+    fs:
+        config:
+            # Default file system storage (String)
+            defaultFS: $OPENSILEX_FILESYSTEM
+            # Map of file storage connection definition by identifier (Map<String,FileStorageConnection>)
+            connections:
+                gridfs:
+                    # Service implementation class for: gridfs (FileStorageConnection)
+                    implementation: org.opensilex.fs.gridfs.GridFSConnection
+                    config:
+                        # MongoDB main host (String)
+                        host: $MONGO_DOCKER_NAME
+                        # MongoDB main host port (int)
+                        port: 27017
+                        database: $REPOSITORIES_NAME
+                local:
+                    # Service implementation class for: local (FileStorageConnection)
+                    implementation: org.opensilex.fs.local.LocalFileSystemConnection
+                    config:
+                        # Base path for file storage (String)
+                        basePath: $INTERNAL_DATA_DIRECTORY
+            customPath:
+                datafile/: $DATAFILE_OPENSILEX_FILESYSTEM
+                documents/: $DOCUMENTS_OPENSILEX_FILESYSTEM
+big-data:
+    mongodb:
+        config:
+            host: $MONGO_DOCKER_NAME
+            port: 27017
+            database: $REPOSITORIES_NAME
+server:
+    pathPrefix: /$OPENSILEX_PATH_PREFIX
+    publicURI: "http://localhost:$HAPROXY_EXPOSED_PORT"
+
+front:
+    versionLabel: $VERSION_LABEL
+    theme: $OPENSILEX_CONFIG_THEME
+    homeComponent: $OPENSILEX_CONFIG_HOMECOMPONENT
+    loginComponent: $OPENSILEX_CONFIG_LOGINCOMPONENT
+    footerComponent: $OPENSILEX_CONFIG_FOOTERCOMPONENT
+    menuComponent: $OPENSILEX_CONFIG_MENUCOMPONENT
+    headerComponent: $OPENSILEX_CONFIG_HEADERCOMPONENT
+ 
