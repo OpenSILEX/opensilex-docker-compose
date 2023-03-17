@@ -77,11 +77,10 @@ This previous action will block your terminal. When the terminal will be accessi
 ## Import databases
 
 ```bash
- bash ../../dump_scripts/import_data.sh dumps/vitis-explorer-dev/2023-01-31/ vitisexplorer.env
+ bash ../../dump_scripts/import_data.sh dumps/vitis-explorer-dev/2023-01-31/
 ```
 
 ## Export databases
 
 ```bash
- bash ../../dump_scripts/export_data.sh dumps/vitis-explorer-dev/2023-01-31/ vitisexplorer.env
-```
+ bash ../../dump_scripts/export_data.sh dumps/vitis-explorer-dev/2023-01-31/
