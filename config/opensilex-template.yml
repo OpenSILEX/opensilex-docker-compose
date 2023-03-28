@@ -40,5 +40,5 @@ big-data:
             database: $REPOSITORIES_NAME
 server:
     pathPrefix: /$OPENSILEX_PATH_PREFIX
-    publicURI: "http://localhost:$HAPROXY_EXPOSED_PORT"
+    publicURI: "$OPENSILEX_PUBLIC_URL"
 

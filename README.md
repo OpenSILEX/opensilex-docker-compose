@@ -70,7 +70,7 @@ Following commands should work from everywhere in your system without errors:
 
   - RDF4J - 3.7.7
   - MongoDB - 5.0.14
-  - OpenSILEX - 1.0.0-rc+6.5
+  - OpenSILEX - 1.0.0-rc+7
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
@@ -78,14 +78,14 @@ Following commands should work from everywhere in your system without errors:
 
 ## Installation steps
 
-This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B6.5" target="_blank">1.0.0-rc+6.5 OpenSILEX version</a>
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B6.5" target="_blank">1.0.0-rc+7 OpenSILEX version</a>
 
 ### Fresh new install (compose v2)
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.0.0-rc+6.5 https://github.com/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.0.0-rc+7 https://github.com/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
@@ -193,7 +193,7 @@ First, go to the previous directory and get the actual version of the repository
 
 ```bash
 # Go inside opensilex-docker-compose directory
-git checkout 1.0.0-rc+6.5
+git checkout 1.0.0-rc+7
 ```
 
 #### From previous version 1.0.0-rc+5.2 (compose v2)
@@ -244,20 +244,20 @@ Configure `opensilex.env` file to configure opensilex sparql config, application
 # CAN BE MODIFIED BY USER
 
 ## START COMMAND can had debug option by uncommenting the following statment
-OPENSILEX_START_CMD_DEBUG=--DEBUG
+# OPENSILEX_START_CMD_DEBUG=--DEBUG
 
 # SPARQL
 BASEURI=http://opensilex.test/
-BASEURIALIAS=opensilex-test
+BASEURIALIAS=opensilex-sandbox
 # customize path prefix Ex : localhost:8081/opensilex or localhost:8081/phenotyping_si
-OPENSILEX_PATH_PREFIX=opensilex
+OPENSILEX_PATH_PREFIX=sandbox
 VERSION_LABEL=test-version
 
 # FILE SYSTEM
 # Default value is "gridfs" - Only "gridfs" or "local" are supported
 OPENSILEX_FILESYSTEM=gridfs
 DATAFILE_OPENSILEX_FILESYSTEM=gridfs
-DOCUMENTS_OPENSILEX_FILESYSTEM=gridfs
+DOCUMENTS_OPENSILEX_FILESYSTEM=gridfs   
 # If "local" file system is choosed OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY is mandatory if you choose gridfs local will be not used
 # File system configuration can be customized to opensilex-template.yml
 OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY=./opensilex_data
@@ -265,22 +265,25 @@ OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY=./opensilex_data
 #OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY=/home/charlero/GIT/GITLAB/opensilex-docker-compose/dump_scripts/demo_dump/publictest
 
 # PORTS
-HAPROXY_EXPOSED_PORT=80
-OPENSILEX_EXPOSED_PORT=8081
+HAPROXY_EXPOSED_PORT=8087
+OPENSILEX_EXPOSED_PORT=28081
 RDF4J_EXPOSED_PORT=28887
 MONGO_EXPOSED_PORT=28888
 MONGO_EXPRESS_EXPOSED_PORT=28889
 
+## START COMMAND can had debug option : --DEBUG
+OPENSILEX_START_CMD=./bin/opensilex.sh server start --host=localhost --port=8081 --adminPort=4081 --CONFIG_FILE=/home/opensilex/config/opensilex.yml
+
 # VERSIONS
 HAPROXY_IMAGE_VERSION=2.6.6
-OPENSILEX_RELEASE_TAG=1.0.0-rc+6.5
+OPENSILEX_RELEASE_TAG=1.0.0-rc+7
 RDF4J_IMAGE_VERSION=3.7.7
 MONGO_IMAGE_VERSION=5.0.14
 MONGO_EXPRESS_IMAGE_VERSION=1.0.0-alpha.4
-
-# THEME can be changed if a module that contains a theme has been loaded
-OPENSILEX_CONFIG_THEME=opensilex-front#phis
-OPENSILEX_CONFIG_HOMECOMPONENT=opensilex-DefaultHomeComponent
+ 
+# # THEME
+OPENSILEX_CONFIG_THEME=opensilex-front#opensilex
+OPENSILEX_CONFIG_HOMECOMPONENT=opensilex-HomeView
 OPENSILEX_CONFIG_LOGINCOMPONENT=opensilex-DefaultLoginComponent
 OPENSILEX_CONFIG_FOOTERCOMPONENT=opensilex-DefaultFooterComponent
 OPENSILEX_CONFIG_MENUCOMPONENT=opensilex-DefaultMenuComponent
@@ -302,11 +305,11 @@ OPENSILEX_CONFIG_HEADERCOMPONENT=opensilex-DefaultHeaderComponent
 Module (opensilex jar) can be added to *"modules"* directory (opensilex-docker-compose/modules) in order to be deployed in opensilex stack.
 
 There is a module example directory working with *"inrae-sixtine-vigne"* module (inrae-sixtine-vigne-1.1.0.jar) that allow you to change ontology and instance front style.
-It is localised in opensilex-docker-compose/modules_examples/1.0.0-rc+6.5/inrae-sixtine-vigne-1.1.0.jar.
+It is localised in opensilex-docker-compose/modules_examples/1.0.0-rc+7/inrae-sixtine-vigne-1.1.0.jar.
 
 **How to do it ?**
 
-- To activate your module you must copy a module example that have been compiled for a specified opensilex version in *modules* directory. (Ex : the module located in 1.0.0-rc+6.5/inrae-sixtine-vigne-1.1.0.jar has been compiled for opensilex version 1.0.0-rc+6.5). It's all.
+- To activate your module you must copy a module example that have been compiled for a specified opensilex version in *modules* directory. (Ex : the module located in 1.0.0-rc+7/inrae-sixtine-vigne-1.1.0.jar has been compiled for opensilex version 1.0.0-rc+7). It's all.
 
 ### Configuration for inrae sixtine vigne
 
