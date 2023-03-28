@@ -78,7 +78,10 @@ services:
     command: >
       bash -c "
         rm -f /home/opensilex/config/opensilex.yml &&
-        envsubst < /home/opensilex/config/opensilex-template.yml > /home/opensilex/config/opensilex.yml &&
+        rm -f /home/opensilex/config/opensilex-template-custom.yml &&
+        cat  /home/opensilex/config/opensilex-template.yml >> /home/opensilex/config/opensilex-template-custom.yml &&
+        cat  /home/opensilex/config/opensilex-custom-config.yml >> /home/opensilex/config/opensilex-template-custom.yml &&
+        envsubst < /home/opensilex/config/opensilex-template-custom.yml > /home/opensilex/config/opensilex.yml &&
         echo 'Running $OPENSILEX_START_CMD $OPENSILEX_START_CMD_DEBUG' &&
         ([ ! -f /home/opensilex/data/first_install ] && touch /home/opensilex/data/first_install && ./bin/opensilex.sh system install --CONFIG_FILE=/home/opensilex/config/opensilex.yml --DEBUG) 
         $OPENSILEX_START_CMD $OPENSILEX_START_CMD_DEBUG

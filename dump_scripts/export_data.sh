@@ -33,7 +33,7 @@ fi
 echo "Preparing opensilex-docker-mongodb data"
 docker exec -i --env-file $SCRIPT_DIR/../opensilex.env opensilex-docker-mongodb bash -c 'echo $CONTAINER_DUMP_DIR && rm -rf $CONTAINER_DUMP_DIR && mkdir -p $CONTAINER_DUMP_DIR && /usr/bin/mongodump --numParallelCollections=1 --db=${REPOSITORIES_NAME} --out=$CONTAINER_DUMP_DIR && mv ${CONTAINER_DUMP_DIR}/${REPOSITORIES_NAME} ${CONTAINER_DUMP_DIR}/$REPOSITORIES_NAME-`date +"%Y-%m-%d"`'
 echo "Exporting opensilex-docker-mongodb data"
-rm -rf $1/mongo
+rm -rf $1/mongodb
 docker cp opensilex-docker-mongodb:$CONTAINER_DUMP_DIR $1/mongodb
 echo "Done opensilex-docker-mongodb"
 
