@@ -6,10 +6,7 @@ front:
   footerComponent: $OPENSILEX_CONFIG_FOOTERCOMPONENT
   menuComponent: $OPENSILEX_CONFIG_MENUCOMPONENT
   headerComponent: $OPENSILEX_CONFIG_HEADERCOMPONENT 
-  dashboard:
-    graph1:
-      # Variable URI to use for the visualization
-      variable: "dev:id/variable/air_temperature_thermometer_degreecelsius"
+
 
 # ------------------------------------------------------------------------------
 # Configuration for module: CoreModule (CoreConfig)
@@ -34,26 +31,3 @@ core:
       delayBetweenMetrics: 2
       # Default metrics units : DAYS, HOURS, MINUTES, SECONDS are authorized (String)
       metricsTimeUnit: HOURS
-  sharedResourceInstances:
-    - uri: http://138.102.159.36:8083/rest
-      label:
-          fr: "PHENOME"
-          en: "PHENOME"
-      accountName: admin@opensilex.org
-      accountPassword: admin
-    - uri: http://138.102.159.36:8082/rest
-      label:
-          fr: "EMPHASIS"
-          en: "EMPHASIS"
-      accountName: admin@opensilex.org
-      accountPassword: admin
-    - uri: https://vitioeno.mistea.inrae.fr/resource/rest
-      label:
-          fr: "VitiOeno"
-          en: "VitiOeno"
-      accountName: admin@opensilex.org
-      accountPassword: admin
-
-system:
-  ignoredModules:
-    opensilex.service.PhisWsModule: opensilex-phis.jar
