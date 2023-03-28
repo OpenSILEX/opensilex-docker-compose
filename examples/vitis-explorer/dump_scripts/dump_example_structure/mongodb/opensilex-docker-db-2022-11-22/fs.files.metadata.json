@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"},{"v":{"$numberInt":"2"},"unique":true,"key":{"filename":{"$numberInt":"1"}},"name":"filename_1"},{"v":{"$numberInt":"2"},"unique":true,"key":{"metadata.path":{"$numberInt":"1"}},"name":"metadata.path_1"}],"uuid":"afdbd4412cd44e43a95179a10ab01164","collectionName":"fs.files","type":"collection"}

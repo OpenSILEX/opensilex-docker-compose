@@ -1,1 +1,0 @@
-{"options":{},"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_","ns":"vitis-explorer-dev.deviceAttribute"},{"v":{"$numberInt":"2"},"unique":true,"key":{"uri":{"$numberInt":"1"}},"name":"uri_1","ns":"vitis-explorer-dev.deviceAttribute"}],"uuid":"232cd65e52364001a3a96cc2a581595a"}
