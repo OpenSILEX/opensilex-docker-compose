@@ -1,11 +1,5 @@
-logs/nginx/log/access.log
-logs/nginx/log/error.log
-logs/opensilex/opensilex.log
-logs/opensilex/**
-docker_logs/debug.log
-.gitignore
+
+config/opensilex-template-custom.yml
 config/opensilex.yml
 debug.log
-dump_scripts/**
-config/opensilex-template.yml
-opensilex.env
+config/opensilex.yml
