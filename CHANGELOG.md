@@ -5,11 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.0.0-rc+6.5] - 2023-02-16
+## [1.0.0-rc+7] - 2023-03-28
 
 ### Changed
 
-- Update opensilex version to 1.0.0-rc+6.5
+- Add parameter for publicURL
+- Update opensilex version to 1.0.0-rc+7
 - Add first version of extra module management
 - Add theme and custom configuration
 
