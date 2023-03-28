@@ -1,21 +1,4 @@
-db_dockerized/opensilex/opensilex.jar
-db_dockerized/opensilex/modules/**
-db_dockerized/logs/opensilex/opensilex.log
-db_dockerized/logs/opensilex/**
-db_dockerized/docker_logs/debug.log
-db_dockerized/config/opensilex.yml
-db_dockerized/debug.log
-db_dockerized/modules/**
 
-
-full-dockerized/logs/nginx/log/access.log
-full-dockerized/logs/nginx/log/error.log
-full-dockerized/logs/opensilex/opensilex.log
-full-dockerized/logs/opensilex/**
-full-dockerized/docker_logs/debug.log
-full-dockerized/config/opensilex.yml
-full-dockerized/debug.log
-full-dockerized/modules/**
-full_dockerized/dump_scripts/demo_dump/**
-db_dockerized/dump_scripts/demo_dump/**
-db_dockerized/examples/vitis_explorer/opensilex_vitis-explorer/logs/**
+config/opensilex-template-custom.yml
+config/opensilex.yml
+debug.log

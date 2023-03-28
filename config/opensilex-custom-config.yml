@@ -1,3 +1,58 @@
+front:
+  versionLabel: $VERSION_LABEL
+  theme: $OPENSILEX_CONFIG_THEME
+  homeComponent: $OPENSILEX_CONFIG_HOMECOMPONENT
+  loginComponent: $OPENSILEX_CONFIG_LOGINCOMPONENT
+  footerComponent: $OPENSILEX_CONFIG_FOOTERCOMPONENT
+  menuComponent: $OPENSILEX_CONFIG_MENUCOMPONENT
+  headerComponent: $OPENSILEX_CONFIG_HEADERCOMPONENT 
+  dashboard:
+    graph1:
+      # Variable URI to use for the visualization
+      variable: "dev:id/variable/air_temperature_thermometer_degreecelsius"
+
+# ------------------------------------------------------------------------------
+# Configuration for module: CoreModule (CoreConfig)
+core:
+  # Metrics options (MetricsConfig)
+  metrics:
+    # Activate access metrics (boolean)
+    enableMetrics: true
+    # Metrics configs about system (SystemMetricsConfig)
+    system:
+      # First metrics for any time depending on is time unit (int)
+      timeBeforeFirstMetric: 1
+      # Delay between whole system metrics (combined with corresponding TimeUnit) (int)
+      delayBetweenMetrics: 2
+      # Default metrics units : DAYS, HOURS, MINUTES, SECONDS are authorized (String)
+      metricsTimeUnit: HOURS
+    # Metrics configs about experiments (ExperimentsMetricsConfig)
+    experiments:
+      # First metrics for any time depending on is time unit (int)
+      timeBeforeFirstMetric: 1
+      # Delay between whole system metrics (combined with corresponding TimeUnit) (int)
+      delayBetweenMetrics: 2
+      # Default metrics units : DAYS, HOURS, MINUTES, SECONDS are authorized (String)
+      metricsTimeUnit: HOURS
+  sharedResourceInstances:
+    - uri: http://138.102.159.36:8083/rest
+      label:
+          fr: "PHENOME"
+          en: "PHENOME"
+      accountName: admin@opensilex.org
+      accountPassword: admin
+    - uri: http://138.102.159.36:8082/rest
+      label:
+          fr: "EMPHASIS"
+          en: "EMPHASIS"
+      accountName: admin@opensilex.org
+      accountPassword: admin
+    - uri: https://vitioeno.mistea.inrae.fr/resource/rest
+      label:
+          fr: "VitiOeno"
+          en: "VitiOeno"
+      accountName: admin@opensilex.org
+      accountPassword: admin
 
 system:
   ignoredModules:

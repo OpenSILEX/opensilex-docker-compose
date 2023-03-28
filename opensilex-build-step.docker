@@ -21,14 +21,13 @@ RUN groupadd --gid $GID $USERNAME \
 # ******************************************************** 
 
 ENV RELEASE https://github.com/OpenSILEX/opensilex/releases/download/$OPENSILEX_RELEASE_TAG/opensilex-release-$OPENSILEX_RELEASE_TAG.zip
-RUN apt-get -y update && apt-get install -y wget zip gettext-base libc6 libc-bin
+RUN apt-get -y update && apt-get install -y wget zip gettext-base libc6 libc-bin rsync
 RUN mkdir -p /home/$USERNAME
 RUN mkdir -p /home/$USERNAME/$INTERNAL_DATA_DIRECTORY
 RUN mkdir -p /home/$USERNAME/config
 RUN mkdir -p /home/$USERNAME/data
 RUN mkdir -p /home/$USERNAME/logs
 RUN mkdir -p /home/$USERNAME/bin/modules
-COPY ./modules/ /home/$USERNAME/bin/modules_to_import/
 
 RUN chown $USERNAME:$USERNAME -R /home/$USERNAME 
 USER $USERNAME
@@ -39,5 +38,4 @@ RUN ls
 COPY ./bin/opensilex.sh /home/$USERNAME/bin/
 COPY ./bin/logback.xml /home/$USERNAME/bin/
 COPY ./config/opensilex-template.yml /home/$USERNAME/config/
-RUN cp /home/$USERNAME/bin/modules_to_import/* /home/$USERNAME/bin/modules
 WORKDIR /home/$USERNAME

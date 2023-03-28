@@ -42,12 +42,3 @@ server:
     pathPrefix: /$OPENSILEX_PATH_PREFIX
     publicURI: "http://localhost:$HAPROXY_EXPOSED_PORT"
 
-front:
-    versionLabel: $VERSION_LABEL
-    theme: $OPENSILEX_CONFIG_THEME
-    homeComponent: $OPENSILEX_CONFIG_HOMECOMPONENT
-    loginComponent: $OPENSILEX_CONFIG_LOGINCOMPONENT
-    footerComponent: $OPENSILEX_CONFIG_FOOTERCOMPONENT
-    menuComponent: $OPENSILEX_CONFIG_MENUCOMPONENT
-    headerComponent: $OPENSILEX_CONFIG_HEADERCOMPONENT
- 
