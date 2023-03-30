@@ -15,7 +15,7 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
     - [Fresh new install (compose v2)](#fresh-new-install-compose-v2)
   - [Run minimal opensilex docker stack compose](#run-minimal-opensilex-docker-stack-compose)
     - [(First install only) Create an administrator user](#first-install-only-create-an-administrator-user)
-  - [Stop docker stack](#stop-docker-stack)
+  - [Stop opensilex docker](#stop-opensilex-docker)
   - [Other tools or customizations](#other-tools-or-customizations)
     - [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
     - [(Optional) Add a reverse proxy](#optional-add-a-reverse-proxy)
@@ -23,7 +23,8 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
       - [From previous version 1.0.0-rc+5.2 (compose v2)](#from-previous-version-100-rc52-compose-v2)
       - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
       - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
-  - [Customize docker configuration](#customize-docker-configuration)
+  - [Configure docker configuration](#configure-docker-configuration)
+  - [Customize opensilex configuration](#customize-opensilex-configuration)
   - [Modular extensions](#modular-extensions)
     - [Explanation of modules directory](#explanation-of-modules-directory)
     - [Configuration for inrae sixtine vigne](#configuration-for-inrae-sixtine-vigne)
@@ -32,6 +33,7 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
     - [Import (Experimental)](#import-experimental)
   - [Manage docker](#manage-docker)
   - [Debug installation](#debug-installation)
+  - [Stop docker stack](#stop-docker-stack)
   - [Danger Zone](#danger-zone)
     - [Stop docker stack and erase all data (Be sure to delete all data)](#stop-docker-stack-and-erase-all-data-be-sure-to-delete-all-data)
   - [Acknowledgments](#acknowledgments)
@@ -144,12 +146,12 @@ Expected configuration :
 
 ![rdf4j_first_connection](./images/rdf4j_first_connection.png)
 
-## Stop docker stack
+## Stop opensilex docker
 
 This command will stop the stack.
 
 ```bash
-docker compose --env-file opensilex.env stop
+docker stop opensilex-docker-opensilexapp
 ```
 
 ## Other tools or customizations
@@ -236,7 +238,7 @@ docker stop opensilex && docker rm opensilex
 docker stop rdf4j && docker rm rdf4j
 ```
 
-## Customize docker configuration
+## Configure docker configuration
 
 Configure `opensilex.env` file to configure opensilex sparql config, applications ports, applications volumes
 
@@ -252,6 +254,7 @@ BASEURIALIAS=opensilex-sandbox
 # customize path prefix Ex : localhost:8081/opensilex or localhost:8081/phenotyping_si
 OPENSILEX_PATH_PREFIX=sandbox
 VERSION_LABEL=test-version
+OPENSILEX_PUBLIC_URL=http://localhost:28081/ # public url for web api
 
 # FILE SYSTEM
 # Default value is "gridfs" - Only "gridfs" or "local" are supported
@@ -298,22 +301,55 @@ OPENSILEX_CONFIG_HEADERCOMPONENT=opensilex-DefaultHeaderComponent
 #OPENSILEX_CONFIG_HEADERCOMPONENT=inrae-sixtine-vigne-SixtineHeaderComponent
 ```
 
+## Customize opensilex configuration
+
+Configure `config/opensilex-custom-config.yml` file to activate [custom features](https://github.com/OpenSILEX/opensilex/tree/master/opensilex-doc/src/main/resources/installation/configuration).
+
+Example : Activate and calculated metrics each 2 hours.
+
+```bash
+
+# ------------------------------------------------------------------------------
+# Configuration for module: CoreModule (CoreConfig)
+core:
+  # Metrics options (MetricsConfig)
+  metrics:
+    # Activate access metrics (boolean)
+    enableMetrics: true
+    # Metrics configs about system (SystemMetricsConfig)
+    system:
+      # First metrics for any time depending on is time unit (int)
+      timeBeforeFirstMetric: 1
+      # Delay between whole system metrics (combined with corresponding TimeUnit) (int)
+      delayBetweenMetrics: 2
+      # Default metrics units : DAYS, HOURS, MINUTES, SECONDS are authorized (String)
+      metricsTimeUnit: HOURS
+    # Metrics configs about experiments (ExperimentsMetricsConfig)
+    experiments:
+      # First metrics for any time depending on is time unit (int)
+      timeBeforeFirstMetric: 1
+      # Delay between whole system metrics (combined with corresponding TimeUnit) (int)
+      delayBetweenMetrics: 2
+      # Default metrics units : DAYS, HOURS, MINUTES, SECONDS are authorized (String)
+      metricsTimeUnit: HOURS
+```
+
 ## Modular extensions
 
 ### Explanation of modules directory
 
-Module (opensilex jar) can be added to *"modules"* directory (opensilex-docker-compose/modules) in order to be deployed in opensilex stack.
+Module (opensilex jar) can be added to _"modules"_ directory (opensilex-docker-compose/modules) in order to be deployed in opensilex stack.
 
-There is a module example directory working with *"inrae-sixtine-vigne"* module (inrae-sixtine-vigne-1.1.0.jar) that allow you to change ontology and instance front style.
+There is a module example directory working with _"inrae-sixtine-vigne"_ module (inrae-sixtine-vigne-1.1.0.jar) that allow you to change ontology and instance front style.
 It is localised in opensilex-docker-compose/modules_examples/1.0.0-rc+7/inrae-sixtine-vigne-1.1.0.jar.
 
 **How to do it ?**
 
-- To activate your module you must copy a module example that have been compiled for a specified opensilex version in *modules* directory. (Ex : the module located in 1.0.0-rc+7/inrae-sixtine-vigne-1.1.0.jar has been compiled for opensilex version 1.0.0-rc+7). It's all.
+- To activate your module you must copy a module example that have been compiled for a specified opensilex version in _modules_ directory. (Ex : the module located in 1.0.0-rc+7/inrae-sixtine-vigne-1.1.0.jar has been compiled for opensilex version 1.0.0-rc+7). It's all.
 
 ### Configuration for inrae sixtine vigne
 
-By modifying *opensilex.env* file with this following configuration you will be able to change the theme.
+By modifying _opensilex.env_ file with this following configuration you will be able to change the theme.
 
 ```bash
 # Example of modification for sixtine vigne module
@@ -324,7 +360,6 @@ OPENSILEX_CONFIG_FOOTERCOMPONENT=inrae-sixtine-vigne-SixtineFooterComponent
 OPENSILEX_CONFIG_MENUCOMPONENT=inrae-sixtine-vigne-SixtineMenuComponent
 OPENSILEX_CONFIG_HEADERCOMPONENT=inrae-sixtine-vigne-SixtineHeaderComponent
 ```
- 
 
 ## Manage data
 
@@ -375,13 +410,21 @@ This command will give you stack trace of the docker build.
 docker compose --env-file opensilex.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g) > docker_logs/debug.log
 ```
 
+## Stop docker stack
+
+This command will stop the docker stack.
+
+```bash
+docker compose --env-file opensilex.env down
+```
+
 ## Danger Zone
 
 $\color{red}{The\ following\ commands\ may\ produce\ a\ loss\ of\ data}$
 
 ### Stop docker stack and erase all data (Be sure to delete all data)
 
-This command will give you stack trace of the docker build.
+This command will stop docker stack and erase all data in your databases.
 
 ```bash
 docker compose --env-file opensilex.env down --volumes
