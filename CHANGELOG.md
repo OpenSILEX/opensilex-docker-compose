@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [1.0.0-rc+7] - 2023-03-30
 
 ### Changed
-
+- Add parameter for publicURL
 - Update opensilex version to 1.0.0-rc+7
 - Add first version of extra module management (sixtine, vitioeno)
 - Add theme and custom configuration

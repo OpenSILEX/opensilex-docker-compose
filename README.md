@@ -360,6 +360,7 @@ OPENSILEX_CONFIG_FOOTERCOMPONENT=inrae-sixtine-vigne-SixtineFooterComponent
 OPENSILEX_CONFIG_MENUCOMPONENT=inrae-sixtine-vigne-SixtineMenuComponent
 OPENSILEX_CONFIG_HEADERCOMPONENT=inrae-sixtine-vigne-SixtineHeaderComponent
 ```
+ 
 
 ## Manage data
 
