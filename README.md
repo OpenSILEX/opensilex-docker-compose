@@ -131,12 +131,12 @@ Docker volumes are persistent until you remove them. You only need to create onc
 docker exec -it opensilex-docker-opensilexapp ./bin/opensilex.sh user add --admin --email=admin@opensilex.org --lang=fr --firstName=firstName --lastName=lastName --password=admin
 ```
 
-After opensilex start you will be able to access to the application on port <a href="http://localhost:8081/opensilex/app" target="_blank">localhost:8081/opensilex/app</a>.
+After opensilex start you will be able to access to the application on port <a href="http://localhost:28081/sandbox/app" target="_blank">localhost:28081/sandbox/app</a>.
 
 By default, different available services can be found at these adresses :
 
-- OpenSILEX web application : <a href="http://localhost:8081/opensilex/app" target="_blank">http://localhost:8081/opensilex/app</a>
-- OpenSILEX API : <a href="http://localhost:8081/opensilex/api-docs" target="_blank">http://localhost:8081/opensilex/api-docs</a>
+- OpenSILEX web application : <a href="http://localhost:28081/sandbox/app" target="_blank">http://localhost:28081/sandbox/app</a>
+- OpenSILEX API : <a href="http://localhost:28081/sandbox/api-docs" target="_blank">http://localhost:28081/sandbox/api-docs</a>
 - MongoDB port : <a href="http://localhost:28888" target="_blank">http://localhost:28888</a>
 - RDF4J Workbench : <a href="http://localhost:28887/rdf4j-workbench" target="_blank">http://localhost:28887/rdf4j-workbench</a>
 
@@ -251,7 +251,7 @@ Configure `opensilex.env` file to configure opensilex sparql config, application
 # SPARQL
 BASEURI=http://opensilex.test/
 BASEURIALIAS=opensilex-sandbox
-# customize path prefix Ex : localhost:8081/opensilex or localhost:8081/phenotyping_si
+# customize path prefix Ex : localhost:28081/sandbox or localhost:8081/phenotyping_si
 OPENSILEX_PATH_PREFIX=sandbox
 VERSION_LABEL=test-version
 OPENSILEX_PUBLIC_URL=http://localhost:28081/ # public url for web api
