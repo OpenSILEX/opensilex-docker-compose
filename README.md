@@ -72,7 +72,7 @@ Following commands should work from everywhere in your system without errors:
 
   - RDF4J - 3.7.7
   - MongoDB - 5.0.14
-  - OpenSILEX - 1.0.0-rc+7
+  - OpenSILEX - 1.0.0-rc+7.1
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
@@ -80,14 +80,14 @@ Following commands should work from everywhere in your system without errors:
 
 ## Installation steps
 
-This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B6.5" target="_blank">1.0.0-rc+7 OpenSILEX version</a>
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B7.1" target="_blank">1.0.0-rc+7.1.1 OpenSILEX version</a>
 
 ### Fresh new install (compose v2)
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.0.0-rc+7 https://github.com/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.0.0-rc+7.1.1 https://github.com/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
@@ -195,7 +195,7 @@ First, go to the previous directory and get the actual version of the repository
 
 ```bash
 # Go inside opensilex-docker-compose directory
-git checkout 1.0.0-rc+7
+git checkout 1.0.0-rc+7.1
 ```
 
 #### From previous version 1.0.0-rc+5.2 (compose v2)
@@ -279,7 +279,7 @@ OPENSILEX_START_CMD=./bin/opensilex.sh server start --host=localhost --port=8081
 
 # VERSIONS
 HAPROXY_IMAGE_VERSION=2.6.6
-OPENSILEX_RELEASE_TAG=1.0.0-rc+7
+OPENSILEX_RELEASE_TAG=1.0.0-rc+7.1
 RDF4J_IMAGE_VERSION=3.7.7
 MONGO_IMAGE_VERSION=5.0.14
 MONGO_EXPRESS_IMAGE_VERSION=1.0.0-alpha.4
@@ -341,11 +341,11 @@ core:
 Module (opensilex jar) can be added to _"modules"_ directory (opensilex-docker-compose/modules) in order to be deployed in opensilex stack.
 
 There is a module example directory working with _"inrae-sixtine-vigne"_ module (inrae-sixtine-vigne-1.1.0.jar) that allow you to change ontology and instance front style.
-It is localised in opensilex-docker-compose/modules_examples/1.0.0-rc+7/inrae-sixtine-vigne-1.1.0.jar.
+It is localised in opensilex-docker-compose/modules_examples/1.0.0-rc+6.5/inrae-sixtine-vigne-1.1.0.jar.
 
 **How to do it ?**
 
-- To activate your module you must copy a module example that have been compiled for a specified opensilex version in _modules_ directory. (Ex : the module located in 1.0.0-rc+7/inrae-sixtine-vigne-1.1.0.jar has been compiled for opensilex version 1.0.0-rc+7). It's all.
+- To activate your module you must copy a module example that have been compiled for a specified opensilex version in _modules_ directory. (Ex : the module located in 1.0.0-rc+6.5/inrae-sixtine-vigne-1.1.0.jar has been compiled for opensilex version 1.0.0-rc+6.5). It's all.
 
 ### Configuration for inrae sixtine vigne
 
