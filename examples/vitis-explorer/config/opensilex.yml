@@ -44,12 +44,13 @@ server:
 
 front:
     versionLabel: test-version
-    theme: inrae-sixtine-vigne#vigne
-    homeComponent: inrae-sixtine-vigne-SixtineHomeComponent
-    loginComponent: inrae-sixtine-vigne-SixtineLoginComponent
-    footerComponent: inrae-sixtine-vigne-SixtineFooterComponent
-    menuComponent: inrae-sixtine-vigne-SixtineMenuComponent
-    headerComponent: inrae-sixtine-vigne-SixtineHeaderComponent
+    theme: vitis-explorer#vigne
+    applicationName: V explorer
+    homeComponent: 
+    loginComponent: vitis-explorer-VitisExplorerLoginComponent
+    footerComponent: 
+    menuComponent: 
+    headerComponent: vitis-explorer-VitisExplorerHeaderComponent
  
 system:
   ignoredModules:

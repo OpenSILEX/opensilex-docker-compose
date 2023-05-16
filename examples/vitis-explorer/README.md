@@ -77,13 +77,13 @@ This previous action will block your terminal. When the terminal will be accessi
 ## Import databases
 
 ```bash
- bash ../../dump_scripts/import_data.sh dumps/vitis-explorer-dev/2023-01-31/
+ bash dump_scripts/import_data.sh dump_scripts/vitis-explorer-dev/2023-05-16/
 ```
 
 ## Export databases
 
 ```bash
- bash ../../dump_scripts/export_data.sh dumps/vitis-explorer-dev/2023-01-31/
+ bash dump_scripts/export_data.sh dump_scripts/vitis-explorer-dev/2023-XX-XX/
 ```
 
 ## Stop opensilex docker
