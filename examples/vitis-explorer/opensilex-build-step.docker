@@ -23,7 +23,7 @@ RUN groupadd --gid $GID $USERNAME \
 ENV RELEASE https://github.com/OpenSILEX/opensilex/releases/download/$OPENSILEX_RELEASE_TAG/opensilex-release-$OPENSILEX_RELEASE_TAG.zip
 RUN apt-get -y update && apt-get install -y wget zip gettext-base libc6 libc-bin
 RUN mkdir -p /home/$USERNAME
-RUN mkdir -p /home/$USERNAME/$INTERNAL_DATA_DIRECTORY
+RUN mkdir -p $INTERNAL_DATA_DIRECTORY
 RUN mkdir -p /home/$USERNAME/config
 RUN mkdir -p /home/$USERNAME/data
 RUN mkdir -p /home/$USERNAME/logs

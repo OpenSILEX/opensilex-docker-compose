@@ -34,7 +34,7 @@ Following commands should work from everywhere in your system without errors:
 
   - RDF4J - 3.7.7
   - MongoDB - 5.0.14
-  - OpenSILEX - 1.0.0-rc+6.5
+  - OpenSILEX - vitist-explorer-1.0.0-rc+7.3
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
@@ -50,8 +50,8 @@ Following commands should work from everywhere in your system without errors:
 - You must run docker compose up command to start your installation:
 
 ```bash
-docker compose --env-file vitis-explorer.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
-docker compose --env-file vitis-explorer.env run --rm start_opensilex_stack
+docker compose --env-file opensilex.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
+docker compose --env-file opensilex.env run --rm start_opensilex_stack
 ```
 
 - Expected Output:
@@ -84,3 +84,14 @@ This previous action will block your terminal. When the terminal will be accessi
 
 ```bash
  bash ../../dump_scripts/export_data.sh dumps/vitis-explorer-dev/2023-01-31/
+```
+
+## Stop opensilex docker
+
+This command will stop the stack.
+
+```bash
+docker restart opensilex-docker-opensilexapp
+```
+
+

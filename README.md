@@ -104,7 +104,7 @@ docker compose --env-file opensilex.env run --rm start_opensilex_stack
 ```
 
 - Expected Output:
-
+    
 ```bash
 [+] Running 3/0
  ⠿ Container opensilex-docker-rdf4j       Running                                                                                                                                              0.0s
