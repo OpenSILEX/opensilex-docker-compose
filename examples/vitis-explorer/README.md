@@ -93,5 +93,3 @@ This command will stop the stack.
 ```bash
 docker restart opensilex-docker-opensilexapp
 ```
-
-

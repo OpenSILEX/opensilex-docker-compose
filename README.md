@@ -71,8 +71,8 @@ Following commands should work from everywhere in your system without errors:
 - Mandatory softwares :
 
   - RDF4J - 3.7.7
-  - MongoDB - 5.0.14
-  - OpenSILEX - 1.0.0-rc+7.1
+  - MongoDB - 5.0.19
+  - OpenSILEX - 1.0.1
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
@@ -80,14 +80,14 @@ Following commands should work from everywhere in your system without errors:
 
 ## Installation steps
 
-This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.0.0-rc%2B7.1" target="_blank">1.0.0-rc+7.1.1 OpenSILEX version</a>
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.0.1" target="_blank">1.0.1 OpenSILEX version</a>
 
 ### Fresh new install (compose v2)
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.0.0-rc+7.1.1 https://github.com/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.0.1 https://github.com/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
@@ -195,7 +195,7 @@ First, go to the previous directory and get the actual version of the repository
 
 ```bash
 # Go inside opensilex-docker-compose directory
-git checkout 1.0.0-rc+7.1
+git checkout 1.0.1
 ```
 
 #### From previous version 1.0.0-rc+5.2 (compose v2)
@@ -279,9 +279,9 @@ OPENSILEX_START_CMD=./bin/opensilex.sh server start --host=localhost --port=8081
 
 # VERSIONS
 HAPROXY_IMAGE_VERSION=2.6.6
-OPENSILEX_RELEASE_TAG=1.0.0-rc+7.1
+OPENSILEX_RELEASE_TAG=1.0.1
 RDF4J_IMAGE_VERSION=3.7.7
-MONGO_IMAGE_VERSION=5.0.14
+MONGO_IMAGE_VERSION=5.0.19
 MONGO_EXPRESS_IMAGE_VERSION=1.0.0-alpha.4
  
 # # THEME
