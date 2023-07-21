@@ -16,6 +16,7 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
   - [Run minimal opensilex docker stack compose](#run-minimal-opensilex-docker-stack-compose)
     - [(First install only) Create an administrator user](#first-install-only-create-an-administrator-user)
   - [Stop opensilex docker](#stop-opensilex-docker)
+  - [Restart opensilex docker](#restart-opensilex-docker)
   - [Other tools or customizations](#other-tools-or-customizations)
     - [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
     - [(Optional) Add a reverse proxy](#optional-add-a-reverse-proxy)
@@ -100,7 +101,7 @@ For migration steps from previous versions, take a look to the [Migration steps 
 
 ```bash
 docker compose --env-file opensilex.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
-docker compose --env-file opensilex.env run --rm start_opensilex_stack
+docker compose --env-file opensilex.env up start_opensilex_stack -d
 ```
 
 - Expected Output:
@@ -154,6 +155,14 @@ This command will stop the stack.
 docker stop opensilex-docker-opensilexapp
 ```
 
+## Restart opensilex docker
+
+This command will restart the opensilex service.
+
+```bash
+docker compose --env-file=opensilex.env up --force-recreate --no-deps opensilex -d
+```
+
 ## Other tools or customizations
 
 ### (Optional) Add a gui for opensilex-docker-mongodb
@@ -161,7 +170,7 @@ docker stop opensilex-docker-opensilexapp
 This will start the mongo express server that helps you do explore your mongo data on port [localhost:28889/mongoexpress](http://localhost:28889/mongoexpress). You can also use your own robo3t or Mongo Compass App.
 
 ```bash
-docker compose --env-file opensilex.env run --rm start_opensilex_stack_mongogui
+docker compose --env-file opensilex.env up --no-recreate   start_opensilex_stack_mongogui -d
 ```
 
 ![mongo-express-image](./images/mongo-express.png)
@@ -173,7 +182,8 @@ This will start the haproxy as reverse proxy for opensilex instance on port that
 It can be configure in the `./opensilex.env` with the variable `HAPROXY_EXPOSED_PORT` (Default to port 80 equivalent to <a href="http://localhost" target="_blank">http://localhost</a>.
 
 ```bash
-docker compose --env-file opensilex.env run --rm start_opensilex_stack_proxy
+docker compose --env-file opensilex.env up --no-recreate start_opensilex_stack_proxy -d
+
 ```
 
 If you have installed [optional reverse proxy](#optional-add-a-reverse-proxy)
