@@ -33,9 +33,14 @@ Following commands should work from everywhere in your system without errors:
 - Mandatory softwares :
 
   - RDF4J - 3.7.7
-  - MongoDB - 5.0.14
-  - OpenSILEX - vitist-explorer-1.0.0-rc+7.3
-
+  - MongoDB - 4.4.6
+  ``WARNING: MongoDB 5.0+ requires a CPU with AVX support, and your current system does not appear to have that!
+  see https://jira.mongodb.org/browse/SERVER-54407
+  see also https://www.mongodb.com/community/forums/t/mongodb-5-0-cpu-intel-g4650-compatibility/116610/2
+  see also https://github.com/docker-library/mongo/issues/485#issuecomment-891991814``
+ 
+  - OpenSILEX - 1.0.2
+  
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
 
