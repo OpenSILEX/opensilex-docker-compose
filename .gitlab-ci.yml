@@ -25,6 +25,6 @@ integration-job:
     - git fetch origin pull/${CI_MERGE_REQUEST_IID}/head:pr-${CI_MERGE_REQUEST_IID}
     - git checkout pr-${CI_MERGE_REQUEST_IID} 
     - echo "Exécution des tests..." 
-  rules:
-    - if: $GITHUB_ACCESS == "$GITHUB_ACCESS_VALUE"
+  only:
+    - merge_requests
    
