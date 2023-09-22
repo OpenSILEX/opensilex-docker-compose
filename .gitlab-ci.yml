@@ -21,6 +21,8 @@ stages:
 
 integration-job:
   stage: integration
+  before_script:
+    - apt update && apt install git
   script:
     - git fetch origin pull/${CI_MERGE_REQUEST_IID}/head:pr-${CI_MERGE_REQUEST_IID}
     - git checkout pr-${CI_MERGE_REQUEST_IID} 
