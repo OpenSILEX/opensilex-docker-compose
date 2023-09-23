@@ -22,11 +22,20 @@ stages:
 integration-job:
   stage: integration
   before_script:
-    - apt update && apt install -y git
+    - apt update && apt install -y git jq
   script:
-    - git fetch origin pull/${CI_MERGE_REQUEST_IID}/head:pr-${CI_MERGE_REQUEST_IID}
-    - git checkout pr-${CI_MERGE_REQUEST_IID} 
-    - echo "Exécution des tests..." 
+    - PULL_REQUEST_NUMBER=$(echo $TRIGGER_PLAYLOAD | jq '.number')
+    - PULL_REQUEST_REPO=$(echo $TRIGGER_PLAYLOAD | jq '.pull_request.base.repo.full_name')
+    - git remote add upstream https://github.com/$PULL_REQUEST_REPO
+    - git fetch upstream pull/${PULL_REQUEST_NUMBER}/head:pr-${PULL_REQUEST_NUMBER}
+    - git checkout pr-${PULL_REQUEST_NUMBER} 
+    - git config --global user.name "anonymous"
+    - git config --global user.email "anonymous@opensilex.org"
+    - git remote set-url origin "https://oauth2:$GITLAB_USER_CI_PAT@forgemia.inra.fr/OpenSILEX/opensilex-docker-compose.git"
+    - if [  -z "`git show-ref refs/heads/pr-${PULL_REQUEST_NUMBER}`" ]; then  echo 'branch pr-${PULL_REQUEST_NUMBER} will be created!' &&  git checkout -b pr-${PULL_REQUEST_NUMBER}; else git checkout pr-${PULL_REQUEST_NUMBER} ;fi
+    - git fetch origin
+    - git push -f origin pr-${PULL_REQUEST_NUMBER}
+
   only:
     - merge_requests
    
