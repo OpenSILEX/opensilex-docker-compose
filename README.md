@@ -26,6 +26,8 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
       - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
   - [Configure docker configuration](#configure-docker-configuration)
   - [Customize opensilex configuration](#customize-opensilex-configuration)
+  - [Core module extensions](#core-module-extensions)
+    - [Configuration for RDG module](#configuration-for-rdg-module)
   - [Modular extensions](#modular-extensions)
     - [Explanation of modules directory](#explanation-of-modules-directory)
     - [Configuration for inrae sixtine vigne](#configuration-for-inrae-sixtine-vigne)
@@ -73,7 +75,7 @@ Following commands should work from everywhere in your system without errors:
 
   - RDF4J - 3.7.7
   - MongoDB - 5.0.19
-  - OpenSILEX - 1.0.1
+  - OpenSILEX - 1.2.0
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
@@ -81,14 +83,14 @@ Following commands should work from everywhere in your system without errors:
 
 ## Installation steps
 
-This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.0.1" target="_blank">1.0.1 OpenSILEX version</a>
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.2.0" target="_blank">1.2.0 OpenSILEX version</a>
 
 ### Fresh new install (compose v2)
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.0.1 https://github.com/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.2.0 https://github.com/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
@@ -205,7 +207,7 @@ First, go to the previous directory and get the actual version of the repository
 
 ```bash
 # Go inside opensilex-docker-compose directory
-git checkout 1.0.1
+git checkout 1.2.0
 ```
 
 #### From previous version 1.0.0-rc+5.2 (compose v2)
@@ -289,7 +291,7 @@ OPENSILEX_START_CMD=./bin/opensilex.sh server start --host=localhost --port=8081
 
 # VERSIONS
 HAPROXY_IMAGE_VERSION=2.6.6
-OPENSILEX_RELEASE_TAG=1.0.1
+OPENSILEX_RELEASE_TAG=1.2.0
 RDF4J_IMAGE_VERSION=3.7.7
 MONGO_IMAGE_VERSION=5.0.19
 MONGO_EXPRESS_IMAGE_VERSION=1.0.0-alpha.4
@@ -344,6 +346,25 @@ core:
       metricsTimeUnit: HOURS
 ```
 
+## Core module extensions
+
+Other modules can be activated by modifiyng OPENSILEX_RELEASE_TAG version (Example : RDG module).
+
+### Configuration for RDG module
+
+By modifying _opensilex.env_ file with this following configuration you will be able to activate rdg module.
+For more configuration, see [RDG module configuration](https://github.com/OpenSILEX/opensilex/blob/master/opensilex-doc/src/main/resources/modules/dataverse.md).
+
+```bash
+# Example of modification for RDG module
+# VERSIONS
+HAPROXY_IMAGE_VERSION=2.6.6
+OPENSILEX_RELEASE_TAG=1.2.0-rdg
+RDF4J_IMAGE_VERSION=3.7.7
+MONGO_IMAGE_VERSION=5.0.19
+MONGO_EXPRESS_IMAGE_VERSION=1.0.0-alpha.4
+```
+
 ## Modular extensions
 
 ### Explanation of modules directory
@@ -371,6 +392,8 @@ OPENSILEX_CONFIG_MENUCOMPONENT=inrae-sixtine-vigne-SixtineMenuComponent
 OPENSILEX_CONFIG_HEADERCOMPONENT=inrae-sixtine-vigne-SixtineHeaderComponent
 ```
  
+
+
 
 ## Manage data
 
