@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.1] - 2024-02-01
+
+### Changed
+
+- Update opensilex version to 1.2.1
+
 ## [1.2.0] - 2024-01-24
 
 ### Changed
@@ -18,7 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Update opensilex version to 1.0.1
 - Update mongo to version 5.0.19
-## [1.0.0-rc+7.1] - 2023-03-30
+## [1.0.0-rc+7.1] - 2023-03-30chang
 
 ### Changed
 
