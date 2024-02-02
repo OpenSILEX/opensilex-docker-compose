@@ -15,6 +15,7 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
     - [Fresh new install (compose v2)](#fresh-new-install-compose-v2)
   - [Run minimal opensilex docker stack compose](#run-minimal-opensilex-docker-stack-compose)
     - [(First install only) Create an administrator user](#first-install-only-create-an-administrator-user)
+  - [Update opensilex version](#update-opensilex-version)
   - [Stop opensilex docker](#stop-opensilex-docker)
   - [Restart opensilex docker](#restart-opensilex-docker)
   - [Other tools or customizations](#other-tools-or-customizations)
@@ -148,6 +149,25 @@ _PS: At the first connection, you will need to change rdf4j server port to 8080 
 Expected configuration :
 
 ![rdf4j_first_connection](./images/rdf4j_first_connection.png)
+
+## Update opensilex version
+
+You can do it in two steps : 
+
+- By modifying _opensilex.env_ file with this following configuration you will be able to change.
+
+```bash
+# Choose opensilex version.
+# VERSIONS 
+OPENSILEX_RELEASE_TAG=1.2.0
+# Ex: OPENSILEX_RELEASE_TAG=1.2.1-rdg or OPENSILEX_RELEASE_TAG=1.2.1
+```
+
+- You will be able to restart opensilex container only by running the following command.
+
+```bash
+docker compose --env-file=opensilex.env up --force-recreate --no-deps opensilex -d
+```
 
 ## Stop opensilex docker
 
@@ -391,9 +411,6 @@ OPENSILEX_CONFIG_FOOTERCOMPONENT=inrae-sixtine-vigne-SixtineFooterComponent
 OPENSILEX_CONFIG_MENUCOMPONENT=inrae-sixtine-vigne-SixtineMenuComponent
 OPENSILEX_CONFIG_HEADERCOMPONENT=inrae-sixtine-vigne-SixtineHeaderComponent
 ```
- 
-
-
 
 ## Manage data
 
