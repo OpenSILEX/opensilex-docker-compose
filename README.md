@@ -108,24 +108,40 @@ docker compose --env-file opensilex.env up start_opensilex_stack -d
 ```
 
 - Expected Output:
-    
+
+
 ```bash
-[+] Running 3/0
- ⠿ Container opensilex-docker-rdf4j       Running                                                                                                                                              0.0s
- ⠿ Container opensilex-docker-mongodb       Running                                                                                                                                              0.0s
- ⠿ Container opensilex-docker-opensilexapp  Recreated                                                                                                                                            0.0s
-[+] Running 1/1
- ⠿ Container opensilex-docker-opensilexapp  Started                                                                                                                                              0.4s
-Waiting for mongo to listen on 27017...
-Waiting for rdf4j to listen on 8080...
-Waiting for opensilex to listen on 8081..
-sleeping
-sleeping
-sleeping
-[wait until it starts]
+WARN[0000] The "OPENSILEX_START_CMD_DEBUG" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "OPENSILEX_START_CMD_DEBUG" variable is not set. Defaulting to a blank string. 
+[+] Running 4/10
+ ⠸ Network opensilex-stack_default                    Created                                                                       2.3s 
+ ⠸ Volume "opensilex-stack_persist_rdf4j_logs"        Created                                                                       2.2s 
+ ⠸ Volume "opensilex-stack_persist_opensilex"         Created                                                                       2.2s 
+ ⠸ Volume "opensilex-stack_haproxy_conf"              Created                                                                       2.2s 
+ ⠹ Volume "opensilex-stack_persist_mongo_data"        Created                                                                       2.2s 
+ ⠹ Volume "opensilex-stack_persist_rdf4j_data"        Created                                                                       2.2s 
+ ✔ Container opensilex-docker-mongodb                 Started                                                                       1.0s 
+ ✔ Container opensilex-docker-rdf4j                   Started                                                                       1.0s 
+ ✔ Container opensilex-docker-opensilexapp            Started                                                                       1.5s 
+ ✔ Container opensilex-stack-start_opensilex_stack-1  Started  
+ ```
+
+- Check if opensilex is launched: 
+
+```bash
+docker logs opensilex-docker-opensilexapp 
 ```
 
-This previous action will block your terminal. When the terminal will be accessible again the opensilex app process will be started and ready.
+- Expected Output:
+  
+These lines must be written in the docker logs.
+
+```bash
+INFO: No Spring WebApplicationInitializer types detected on classpath
+Feb 26, 2024 10:00:06 PM org.apache.coyote.AbstractProtocol start
+INFO: Starting ProtocolHandler ["http-nio-8081"]
+```
+ 
 
 ### (First install only) Create an administrator user
 
