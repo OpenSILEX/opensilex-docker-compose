@@ -38,4 +38,5 @@ RUN ls
 COPY ./bin/opensilex.sh /home/$USERNAME/bin/
 COPY ./bin/logback.xml /home/$USERNAME/bin/
 COPY ./config/opensilex-template.yml /home/$USERNAME/config/
+COPY ./config/other /home/$USERNAME/config/other
 WORKDIR /home/$USERNAME
