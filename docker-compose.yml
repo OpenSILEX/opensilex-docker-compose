@@ -77,7 +77,6 @@ services:
       - "$OPENSILEX_LOCAL_FILE_SYSTEM_DIRECTORY:$INTERNAL_DATA_DIRECTORY"
     command: >
       bash -c "
-        sudo chown -R opensilex:opensilex /home/opensilex/config &&
         rm -f /home/opensilex/config/opensilex.yml &&
         rm -f /home/opensilex/config/opensilex-template-custom.yml &&
         cat  /home/opensilex/config/opensilex-template.yml >> /home/opensilex/config/opensilex-template-custom.yml &&
