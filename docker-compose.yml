@@ -26,7 +26,7 @@ services:
     command: >
       bash -c "
       (
-        sleep 3 &&
+        mongostat -n=1  &&
         mongo --eval \"rs.initiate({'_id':'opensilex','members':[{'_id':0,'host':'opensilex-docker-mongodb:27017'}]})\" &&
         wait
       ) & docker-entrypoint.sh --replSet opensilex
