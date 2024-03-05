@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.2] - 2024-03-05
+
+### Changed
+
+- Update opensilex version to 1.2.2
+- Merge [pull request](https://github.com/OpenSILEX/opensilex-docker-compose/pull/1) from [afabbri](https://github.com/afabbri) on mongo start test
+
 ## [1.2.1] - 2024-02-01
 
 ### Changed
