@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Changed
 
 - Update opensilex version to 1.2.3
+- See the [version changelog](https://github.com/OpenSILEX/opensilex/releases/tag/1.2.3) for potential migration 
+  instructions
 
 ## [1.2.2] - 2024-03-05
 
