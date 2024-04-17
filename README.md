@@ -168,6 +168,10 @@ Expected configuration :
 
 ## Update opensilex version
 
+> Warning ! Before updating, if you already have a running version, please check the migration guides
+> between releases. You can find the migration instructions in the changelog for each release
+> (https://github.com/OpenSILEX/opensilex/tree/master/opensilex-doc/src/main/resources/release).
+
 You can do it in two steps : 
 
 - By modifying _opensilex.env_ file with this following configuration you will be able to change.
