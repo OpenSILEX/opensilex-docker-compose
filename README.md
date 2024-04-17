@@ -76,7 +76,7 @@ Following commands should work from everywhere in your system without errors:
 
   - RDF4J - 3.7.7
   - MongoDB - 5.0.19
-  - OpenSILEX - 1.2.2
+  - OpenSILEX - 1.2.3
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
@@ -84,14 +84,14 @@ Following commands should work from everywhere in your system without errors:
 
 ## Installation steps
 
-This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.2.2" target="_blank">1.2.2 OpenSILEX version</a>
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.2.3" target="_blank">1.2.3 OpenSILEX version</a>
 
 ### Fresh new install (compose v2)
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.2.2 https://github.com/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.2.3 https://github.com/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
@@ -243,7 +243,7 @@ First, go to the previous directory and get the actual version of the repository
 
 ```bash
 # Go inside opensilex-docker-compose directory
-git checkout 1.2.2
+git checkout 1.2.3
 ```
 
 #### From previous version 1.0.0-rc+5.2 (compose v2)
