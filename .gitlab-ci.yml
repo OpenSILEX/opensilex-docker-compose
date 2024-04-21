@@ -42,8 +42,8 @@ build:image:
   script: 
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable"; exit 1; fi 
     - docker info
-    - docker build -t $DOCKER_REGISTRY/opensilex-docker-compose  --tag=registry.forgemia.inra.fr/opensilex/opensilex-docker-compose:$IMAGE_TAG .
-    - docker push $DOCKER_REGISTRY/opensilex-docker-compose:$IMAGE_TAG
+    - docker compose build -t $DOCKER_REGISTRY/opensilex-docker-compose  --tag=registry.forgemia.inra.fr/opensilex/opensilex-docker-compose:$IMAGE_TAG .
+    - docker compose push $DOCKER_REGISTRY/opensilex-docker-compose:$IMAGE_TAG
   when: manual
 
 pages:
