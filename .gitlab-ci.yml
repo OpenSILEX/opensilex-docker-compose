@@ -17,6 +17,7 @@
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
 stages:
+  - pages
   - integration
 
 integration-job:
@@ -27,4 +28,34 @@ integration-job:
     - echo "Exécution des tests..." 
   rules:
     - if: $GITHUB_ACCESS == "$GITHUB_ACCESS_VALUE"
-   
+
+
+# create an docker image 
+build:image: 
+  image: docker:19.03.12
+  stage: build
+  services:
+    - docker:19.03.12-dind
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - git checkout $IMAGE_TAG
+    - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable"; exit 1; fi 
+    - docker info
+    - docker build -t $DOCKER_REGISTRY/opensilex-docker-compose  --tag=registry.forgemia.inra.fr/opensilex/opensilex-docker-compose:$IMAGE_TAG .
+    - docker push $DOCKER_REGISTRY/opensilex-docker-compose:$IMAGE_TAG
+  when: manual
+
+pages:
+  stage: pages 
+  before_script:
+   - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3
+   - trivy plugin install github.com/fatihtokus/scan2html
+  script:
+    - mkdir public 
+    - trivy scan2html image $DOCKER_REGISTRY/opensilex-docker-compose:latest public/interactive_result.html
+  artifacts:
+    paths:
+      - public
+      - logs
+  when: manual
