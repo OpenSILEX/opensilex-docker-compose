@@ -39,8 +39,7 @@ build:image:
     - docker:19.03.12-dind
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-  script:
-    - git checkout $IMAGE_TAG
+  script: 
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable"; exit 1; fi 
     - docker info
     - docker build -t $DOCKER_REGISTRY/opensilex-docker-compose  --tag=registry.forgemia.inra.fr/opensilex/opensilex-docker-compose:$IMAGE_TAG .
