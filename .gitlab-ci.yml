@@ -33,7 +33,7 @@ integration-job:
 
 # create an docker image 
 build:image: 
-  image: docker:19.03.12
+  image: docker:26.0.2-dind
   stage: build
   services:
     - docker:dind
