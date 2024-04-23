@@ -44,7 +44,7 @@ build:image:
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable"; exit 1; fi 
     - docker info
     - ls
-    - docker compose --env-file opensilex.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
+    - docker compose --env-file opensilex.env build --build-arg UID=999 --build-arg GID=999 opensilex
     - docker compose push $DOCKER_REGISTRY/opensilex-docker-compose:$IMAGE_TAG
   when: manual
 
