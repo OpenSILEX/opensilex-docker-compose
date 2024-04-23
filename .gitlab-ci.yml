@@ -55,6 +55,7 @@ pages:
     - docker:dind
   stage: pages 
   before_script:
+   - apk add --no-cache curl
    - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.18.3
    - trivy plugin install github.com/fatihtokus/scan2html
    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
