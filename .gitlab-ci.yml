@@ -45,8 +45,8 @@ build:image:
     - docker info
     - ls
     - docker compose --env-file opensilex.env build --build-arg UID=999 --build-arg GID=999 opensilex
-    - docker tag docker.io/library/opensilex-stack-opensilex $DOCKER_REGISTRY/opensilex-docker-compose:$IMAGE_TAG
-    - docker push $DOCKER_REGISTRY/opensilex-docker-compose:$IMAGE_TAG
+    - docker tag docker.io/library/opensilex-stack-opensilex $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
+    - docker push $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
   when: manual
 
 pages:
@@ -61,8 +61,8 @@ pages:
   script:
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
     - mkdir public 
-    - docker image pull  $DOCKER_REGISTRY/opensilex-docker-compose:$IMAGE_TAG
-    - trivy scan2html image $DOCKER_REGISTRY/opensilex-docker-compose:latest public/interactive_result.html
+    - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
+    - trivy scan2html image $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:latest public/interactive_result.html
   artifacts:
     paths:
       - public
