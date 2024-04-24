@@ -17,6 +17,7 @@
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
 stages:
+  - test
   - build
   - pages
   - integration
@@ -34,7 +35,7 @@ include:
   - template: Jobs/Container-Scanning.gitlab-ci.yml
 
 container_scanning:
-  stage: build 
+  stage: test 
   variables:
     CS_IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:latest
   artifacts:
