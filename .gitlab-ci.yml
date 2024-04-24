@@ -68,7 +68,7 @@ pages:
     DOCKER_DRIVER: overlay2
     # See https://github.com/docker-library/docker/pull/166
     DOCKER_TLS_CERTDIR: ""
-    IMAGE: trivy-ci-test:$CI_COMMIT_SHA
+    IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
     TRIVY_NO_PROGRESS: "true"
     TRIVY_CACHE_DIR: ".trivycache/"
     XDG_DATA_HOME: $CI_PROJECT_DIR/trivy/plugins
@@ -86,7 +86,7 @@ pages:
     - mkdir $CI_PROJECT_DIR/public 
     - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
      # Image report
-    - trivy $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG --format template --template "@contrib/gitlab-codequality.tpl" -o gl-codeclimate-image.json $IMAGE
+    - trivy image --exit-code 0   --format template --template "@contrib/gitlab-codequality.tpl" -o gl-codeclimate-image.json $IMAGE
     - trivy plugin run github.com/fatihtokus/scan2html $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG $CI_PROJECT_DIR/public/index.html
 
   cache:
