@@ -90,4 +90,6 @@ pages:
     paths:
       - gl-codeclimate.json
       - public 
+    reports:
+      codequality: gl-codeclimate.json
   when: manual
