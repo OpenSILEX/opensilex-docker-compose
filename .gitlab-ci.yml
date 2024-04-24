@@ -55,7 +55,7 @@ pages:
     - docker:dind
   stage: pages 
   before_script:
-   - export TRIVY_VERSION=${TRIVY_VERSION:-v0.19.2}
+   - export TRIVY_VERSION=${TRIVY_VERSION:-v0.50.2}
    - apk add --no-cache curl
    - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin ${TRIVY_VERSION}
    - mkdir -p $CI_PROJECT_DIR/trivy/plugins
