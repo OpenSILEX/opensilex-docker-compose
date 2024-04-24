@@ -86,7 +86,7 @@ pages:
     - mkdir $CI_PROJECT_DIR/public 
     - tree -L 3 $CI_PROJECT_DIR/trivy/plugins 
     - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
-    - trivy image -o $CI_PROJECT_DIR/public/index.html --format template --template '$CI_PROJECT_DIR/trivy/trivy-html.tpl' $IMAGE
+    - trivy image --timeout 30m -o $CI_PROJECT_DIR/public/index.html --format template --template '$CI_PROJECT_DIR/trivy/trivy-html.tpl' $IMAGE
      # Image report
     # - trivy image --exit-code 0   --format template --template "@contrib/gitlab-codequality.tpl" -o gl-codeclimate-image.json $IMAGE
     # - trivy plugin run github.com/fatihtokus/scan2html $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG $CI_PROJECT_DIR/public/index.html
