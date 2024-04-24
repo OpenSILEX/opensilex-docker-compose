@@ -91,7 +91,7 @@ pages:
     - trivy image --timeout 30m -o index.html --format template --template '$CI_PROJECT_DIR/trivy/trivy-html.tpl' $IMAGE
      # Image report
     # - trivy image --exit-code 0 --format template --template "@contrib/gitlab-codequality.tpl" -o gl-codeclimate-image.json $IMAGE
-    - trivy plugin run github.com/fatihtokus/scan2html image $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG index.html
+    - trivy scan2html image $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG index.html
 
   cache:
     paths:
