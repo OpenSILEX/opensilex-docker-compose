@@ -64,12 +64,7 @@ pages:
     - docker:dind
   stage: pages 
   variables:
-    DOCKER_HOST: tcp://docker:2375/
-    DOCKER_DRIVER: overlay2
-    # See https://github.com/docker-library/docker/pull/166
-    DOCKER_TLS_CERTDIR: ""
     IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
-    TRIVY_NO_PROGRESS: "true"
     TRIVY_CACHE_DIR: ".trivycache/"
     XDG_DATA_HOME: $CI_PROJECT_DIR/trivy/plugins
   allow_failure: true
