@@ -81,7 +81,6 @@ pages:
     - mkdir $CI_PROJECT_DIR/public 
     - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
      # Image report
-    - trivy image --exit-code 0   --format template --template "@contrib/gitlab-codequality.tpl" -o gl-codeclimate-image.json $IMAGE
     - trivy plugin run github.com/fatihtokus/scan2html $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG $CI_PROJECT_DIR/public/index.html
 
   cache:
@@ -90,8 +89,5 @@ pages:
     # - trivy plugin run github.com/fatihtokus/scan2html $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG $CI_PROJECT_DIR/public/index.html
   artifacts:
     paths:
-      - gl-codeclimate.json
-      - public 
-    reports:
-      codequality: gl-codeclimate.json
+      - public
   when: manual
