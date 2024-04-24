@@ -34,8 +34,9 @@ include:
   - template: Jobs/Container-Scanning.gitlab-ci.yml
 
 container_scanning:
+  stage: build 
   variables:
-    CS_IMAGE: DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
+    CS_IMAGE: DOCKER_REGISTRY/opensilex/opensilex-docker-compose:latest
 
 
 # create an docker image 
@@ -90,9 +91,7 @@ pages:
 
   cache:
     paths:
-      - .trivycache/
-      
-
+      - .trivycache/ 
     # - trivy plugin run github.com/fatihtokus/scan2html $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG $CI_PROJECT_DIR/public/index.html
   artifacts:
     paths:
