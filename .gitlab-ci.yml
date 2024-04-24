@@ -36,7 +36,7 @@ include:
 container_scanning:
   stage: build 
   variables:
-    CS_IMAGE: DOCKER_REGISTRY/opensilex/opensilex-docker-compose:latest
+    CS_IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:latest
 
 
 # create an docker image 
