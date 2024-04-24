@@ -30,6 +30,13 @@ integration-job:
   rules:
     - if: $GITHUB_ACCESS == "$GITHUB_ACCESS_VALUE"
 
+include:
+  - template: Jobs/Container-Scanning.gitlab-ci.yml
+
+container_scanning:
+  variables:
+    CS_IMAGE: DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
+
 
 # create an docker image 
 build:image: 
@@ -38,6 +45,7 @@ build:image:
   services:
     - docker:dind
   before_script:
+    - export IMAGE_TAG=${IMAGE_TAG:latest} 
     - apk add --no-cache docker-compose
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script: 
@@ -77,7 +85,7 @@ pages:
     - mkdir $CI_PROJECT_DIR/public 
     - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
      # Image report
-    - trivy $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG --exit-code 0 --format template --template "@contrib/gitlab-codequality.tpl" -o gl-codeclimate-image.json $IMAGE
+    - trivy $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG --format template --template "@contrib/gitlab-codequality.tpl" -o gl-codeclimate-image.json $IMAGE
     - trivy plugin run github.com/fatihtokus/scan2html $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG $CI_PROJECT_DIR/public/index.html
 
   cache:
