@@ -69,13 +69,12 @@ pages:
   variables:
     IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
     TRIVY_CACHE_DIR: ".trivycache/"
-    XDG_DATA_HOME: $CI_PROJECT_DIR/trivy/plugins
-    TRIVY_LOG_LEVEL: debug
+    XDG_DATA_HOME: /usr/local/bin/trivy/plugins
   allow_failure: true
   before_script:
    - export TRIVY_VERSION=${TRIVY_VERSION:-v0.50.2}
    - apk add --no-cache curl tree
-   - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $CI_PROJECT_DIR/trivy/ ${TRIVY_VERSION}
+   - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin ${TRIVY_VERSION}
    - mkdir -p $CI_PROJECT_DIR/trivy/plugins 
    - wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
    - mv html.tpl $CI_PROJECT_DIR/trivy
