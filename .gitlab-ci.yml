@@ -17,8 +17,8 @@
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
 stages:
-  - test
   - build
+  - test
   - pages
   - integration
 
@@ -33,7 +33,7 @@ integration-job:
 
 include:
   - template: Jobs/Container-Scanning.gitlab-ci.yml
-
+  - template: Security/Container-Scanning.gitlab-ci.yml
 container_scanning:
   stage: test 
   variables:
@@ -70,11 +70,12 @@ pages:
     IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
     TRIVY_CACHE_DIR: ".trivycache/"
     XDG_DATA_HOME: $CI_PROJECT_DIR/trivy/plugins
+    TRIVY_LOG_LEVEL: debug
   allow_failure: true
   before_script:
    - export TRIVY_VERSION=${TRIVY_VERSION:-v0.50.2}
    - apk add --no-cache curl tree
-   - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin ${TRIVY_VERSION}
+   - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b $CI_PROJECT_DIR/trivy/ ${TRIVY_VERSION}
    - mkdir -p $CI_PROJECT_DIR/trivy/plugins 
    - wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
    - mv html.tpl $CI_PROJECT_DIR/trivy
@@ -91,7 +92,7 @@ pages:
     - trivy image --timeout 30m -o index.html --format template --template '$CI_PROJECT_DIR/trivy/trivy-html.tpl' $IMAGE
      # Image report
     # - trivy image --exit-code 0 --format template --template "@contrib/gitlab-codequality.tpl" -o gl-codeclimate-image.json $IMAGE
-    - trivy scan2html image $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG index.html
+    - trivy plugin run github.com/fatihtokus/scan2html image $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG index.html
 
   cache:
     paths:
