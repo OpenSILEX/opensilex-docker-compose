@@ -81,7 +81,8 @@ trivy:
     - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
     
     # Build image
-    - ./trivy plugin -d install github.com/fatihtokus/scan2html
+    - wget https://github.com/fatihtokus/scan2html/releases/download/v0.2.6/scan2html.tar.gz
+    - ./trivy plugin -d install ./scan2html.tar.gz
     - mkdir public && cd public
     - ./trivy scan2html image $IMAGE index.html
     # Build report
