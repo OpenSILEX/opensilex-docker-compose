@@ -20,6 +20,7 @@ stages:
   - build
   - test
   - pages
+  - scan
   - integration
 
 integration-job:
@@ -41,6 +42,7 @@ container_scanning:
   artifacts:
     reports:
       container_scanning: gl-container-scanning-report.json
+    
 
 # create an docker image 
 build:image: 
@@ -61,6 +63,33 @@ build:image:
     - docker push $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
   when: manual
 
+
+trivy_scan:
+ stage: scan
+ image: aquasec/trivy:latest
+ variables:
+    IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
+    TRIVY_CACHE_DIR: ".trivycache/"
+
+ before_script:
+  - apk add --update docker openrc. --no-cache
+  - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  - trivy plugin -d install github.com/fatihtokus/scan2html
+  - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
+
+ script:
+    - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
+    - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
+
+    # - trivy image --input my-image.tar
+#  dependencies:
+#     - build
+    - trivy image --timeout 30m -o index.html --format template --template "${CI_PROJECT_DIR}/trivy/trivy-html.tpl" $IMAGE
+
+ cache:
+    paths:
+      - .trivycache/ 
+
 pages:
   image: docker:26.0.2-dind 
   services:
@@ -70,6 +99,7 @@ pages:
     IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
     TRIVY_CACHE_DIR: ".trivycache/"
     XDG_DATA_HOME: /usr/local/bin/trivy/plugins
+
   allow_failure: true
   before_script:
    - export TRIVY_VERSION=${TRIVY_VERSION:-v0.50.2}
@@ -79,7 +109,7 @@ pages:
    - wget https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/html.tpl
    - mv html.tpl $CI_PROJECT_DIR/trivy
   #  - trivy plugin run github.com/fatihtokus/scan2html
-   - trivy plugin install github.com/fatihtokus/scan2html
+   - trivy plugin -d install github.com/fatihtokus/scan2html
   #  - trivy plugin list
    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
@@ -88,7 +118,7 @@ pages:
     - tree -L 7 $CI_PROJECT_DIR/trivy/plugins 
     - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
     - cd $CI_PROJECT_DIR/public 
-    - trivy image --timeout 30m -o index.html --format template --template '$CI_PROJECT_DIR/trivy/trivy-html.tpl' $IMAGE
+    - trivy image --timeout 30m -o index.html --format template --template "${CI_PROJECT_DIR}/trivy/trivy-html.tpl" $IMAGE
      # Image report
     # - trivy image --exit-code 0 --format template --template "@contrib/gitlab-codequality.tpl" -o gl-codeclimate-image.json $IMAGE
     - trivy plugin run github.com/fatihtokus/scan2html image $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG index.html
