@@ -65,9 +65,9 @@ build:image:
 
 trivy:
   stage: test
-  image: docker:stable
+  image: docker:26.0.2-dind
   services:
-    - name: docker:dind 
+    - docker:dind
   variables:
     IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
   before_script:
