@@ -19,8 +19,8 @@
 stages:
   - build
   - test
-  - pages
   - scan
+  - pages
   - integration
 
 integration-job:
@@ -63,6 +63,45 @@ build:image:
     - docker push $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
   when: manual
 
+trivy:
+  stage: test
+  image: docker:stable
+  services:
+    - name: docker:dind
+      entrypoint: ["env", "-u", "DOCKER_HOST"]
+      command: ["dockerd-entrypoint.sh"]
+  variables:
+    DOCKER_HOST: tcp://docker:2375/
+    DOCKER_DRIVER: overlay2
+    # See https://github.com/docker-library/docker/pull/166
+    DOCKER_TLS_CERTDIR: ""
+    IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
+  before_script:
+    - export TRIVY_VERSION=$(wget -qO - "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+    - echo $TRIVY_VERSION
+    - wget --no-verbose https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz -O - | tar -zxvf -
+  allow_failure: true
+  script:
+    - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
+    - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
+    
+    # Build image
+    - ./trivy plugin -d install github.com/fatihtokus/scan2html
+    - mkdir public && cd public
+    - ./trivy scan2html image $IMAGE index.html
+    # Build report
+    - ./trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --format template --template "@contrib/gitlab.tpl" -o gl-container-scanning-report.json $IMAGE
+    # Print report
+    - ./trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --severity HIGH $IMAGE
+    # Fail on severe vulnerabilities
+    - ./trivy --exit-code 1 --cache-dir .trivycache/ --severity CRITICAL --no-progress $IMAGE
+  cache:
+    paths:
+      - .trivycache/
+  # Enables https://docs.gitlab.com/ee/user/application_security/container_scanning/ (Container Scanning report is available on GitLab EE Ultimate or GitLab.com Gold)
+  artifacts:
+    reports:
+      container_scanning: gl-container-scanning-report.js
 
 trivy_scan:
  stage: scan
@@ -121,7 +160,7 @@ pages:
     - trivy image --timeout 30m -o index.html --format template --template "${CI_PROJECT_DIR}/trivy/trivy-html.tpl" $IMAGE
      # Image report
     # - trivy image --exit-code 0 --format template --template "@contrib/gitlab-codequality.tpl" -o gl-codeclimate-image.json $IMAGE
-    - trivy plugin run github.com/fatihtokus/scan2html image $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG index.html
+    - trivy scan2html image $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG index.html
 
   cache:
     paths:
