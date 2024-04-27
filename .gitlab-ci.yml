@@ -82,10 +82,11 @@ trivy:
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
     - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
     - mkdir public && mkdir -p ${CI_PROJECT_DIR}/.trivy/plugins
-    - ls ${CI_PROJECT_DIR}/.trivy/plugins/scan2html
     # Build image
     # - wget https://github.com/fatihtokus/scan2html/releases/download/v0.2.6/scan2html.tar.gz
     - ${CI_PROJECT_DIR}/trivy plugin -d install github.com/fatihtokus/scan2html
+    - ls ${CI_PROJECT_DIR}/.trivy/plugins/scan2html
+
     - ${CI_PROJECT_DIR}/trivy scan2html image $IMAGE index.html
     - mv index.html public
     # Build report
