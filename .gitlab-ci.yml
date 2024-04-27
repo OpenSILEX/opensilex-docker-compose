@@ -86,9 +86,9 @@ trivy:
     # - wget https://github.com/fatihtokus/scan2html/releases/download/v0.2.6/scan2html.tar.gz
     - ${CI_PROJECT_DIR}/trivy plugin -d install github.com/fatihtokus/scan2html
     - ls -la  ${CI_PROJECT_DIR}/.trivy/plugins/scan2html
-    - ls -la ${CI_PROJECT_DIR}/.trivy/plugins/scan2html/scan2html
+    - chmod 777 ${CI_PROJECT_DIR}/.trivy/plugins/scan2html/scan2html
 
-    - cd ls -la  ${CI_PROJECT_DIR}/.trivy/plugins/scan2html
+    - cd ${CI_PROJECT_DIR}/.trivy/plugins/scan2html
     - pwd
     - ${CI_PROJECT_DIR}/trivy scan2html image $IMAGE index.html
     - mv index.html public
