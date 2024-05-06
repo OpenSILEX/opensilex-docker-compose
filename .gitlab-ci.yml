@@ -115,7 +115,7 @@ trivy_html:
     IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
   before_script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - apk install --no-cache trivy
+    - apk add --no-cache trivy
     # - curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.51.1
     # - export PATH="/usr/local/bin/trivy:/usr/local/bin/.trivy/plugins/scan2html/scan2html:$PATH" 
   allow_failure: true
