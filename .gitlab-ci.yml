@@ -116,7 +116,7 @@ trivy:
     - echo $TRIVY_VERSION
     - cd ${CI_PROJECT_DIR}
     - wget --no-verbose https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz -O - | tar -zxvf -
-    - export PATH="${CI_PROJECT_DIR}/trivy:$PATH" 
+    - export PATH="${CI_PROJECT_DIR}/trivy:${CI_PROJECT_DIR}/.trivy/plugins/scan2html/scan2html:$PATH" 
   allow_failure: true
   script:
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
@@ -127,6 +127,7 @@ trivy:
     - ${CI_PROJECT_DIR}/trivy plugin -d install github.com/fatihtokus/scan2html
     - ${CI_PROJECT_DIR}/trivy -d  plugin list
     - cd ${CI_PROJECT_DIR}/public
+    - ls ${CI_PROJECT_DIR}/.trivy/plugins/scan2html
     - ${CI_PROJECT_DIR}/trivy -d  scan2html image $IMAGE index.html 
     # Build report
     - ${CI_PROJECT_DIR}/trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --format template --template "@contrib/gitlab.tpl" -o gl-container-scanning-report.json $IMAGE
