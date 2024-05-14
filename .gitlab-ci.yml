@@ -128,31 +128,21 @@ trivy_html:
   script:
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
     - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
-    - mkdir -p ${CI_PROJECT_DIR}/public
+    - mkdir -p ${CI_PROJECT_DIR}/public && mkdir -p public
     # Build image
     - ./trivy plugin install github.com/fatihtokus/scan2html
     - ./trivy plugin list
-    - ./trivy --timeout 45m scan2html image ${IMAGE} "index.html"
-    - mv index.html ${CI_PROJECT_DIR}/public
+    - ./trivy --no-progress --cache-dir .trivycache/ --timeout 45m scan2html image ${IMAGE} index.html
+    - cp index.html ${CI_PROJECT_DIR}/public
+    - cp index.html public
+
   artifacts:
     paths: 
       - public
   cache:
     paths:
       - .trivycache/
-    # Build report
-#    - trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --format template --template "@contrib/gitlab.tpl" -o #gl-container-scanning-report.json $IMAGE
-#    # Print report
-#    - trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --severity HIGH $IMAGE
-#    # Fail on severe vulnerabilities
-#    - trivy --exit-code 1 --cache-dir .trivycache/ --severity CRITICAL --no-progress $IMAGE
-#  cache:
-#    paths:
-#      - .trivycache/
-#  # Enables https://docs.gitlab.com/ee/user/application_security/container_scanning/ (Container Scanning report is available on GitLab #EE Ultimate or GitLab.com Gold)
-#  artifacts:
-#    reports:
-#      container_scanning: gl-container-scanning-report.js
+  
 # trivy_scan:
 #  stage: scan
 #  image: aquasec/trivy:latest
