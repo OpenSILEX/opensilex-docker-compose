@@ -113,6 +113,7 @@ trivy_html:
   variables:
     # XDG_DATA_HOME: ${CI_PROJECT_DIR}
     IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
+  # https://github.com/fatihtokus/scan2html/issues/32#top for alpine 
   before_script:
     - export TRIVY_VERSION=$(wget -qO - "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
     - echo $TRIVY_VERSION
@@ -129,16 +130,16 @@ trivy_html:
     - docker image pull  $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
     - mkdir -p ${CI_PROJECT_DIR}/public
     # Build image
-    # - wget https://github.com/fatihtokus/scan2html/releases/download/v0.2.6/scan2html.tar.gz
     - ./trivy plugin install github.com/fatihtokus/scan2html
     - ./trivy plugin list
-     
-    # - ls /usr/local/bin/.trivy/plugins/scan2html
-    - ./trivy scan2html image ${IMAGE} "index.html"
+    - ./trivy --timeout 45m scan2html image ${IMAGE} "index.html"
     - mv index.html ${CI_PROJECT_DIR}/public
   artifacts:
     paths: 
-      - public 
+      - public
+  cache:
+    paths:
+      - .trivycache/
     # Build report
 #    - trivy --exit-code 0 --cache-dir .trivycache/ --no-progress --format template --template "@contrib/gitlab.tpl" -o #gl-container-scanning-report.json $IMAGE
 #    # Print report
