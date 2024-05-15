@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.2.5] - 2024-05-15
+
+### Changed
+
+- Update opensilex version to 1.2.5
+- See the [version changelog](https://github.com/OpenSILEX/opensilex/releases/tag/1.2.5)
+
 ## [1.2.4] - 2024-04-17
 
 ### Changed
