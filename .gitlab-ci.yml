@@ -97,7 +97,8 @@ pages:
   artifacts:
     paths: 
       - public
-  cache:
+  cache:  # Cache libraries in between jobs
+    key: $CI_COMMIT_REF_SLUG
     paths:
       - .trivycache/
   
