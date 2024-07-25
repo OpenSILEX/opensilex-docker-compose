@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+
+## [1.3.3] - 2024-07-25
+
+### Changed
+
+- Update opensilex version to 1.3.3
+- See the [version changelog](https://github.com/OpenSILEX/opensilex/releases/tag/1.3.3)
+- Update haproxy docker from 2.6.6 to 3.0.3
+- Update mongo express from 1.0.0-alpha.4 to 1.0.2-20
+  - Update documentation authentification is now required (see README)
+- Update mongodb from 5.0.19 to 5.0.28
+
 ## [1.2.5] - 2024-05-15
 
 ### Changed

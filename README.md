@@ -75,23 +75,23 @@ Following commands should work from everywhere in your system without errors:
 - Mandatory softwares :
 
   - RDF4J - 3.7.7
-  - MongoDB - 5.0.19
-  - OpenSILEX - 1.2.5
+  - MongoDB - 5.0.28
+  - OpenSILEX - 1.3.3
 
 - Other managements softwares :
-  - mongo-express (A web based gui for mongo) - 1.0.0-alpha.4
-  - haproxy (web server used as reverse proxy) - 2.6.6
+  - mongo-express (A web based gui for mongo) - 1.0.2-20
+  - haproxy (web server used as reverse proxy) - 3.0.3
 
 ## Installation steps
 
-This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.2.5" target="_blank">1.2.5 OpenSILEX version</a>
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.3.3" target="_blank">1.3.3 OpenSILEX version</a>
 
 ### Fresh new install (compose v2)
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.2.5 https://github.com/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.3.3 https://github.com/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
@@ -141,7 +141,6 @@ INFO: No Spring WebApplicationInitializer types detected on classpath
 Feb 26, 2024 10:00:06 PM org.apache.coyote.AbstractProtocol start
 INFO: Starting ProtocolHandler ["http-nio-8081"]
 ```
- 
 
 ### (First install only) Create an administrator user
 
@@ -211,6 +210,16 @@ docker compose --env-file=opensilex.env up --force-recreate --no-deps opensilex 
 
 This will start the mongo express server that helps you do explore your mongo data on port [localhost:28889/mongoexpress](http://localhost:28889/mongoexpress). You can also use your own robo3t or Mongo Compass App.
 
+Before run mongoexpress, please configure admin and password of mongo-express.
+
+```bash
+ME_CONFIG_BASICAUTH_USERNAME=  
+ME_CONFIG_BASICAUTH_PASSWORD=  
+#default
+#ME_CONFIG_BASICAUTH_USERNAME=adminexpress
+#ME_CONFIG_BASICAUTH_PASSWORD=admin
+```
+
 ```bash
 docker compose --env-file opensilex.env up --no-recreate   start_opensilex_stack_mongogui -d
 ```
@@ -233,13 +242,13 @@ If you have installed [optional reverse proxy](#optional-add-a-reverse-proxy)
 By default, different available services can be found at these adresses. The port might be change depending on your `./opensilex.env` configuration file.
 
 - Web :
-  - OpenSILEX web application : <a href="http://localhost/opensilex/app" target="_blank">http://localhost/opensilex/app</a>
-  - OpenSILEX API : <a href="http://localhost/opensilex/api-docs" target="_blank">http://localhost/opensilex/api-docs</a>
-  - RDF4J Workbench : <a href="http://localhost/rdf4j-workbench" target="_blank">http://localhost/rdf4j-workbench</a>
+  - OpenSILEX web application : <a href="http://localhost:8087/sandbox/app/" target="_blank">http://localhost:8087/sandbox/app/</a>
+  - OpenSILEX API : <a href="http://localhost:8087/sandbox/api-docs" target="_blank">http://localhost:8087/sandbox/api-docs</a>
+  - RDF4J Workbench : <a href="http://localhost:8087/rdf4j-workbench" target="_blank">http://localhost:8087/rdf4j-workbench</a>
 
 Mongo express will be automatically installed [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
 
-- MongoDB express : <a href="http://localhost/mongoexpress" target="_blank">http://localhost/mongoadmin</a>
+- MongoDB express : <a href="http://localhost:8087/mongoexpress" target="_blank">http://localhost:8087/mongoexpress</a>
 
 ### Migration steps from previous versions
 
@@ -247,7 +256,7 @@ First, go to the previous directory and get the actual version of the repository
 
 ```bash
 # Go inside opensilex-docker-compose directory
-git checkout 1.2.5
+git checkout 1.3.3
 ```
 
 #### From previous version 1.0.0-rc+5.2 (compose v2)

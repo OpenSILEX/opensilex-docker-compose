@@ -1,5 +1,3 @@
-version: "3.5"
-
 services:
   haproxy:
     container_name: $HAPROXY_DOCKER_NAME
