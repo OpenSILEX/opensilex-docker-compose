@@ -1,4 +1,5 @@
 # Minimalist opensilex docker compose environment
+:bangbang: `This repository is archived, this project will be maintained on :` https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose :bangbang:
 
 <!-- add _target to all external link -->
 <head>
