@@ -11,6 +11,7 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
   - [Pre-requesite softwares](#pre-requesite-softwares)
   - [Check your installed softwares](#check-your-installed-softwares)
   - [Stack software name with associated versions](#stack-software-name-with-associated-versions)
+  - [Contributing to the project](#contributing-to-the-project)
   - [Installation steps](#installation-steps)
     - [Fresh new install (compose v2)](#fresh-new-install-compose-v2)
   - [Run minimal opensilex docker stack compose](#run-minimal-opensilex-docker-stack-compose)
@@ -82,6 +83,10 @@ Following commands should work from everywhere in your system without errors:
   - mongo-express (A web based gui for mongo) - 1.0.2-20
   - haproxy (web server used as reverse proxy) - 3.0.3
 
+## Contributing to the project
+
+If you want to contibute to the project by declaring a bug or submit a new fonctionnality, see [CONTRIBUTING.md](CONTRIBUTING.md) file.
+
 ## Installation steps
 
 This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.3.3" target="_blank">1.3.3 OpenSILEX version</a>
@@ -91,7 +96,7 @@ This docker version is related to <a href="https://github.com/OpenSILEX/opensile
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.3.3 https://github.com/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.3.3 https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
@@ -514,3 +519,5 @@ docker compose --env-file opensilex.env down --volumes
 ## Acknowledgments
 
 Olivier Fangi & Co - <a href="https://github.com/p2m2" target="_blank">P2M2 Team</a>
+
+
