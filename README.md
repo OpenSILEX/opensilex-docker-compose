@@ -5,7 +5,9 @@
   <base target="_blank">
 </head>
 
-Docker compose environnent to deploy opensilex stack based on a previous work <a href="https://github.com/p2m2/opensilex-phis-igepp" target="_blank">opensilex-phis-igepp</a>.
+> [!IMPORTANT]  
+> Issues must be opened at this address : https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose/-/issues
+
 
 - [Minimalist opensilex docker compose environment](#minimalist-opensilex-docker-compose-environment)
   - [Pre-requesite softwares](#pre-requesite-softwares)
@@ -47,9 +49,9 @@ Docker compose environnent to deploy opensilex stack based on a previous work <a
 
 **Tested Operating system :**
 
-[![Ubuntu22.04](https://img.shields.io/badge/Ubuntu-22.04-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://releases.ubuntu.com/22.04/)
+[![Ubuntu24.04](https://img.shields.io/badge/Ubuntu-24.04-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)](https://releases.ubuntu.com/22.04/)
 
-[![Debian11](https://img.shields.io/badge/Debian-11-E95420?style=for-the-badge&logo=debian&logoColor=white)](https://www.debian.org/releases/bullseye/releasenotes)
+[![Debian12](https://img.shields.io/badge/Debian-12-E95420?style=for-the-badge&logo=debian&logoColor=white)](https://www.debian.org/releases/bullseye/releasenotes)
 
 _Not working operating system :_
 
@@ -518,6 +520,7 @@ docker compose --env-file opensilex.env down --volumes
 
 ## Acknowledgments
 
+This Docker compose environnent to deploy opensilex stack based on a previous work <a href="https://github.com/p2m2/opensilex-phis-igepp" target="_blank">opensilex-phis-igepp</a>.
+
+
 Olivier Fangi & Co - <a href="https://github.com/p2m2" target="_blank">P2M2 Team</a>
-
-
