@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.1] - 2025-01-23
+
+- Update Opensilex version to 1.4.1
+  - See the [1.4.0 version changelog](https://github.com/OpenSILEX/opensilex/releases/tag/1.4.0)
+  - See the [1.4.1 version changelog](https://github.com/OpenSILEX/opensilex/releases/tag/1.4.1)
+- Update Opensilex docker base image from `9.0.89-jre11-temurin-jammy`
+  to `tomcat:9.0.98-jre17-temurin-noble`
+- Update RDF4J docker from 3.7.7 to 5.0.3
 
 ## [1.3.3] - 2024-07-25
 
