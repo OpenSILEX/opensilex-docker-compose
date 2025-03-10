@@ -14,24 +14,24 @@ services:
       - haproxy_conf:/usr/local/etc/haproxy
     ports:
       - "$HAPROXY_EXPOSED_PORT:80"
+
   mongo:
     container_name: $MONGO_DOCKER_NAME
-    image: mongo:$MONGO_IMAGE_VERSION
+    image: mongo:${MONGO_IMAGE_VERSION}
     restart: always
     env_file: opensilex.env
-    volumes:
-      - persist_mongo_data:/data
-    command: >
-      bash -c "
-      (
-        mongostat -n=1  &&
-        mongo --eval \"rs.initiate({'_id':'opensilex','members':[{'_id':0,'host':'opensilex-docker-mongodb:27017'}]})\" &&
-        wait
-      ) & docker-entrypoint.sh --replSet opensilex
-      "
+    command: ["--replSet", "opensilex", "--bind_ip_all", "--port", "27017"]
     ports:
       - "$MONGO_EXPOSED_PORT:27017"
-
+    healthcheck:
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'opensilex',members:[{_id:0,host:'opensilex-docker-mongodb:27017'}]}) }" | mongosh --port 27017 --quiet
+      interval: 5s
+      timeout: 30s
+      start_period: 0s
+      start_interval: 1s
+      retries: 30
+    volumes:
+      - persist_mongo_data:/data
   rdf4j:
     container_name: $RDF4J_DOCKER_NAME
     env_file: opensilex.env
@@ -91,13 +91,16 @@ services:
     ports:
       - "$OPENSILEX_EXPOSED_PORT:8081"
 
-  # Stack part to start
+  # To start stack
   start_opensilex_stack:
     image: dadarek/wait-for-dependencies
     depends_on:
-      - mongo
-      - rdf4j
-      - opensilex
+      mongo:
+          condition: service_healthy
+      rdf4j:
+          condition: service_started
+      opensilex  :
+          condition: service_started
     command: mongo:27017 rdf4j:8080 opensilex:8081
 
   start_opensilex_stack_mongogui:

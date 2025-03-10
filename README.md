@@ -21,13 +21,11 @@
   - [Update opensilex version](#update-opensilex-version)
   - [Stop opensilex docker](#stop-opensilex-docker)
   - [Restart opensilex docker](#restart-opensilex-docker)
+  - [Stop docker stack](#stop-docker-stack)
+- [Advanced opensilex docker stack compose configuration](#advanced-opensilex-docker-stack-compose-configuration)
   - [Other tools or customizations](#other-tools-or-customizations)
     - [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
     - [(Optional) Add a reverse proxy](#optional-add-a-reverse-proxy)
-    - [Migration steps from previous versions](#migration-steps-from-previous-versions)
-      - [From previous version 1.0.0-rc+5.2 (compose v2)](#from-previous-version-100-rc52-compose-v2)
-      - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
-      - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
   - [Configure docker configuration](#configure-docker-configuration)
   - [Customize opensilex configuration](#customize-opensilex-configuration)
   - [Core module extensions](#core-module-extensions)
@@ -38,9 +36,12 @@
   - [Manage data](#manage-data)
     - [Export (Experimental)](#export-experimental)
     - [Import (Experimental)](#import-experimental)
+  - [Migration steps from previous versions](#migration-steps-from-previous-versions)
+      - [From previous version 1.0.0-rc+5.2 (compose v2)](#from-previous-version-100-rc52-compose-v2)
+      - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
+      - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
   - [Manage docker](#manage-docker)
   - [Debug installation](#debug-installation)
-  - [Stop docker stack](#stop-docker-stack)
   - [Danger Zone](#danger-zone)
     - [Stop docker stack and erase all data (Be sure to delete all data)](#stop-docker-stack-and-erase-all-data-be-sure-to-delete-all-data)
   - [Acknowledgments](#acknowledgments)
@@ -78,8 +79,8 @@ Following commands should work from everywhere in your system without errors:
 - Mandatory softwares :
 
   - RDF4J - 5.0.3
-  - MongoDB - 5.0.28
-  - OpenSILEX - 1.4.1
+  - MongoDB - 7.0.17
+  - OpenSILEX - 1.4.3
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.2-20
@@ -91,14 +92,14 @@ If you want to contibute to the project by declaring a bug or submit a new fonct
 
 ## Installation steps
 
-This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.4.1" target="_blank">1.4.1 OpenSILEX version</a>
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.4.3" target="_blank">1.4.3 OpenSILEX version</a>
 
 ### Fresh new install (compose v2)
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.4.1 https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.4.3 https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
@@ -192,6 +193,9 @@ OPENSILEX_RELEASE_TAG=1.2.0
 - You will be able to restart opensilex container only by running the following command.
 
 ```bash
+# construct opensilex docker container
+docker compose --env-file opensilex.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g) opensilex
+# restart opensilex service
 docker compose --env-file=opensilex.env up --force-recreate --no-deps opensilex -d
 ```
 
@@ -210,6 +214,17 @@ This command will restart the opensilex service.
 ```bash
 docker compose --env-file=opensilex.env up --force-recreate --no-deps opensilex -d
 ```
+
+## Stop docker stack
+
+This command will stop the docker stack.
+
+```bash
+docker compose --env-file opensilex.env down
+```
+
+# Advanced opensilex docker stack compose configuration
+
 
 ## Other tools or customizations
 
@@ -257,54 +272,6 @@ Mongo express will be automatically installed [(Optional) Add a gui for opensile
 
 - MongoDB express : <a href="http://localhost:8087/mongoexpress" target="_blank">http://localhost:8087/mongoexpress</a>
 
-### Migration steps from previous versions
-
-First, go to the previous directory and get the actual version of the repository.
-
-```bash
-# Go inside opensilex-docker-compose directory
-git checkout 1.4.1
-```
-
-#### From previous version 1.0.0-rc+5.2 (compose v2)
-
-If you had a previous installation go to the directory where the project have been clone.
-And execute the following command to remove previous docker stack :
-
-```bash
-# Remove old containers
-docker stop mongodb && docker rm mongodb
-docker stop opensilexapp && docker rm opensilexapp
-docker stop rdf4jdb && docker rm rdf4jdb
-docker stop haproxy && docker rm haproxy
-docker stop mongoexpressgui && docker rm mongoexpressgui
-```
-
-#### From previous version 1.0.0-rc+5.1 (compose v1)
-
-If you had a previous installation go to the directory where the project have been clone.
-And execute the following command to remove previous docker stack :
-
-```bash
-# Remove old containers
-docker stop mongodb && docker rm mongodb
-docker stop opensilexapp && docker rm opensilexapp
-docker stop rdf4jdb && docker rm rdf4jdb
-docker stop haproxy && docker rm haproxy
-docker stop mongoexpressgui && docker rm mongoexpressgui
-```
-
-#### From previous version before 1.0.0-rc+5.1 (compose v1)
-
-If you had a previous installation go to the directory where the project have been clone.
-And execute the following command to remove previous docker stack :
-
-```bash
-# Remove old containers
-docker stop mongodb && docker rm mongodb
-docker stop opensilex && docker rm opensilex
-docker stop rdf4j && docker rm rdf4j
-```
 
 ## Configure docker configuration
 
@@ -483,6 +450,59 @@ cd <opensilex-docker-compose-dir>/dump_scripts
 sh import_data.sh <path_to_data>
 ```
 
+
+
+
+## Migration steps from previous versions
+
+First, go to the previous directory and get the actual version of the repository.
+
+```bash
+# Go inside opensilex-docker-compose directory and get the latest tag
+git checkout $(git tag | sort -V | tail -1)
+```
+
+#### From previous version 1.0.0-rc+5.2 (compose v2)
+
+If you had a previous installation go to the directory where the project have been clone.
+And execute the following command to remove previous docker stack :
+
+```bash
+# Remove old containers
+docker stop mongodb && docker rm mongodb
+docker stop opensilexapp && docker rm opensilexapp
+docker stop rdf4jdb && docker rm rdf4jdb
+docker stop haproxy && docker rm haproxy
+docker stop mongoexpressgui && docker rm mongoexpressgui
+```
+
+#### From previous version 1.0.0-rc+5.1 (compose v1)
+
+If you had a previous installation go to the directory where the project have been clone.
+And execute the following command to remove previous docker stack :
+
+```bash
+# Remove old containers
+docker stop mongodb && docker rm mongodb
+docker stop opensilexapp && docker rm opensilexapp
+docker stop rdf4jdb && docker rm rdf4jdb
+docker stop haproxy && docker rm haproxy
+docker stop mongoexpressgui && docker rm mongoexpressgui
+```
+
+#### From previous version before 1.0.0-rc+5.1 (compose v1)
+
+If you had a previous installation go to the directory where the project have been clone.
+And execute the following command to remove previous docker stack :
+
+```bash
+# Remove old containers
+docker stop mongodb && docker rm mongodb
+docker stop opensilex && docker rm opensilex
+docker stop rdf4j && docker rm rdf4j
+```
+
+
 ## Manage docker
 
 In order to manage your docker stack via an web interface, we suggest you to use <a href="https://docs.portainer.io/start/install/server/docker/linux#deployment" target="_blank">Portainer Community edition edition</a>
@@ -497,15 +517,14 @@ This command will give you stack trace of the docker build.
 docker compose --env-file opensilex.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g) > docker_logs/debug.log
 ```
 
-## Stop docker stack
 
-This command will stop the docker stack.
-
-```bash
-docker compose --env-file opensilex.env down
-```
 
 ## Danger Zone
+
+> [!CAUTION]
+> The following commands may produce a loss of data.
+
+ 
 
 $\color{red}{The\ following\ commands\ may\ produce\ a\ loss\ of\ data}$
 
