@@ -15,7 +15,7 @@
   - [Stack software name with associated versions](#stack-software-name-with-associated-versions)
   - [Contributing to the project](#contributing-to-the-project)
   - [Installation steps](#installation-steps)
-    - [Fresh new install (compose v2)](#fresh-new-install-compose-v2)
+    - [Fresh new install](#fresh-new-install)
   - [Run minimal opensilex docker stack compose](#run-minimal-opensilex-docker-stack-compose)
     - [(First install only) Create an administrator user](#first-install-only-create-an-administrator-user)
   - [Update opensilex version](#update-opensilex-version)
@@ -37,9 +37,6 @@
     - [Export (Experimental)](#export-experimental)
     - [Import (Experimental)](#import-experimental)
   - [Migration steps from previous versions](#migration-steps-from-previous-versions)
-      - [From previous version 1.0.0-rc+5.2 (compose v2)](#from-previous-version-100-rc52-compose-v2)
-      - [From previous version 1.0.0-rc+5.1 (compose v1)](#from-previous-version-100-rc51-compose-v1)
-      - [From previous version before 1.0.0-rc+5.1 (compose v1)](#from-previous-version-before-100-rc51-compose-v1)
   - [Manage docker](#manage-docker)
   - [Debug installation](#debug-installation)
   - [Danger Zone](#danger-zone)
@@ -94,7 +91,7 @@ If you want to contibute to the project by declaring a bug or submit a new fonct
 
 This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.4.3" target="_blank">1.4.3 OpenSILEX version</a>
 
-### Fresh new install (compose v2)
+### Fresh new install 
 
 Clone the repository to in order to get the project.
 
@@ -103,7 +100,8 @@ git clone --branch 1.4.3 https://forgemia.inra.fr/OpenSILEX/opensilex-docker-com
 cd opensilex-docker-compose
 ```
 
-For migration steps from previous versions, take a look to the [Migration steps from previous version](#migration-steps-from-previous-versions) section
+> [!IMPORTANT]
+> For migration steps from previous versions, take a look to the [Migration steps from previous version](MIGRATION.md) section
 
 ## Run minimal opensilex docker stack compose
 
@@ -462,45 +460,7 @@ First, go to the previous directory and get the actual version of the repository
 git checkout $(git tag | sort -V | tail -1)
 ```
 
-#### From previous version 1.0.0-rc+5.2 (compose v2)
-
-If you had a previous installation go to the directory where the project have been clone.
-And execute the following command to remove previous docker stack :
-
-```bash
-# Remove old containers
-docker stop mongodb && docker rm mongodb
-docker stop opensilexapp && docker rm opensilexapp
-docker stop rdf4jdb && docker rm rdf4jdb
-docker stop haproxy && docker rm haproxy
-docker stop mongoexpressgui && docker rm mongoexpressgui
-```
-
-#### From previous version 1.0.0-rc+5.1 (compose v1)
-
-If you had a previous installation go to the directory where the project have been clone.
-And execute the following command to remove previous docker stack :
-
-```bash
-# Remove old containers
-docker stop mongodb && docker rm mongodb
-docker stop opensilexapp && docker rm opensilexapp
-docker stop rdf4jdb && docker rm rdf4jdb
-docker stop haproxy && docker rm haproxy
-docker stop mongoexpressgui && docker rm mongoexpressgui
-```
-
-#### From previous version before 1.0.0-rc+5.1 (compose v1)
-
-If you had a previous installation go to the directory where the project have been clone.
-And execute the following command to remove previous docker stack :
-
-```bash
-# Remove old containers
-docker stop mongodb && docker rm mongodb
-docker stop opensilex && docker rm opensilex
-docker stop rdf4j && docker rm rdf4j
-```
+See migration [Migration versions](MIGRATION.md)
 
 
 ## Manage docker
