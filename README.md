@@ -22,6 +22,10 @@
   - [Stop opensilex docker](#stop-opensilex-docker)
   - [Restart opensilex docker](#restart-opensilex-docker)
   - [Stop docker stack](#stop-docker-stack)
+  - [Migration steps from previous versions](#migration-steps-from-previous-versions)
+  - [Manage data](#manage-data)
+    - [Export data](#export-data)
+    - [Import data](#import-data)
 - [Advanced opensilex docker stack compose configuration](#advanced-opensilex-docker-stack-compose-configuration)
   - [Other tools or customizations](#other-tools-or-customizations)
     - [(Optional) Add a gui for opensilex-docker-mongodb](#optional-add-a-gui-for-opensilex-docker-mongodb)
@@ -33,10 +37,6 @@
   - [Modular extensions](#modular-extensions)
     - [Explanation of modules directory](#explanation-of-modules-directory)
     - [Configuration for inrae sixtine vigne](#configuration-for-inrae-sixtine-vigne)
-  - [Manage data](#manage-data)
-    - [Export (Experimental)](#export-experimental)
-    - [Import (Experimental)](#import-experimental)
-  - [Migration steps from previous versions](#migration-steps-from-previous-versions)
   - [Manage docker](#manage-docker)
   - [Debug installation](#debug-installation)
   - [Danger Zone](#danger-zone)
@@ -220,6 +220,55 @@ This command will stop the docker stack.
 ```bash
 docker compose --env-file opensilex.env down
 ```
+
+
+## Migration steps from previous versions
+
+First, go to the previous directory and get the actual version of the repository.
+
+```bash
+# Go inside opensilex-docker-compose directory and get the latest tag
+git checkout $(git tag | sort -V | tail -1)
+```
+
+See migration [Migration versions](MIGRATION.md)
+
+
+## Manage data
+
+File system management are not shown in the the following steps because local files are manage with bind volumes or with gridfs. Other file systems are not managed in this version of opensilex docker.
+
+### Export data
+
+This script will dumps mongodb and rdf4j data in a directory with this structure.
+
+```bash
+
+# Step 1
+cd <opensilex-docker-compose-dir>/dump_scripts
+# Example directory structure <opensilex-docker-compose-dir>/dump_scripts/dump_example_structure
+# ├── mongodb
+# │   └── opensilex-docker-db-2022-11-21
+# └── rdf4j
+#     └── opensilex-docker-db-2022-11-21
+sh export_data.sh <path_to_data>
+```
+
+### Import data
+
+This script will restore mongodb and rdf4j data in a directory with this structure.
+
+```bash
+# Step 1
+cd <opensilex-docker-compose-dir>/dump_scripts
+# Example directory structure <opensilex-docker-compose-dir>/dump_scripts/dump_example_structure
+# ├── mongodb
+# │   └── opensilex-dump-db-2022-11-21
+# └── rdf4j
+#     └── opensilex-dump-db-2022-11-21
+sh import_data.sh <path_to_data>
+```
+
 
 # Advanced opensilex docker stack compose configuration
 
@@ -412,56 +461,6 @@ OPENSILEX_CONFIG_FOOTERCOMPONENT=inrae-sixtine-vigne-SixtineFooterComponent
 OPENSILEX_CONFIG_MENUCOMPONENT=inrae-sixtine-vigne-SixtineMenuComponent
 OPENSILEX_CONFIG_HEADERCOMPONENT=inrae-sixtine-vigne-SixtineHeaderComponent
 ```
-
-## Manage data
-
-File system management are not shown in the the following steps because local files are manage with bind volumes or with gridfs. Other file systems are not managed in this version of opensilex docker.
-
-### Export (Experimental)
-
-This script will dumps mongodb and rdf4j data in a directory with this structure.
-
-```bash
-
-# Step 1
-cd <opensilex-docker-compose-dir>/dump_scripts
-# Example directory structure <opensilex-docker-compose-dir>/dump_scripts/dump_example_structure
-# ├── mongodb
-# │   └── opensilex-docker-db-2022-11-21
-# └── rdf4j
-#     └── opensilex-docker-db-2022-11-21
-sh export_data.sh <path_to_data>
-```
-
-### Import (Experimental)
-
-This script will restore mongodb and rdf4j data in a directory with this structure.
-
-```bash
-# Step 1
-cd <opensilex-docker-compose-dir>/dump_scripts
-# Example directory structure <opensilex-docker-compose-dir>/dump_scripts/dump_example_structure
-# ├── mongodb
-# │   └── opensilex-dump-db-2022-11-21
-# └── rdf4j
-#     └── opensilex-dump-db-2022-11-21
-sh import_data.sh <path_to_data>
-```
-
-
-
-
-## Migration steps from previous versions
-
-First, go to the previous directory and get the actual version of the repository.
-
-```bash
-# Go inside opensilex-docker-compose directory and get the latest tag
-git checkout $(git tag | sort -V | tail -1)
-```
-
-See migration [Migration versions](MIGRATION.md)
-
 
 ## Manage docker
 

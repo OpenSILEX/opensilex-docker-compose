@@ -4,22 +4,22 @@
 ## From 1.4.1 version to 1.4.4
 
  
-1. [Export stack data](README.md#export-experimental)
+1. [Export mongo and rdf4j data](README.md#export-data)
 
 2. Stop and remove exisiting docker containers
 ```bash
 docker compose --env-file opensilex.env down --volumes
 ```
-3. Update opensilex.env or gest the latest
+1. Update opensilex.env or gest the latest
 
-4. Start stack
+2. Start stack
 
 ```bash
 docker compose --env-file opensilex.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
 docker compose --env-file opensilex.env up start_opensilex_stack -d
 ```
 
-5. [Import saved data](README.md#import-experimental)
+5. [Import mongo and rdf4j saved data](README.md#import-data)
 
 
 
