@@ -7,8 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.4.6] - 2025-04-05
 
-The following modifications fix [CVE-2025-24813](https://nvd.nist.gov/vuln/detail/CVE-2025-24813) inside docker compose stack.
- 
+These changes address potential vulnerabilities such as [CVE-2025-24813](https://nvd.nist.gov/vuln/detail/CVE-2025-24813) in the Docker Compose Stack environment.
+
 - Update Opensilex version to 1.4.6 
   - See the [1.4.6 version changelog](https://github.com/OpenSILEX/opensilex/releases/tag/1.4.6)
   - See the [1.4.5 version changelog](https://github.com/OpenSILEX/opensilex/releases/tag/1.4.5)
