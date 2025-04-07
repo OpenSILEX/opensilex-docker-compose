@@ -1,6 +1,6 @@
 ARG RDF4J_IMAGE_VERSION
 
-FROM eclipse/rdf4j-workbench:${RDF4J_IMAGE_VERSION:-5.0.3}
+FROM eclipse/rdf4j-workbench:${RDF4J_IMAGE_VERSION:-5.1.2}
 USER root
 RUN apt-get update && apt-get install libnghttp2-14
 USER tomcat

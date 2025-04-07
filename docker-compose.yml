@@ -67,6 +67,7 @@ services:
       args:
         OPENSILEX_RELEASE_TAG: $OPENSILEX_RELEASE_TAG
         INTERNAL_DATA_DIRECTORY: $INTERNAL_DATA_DIRECTORY
+        OPENSILEX_TOMCAT_IMAGE_VERSION: $OPENSILEX_TOMCAT_IMAGE_VERSION
       dockerfile: opensilex-build-step.docker
     env_file: opensilex.env
     depends_on:

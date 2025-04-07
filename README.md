@@ -135,7 +135,7 @@ WARN[0000] The "OPENSILEX_START_CMD_DEBUG" variable is not set. Defaulting to a 
 - Check if opensilex is launched: 
 
 ```bash
-docker logs opensilex-docker-opensilexapp 
+docker logs -f opensilex-docker-opensilexapp 
 ```
 
 - Expected Output:
