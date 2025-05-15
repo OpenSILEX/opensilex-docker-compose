@@ -20,11 +20,17 @@ Unsure where to begin? You can start by looking through the `Issues` tab to find
 
 ### Reporting Bugs
 
-Report bugs by opening an issue with ``bug template``. Please provide details like the error message, environment, and steps to reproduce the problem.
+To report a bug:
+1. Use the [Bug Report Template](/.github/ISSUE_TEMPLATE/bug_report.md)
+2. Fill out all requested sections
+3. Attach screenshots or logs if relevant
 
 ### Suggesting Enhancements
 
-Enhancement suggestions are tracked as GitLab issues. Create an issue to propose a new feature or improvement.
+To propose an improvement:
+1. Use the [Feature Request Template](/.github/ISSUE_TEMPLATE/feature_request.md)
+2. Clearly explain the expected benefits
+3. Propose a solution if you have one
 
 ### Merge Request Process
 
@@ -83,24 +89,9 @@ and passes any existing tests.
 
 Open a Merge Request with a clear `title` and `description`. Explain what you did and why.
 
-## Our Standards
-
-- **Have fun!** 🎉
-```
-
-Remember, the goal of the project is to make it easy for anyone to contribute. Let's keep things friendly and professional!
-
----
-
-Feel free to modify this template to fit your project's specifics, such as specific setup instructions, testing frameworks, or additional guidelines you'd like contributors to follow.
-
----
-
-## Additional Notes
-
-Contributions are what make open-source projects thrive. Thank you for being interested in contributing to opensilex-docker-compose!
-
-## Guide to Contributing
+ 
+ 
+## Detailled Guide to Contributing
 
 To contribute to opensilex-docker-compose, follow these steps:
 
@@ -113,7 +104,9 @@ Fork this repository to your GitLab account.
 Clone your forked repository to your local machine:
 
 ```sh
-git clone https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose.git
+git clone https://github.com/OpenSILEX/opensilex-docker-compose
+# or
+# git clone https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose.git
 cd opensilex-docker-compose
 ```
 

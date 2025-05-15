@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.7] - 2025-05-15
+
+- Update Opensilex version to 1.4.7. See the [1.4.7 version changelog](https://github.com/OpenSILEX/opensilex/releases/tag/1.4.7)
+- Update contributing documentation
+
 ## [1.4.6] - 2025-04-05
 
 These changes address potential vulnerabilities such as [CVE-2025-24813](https://nvd.nist.gov/vuln/detail/CVE-2025-24813) in the Docker Compose Stack environment.
@@ -17,6 +22,7 @@ These changes address potential vulnerabilities such as [CVE-2025-24813](https:/
   to `tomcat:9.0.99-jre17-temurin-noble`
 - Update RDF4J docker from 5.0.3 to 5.1.2
 - Add a new OPENSILEX_TOMCAT_IMAGE_VERSION ARG requested in [#5 pull request](https://github.com/OpenSILEX/opensilex-docker-compose/issues/5)
+- [See migration step](MIGRATION.md#from-144-version-to-146) 
 
 
 ## [1.4.4] - 2025-03-10

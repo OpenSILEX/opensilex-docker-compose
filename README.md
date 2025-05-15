@@ -6,7 +6,7 @@
 </head>
 
 > [!IMPORTANT]  
-> Issues must be opened at this address : https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose/-/issues
+> To report bugs or suggesting enhancements, you can create a tempalted issue. For more information, [CONTRIBUTING GUIDE](CONTRIBUTING.md)
 
 
 - [Minimalist opensilex docker compose environment](#minimalist-opensilex-docker-compose-environment)
@@ -75,9 +75,9 @@ Following commands should work from everywhere in your system without errors:
 
 - Mandatory softwares :
 
-  - RDF4J - 5.0.3
+  - RDF4J - 5.1.2
   - MongoDB - 7.0.17
-  - OpenSILEX - 1.4.3
+  - OpenSILEX - 1.4.7
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.2-20
@@ -89,14 +89,14 @@ If you want to contibute to the project by declaring a bug or submit a new fonct
 
 ## Installation steps
 
-This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.4.3" target="_blank">1.4.3 OpenSILEX version</a>
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.4.7" target="_blank">1.4.7 OpenSILEX version</a>
 
 ### Fresh new install 
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.4.3 https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.4.7 https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
