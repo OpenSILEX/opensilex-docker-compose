@@ -3,3 +3,4 @@ config/opensilex-template-custom.yml
 config/opensilex.yml
 debug.log
 config/opensilex.yml
+config/opensilex-custom-config.yml

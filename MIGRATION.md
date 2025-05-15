@@ -2,7 +2,6 @@
 # Major migration
 
 ## From 1.4.4 version to 1.4.6
-
  
 1. We recommend to [Export mongo and rdf4j data](README.md#export-data)
 
