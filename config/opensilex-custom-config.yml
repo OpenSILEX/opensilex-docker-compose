@@ -6,7 +6,7 @@ front:
   footerComponent: $OPENSILEX_CONFIG_FOOTERCOMPONENT
   menuComponent: $OPENSILEX_CONFIG_MENUCOMPONENT
   headerComponent: $OPENSILEX_CONFIG_HEADERCOMPONENT 
-
+  applicationName: $OPENSILEX_CONFIG_APPLICATIONNAME
 
 # ------------------------------------------------------------------------------
 # Configuration for module: CoreModule (CoreConfig)
