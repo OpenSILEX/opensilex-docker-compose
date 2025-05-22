@@ -36,6 +36,7 @@
     - [Configuration for RDG module](#configuration-for-rdg-module)
   - [Modular extensions](#modular-extensions)
     - [Explanation of modules directory](#explanation-of-modules-directory)
+    - [Configuration for PHIS module](#configuration-for-phis-module)
     - [Configuration for inrae sixtine vigne](#configuration-for-inrae-sixtine-vigne)
   - [Manage docker](#manage-docker)
   - [Debug installation](#debug-installation)
@@ -374,7 +375,7 @@ OPENSILEX_CONFIG_FOOTERCOMPONENT=opensilex-DefaultFooterComponent
 OPENSILEX_CONFIG_MENUCOMPONENT=opensilex-DefaultMenuComponent
 OPENSILEX_CONFIG_HEADERCOMPONENT=opensilex-DefaultHeaderComponent
 
-# Example of modification
+# Example of modification for sixtine
 #OPENSILEX_CONFIG_THEME=inrae-sixtine-vigne#vigne
 #OPENSILEX_CONFIG_HOMECOMPONENT=inrae-sixtine-vigne-SixtineHomeComponent
 #OPENSILEX_CONFIG_LOGINCOMPONENT=inrae-sixtine-vigne-SixtineLoginComponent
@@ -448,6 +449,21 @@ It is localised in opensilex-docker-compose/modules_examples/1.0.0-rc+6.5/inrae-
 
 - To activate your module you must copy a module example that have been compiled for a specified opensilex version in _modules_ directory. (Ex : the module located in 1.0.0-rc+6.5/inrae-sixtine-vigne-1.1.0.jar has been compiled for opensilex version 1.0.0-rc+6.5). It's all.
 
+
+### Configuration for PHIS module
+
+By modifying _opensilex.env_ file with this following configuration you will be able to change the theme.
+
+```bash
+OPENSILEX_CONFIG_APPLICATIONNAME=Phis
+OPENSILEX_CONFIG_THEME=opensilex-phis#phis
+OPENSILEX_CONFIG_HOMECOMPONENT=opensilex-HomeView
+OPENSILEX_CONFIG_LOGINCOMPONENT=opensilex-phis-PhisLoginComponent
+OPENSILEX_CONFIG_HEADERCOMPONENT=opensilex-phis-PhisHeaderComponent
+OPENSILEX_CONFIG_FOOTERCOMPONENT=opensilex-DefaultFooterComponent
+OPENSILEX_CONFIG_MENUCOMPONENT=opensilex-DefaultMenuComponent
+```
+
 ### Configuration for inrae sixtine vigne
 
 By modifying _opensilex.env_ file with this following configuration you will be able to change the theme.
@@ -461,6 +477,7 @@ OPENSILEX_CONFIG_FOOTERCOMPONENT=inrae-sixtine-vigne-SixtineFooterComponent
 OPENSILEX_CONFIG_MENUCOMPONENT=inrae-sixtine-vigne-SixtineMenuComponent
 OPENSILEX_CONFIG_HEADERCOMPONENT=inrae-sixtine-vigne-SixtineHeaderComponent
 ```
+
 
 ## Manage docker
 
