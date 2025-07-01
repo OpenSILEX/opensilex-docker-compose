@@ -102,7 +102,7 @@ pages:
     # test install
     - ./trivy plugin list
     ## run plugin with timeout
-    - TMPDIR=${CI_PROJECT_DIR}/tmp ./trivy  --debug --cache-dir .trivycache/ --format json --output /builds/OpenSILEX/opensilex-docker-compose/tmp/scan2html-temp-report.json --timeout 45m scan2html image ${IMAGE} --output ${CI_PROJECT_DIR}/public/index.html
+    - TMPDIR=${CI_PROJECT_DIR}/tmp ${CI_PROJECT_DIR}/trivy --cache-dir .trivycache/ --timeout 45m --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json scan2html image ${IMAGE} --output ${CI_PROJECT_DIR}/public/index.html
   artifacts:
     paths: 
       - public
