@@ -60,7 +60,9 @@ build:image:
     - docker info
     - ls
     - docker compose --env-file opensilex.env build --build-arg UID=999 --build-arg GID=999 opensilex
+    - echo "Using docker tag  docker.io/library/$DOCKER_COMPOSE_STACK_NAME $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG "
     - docker tag docker.io/library/$DOCKER_COMPOSE_STACK_NAME $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
+    - echo "Using docker  push $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG " 
     - docker push $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
   when: manual
  
