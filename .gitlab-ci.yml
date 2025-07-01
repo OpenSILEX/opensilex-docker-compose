@@ -97,7 +97,7 @@ pages:
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
     - docker image pull  $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
     - mkdir -p ${CI_PROJECT_DIR}/public && mkdir -p public
-    - mkdir -p
+    - mkdir -p ${CI_PROJECT_DIR}/tmp
     - cd ${CI_PROJECT_DIR}/public
     # install plugin to create html
     - ${CI_PROJECT_DIR}/trivy plugin install github.com/fatihtokus/scan2html
