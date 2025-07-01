@@ -104,7 +104,7 @@ pages:
     # test install
     - ${CI_PROJECT_DIR}/trivy plugin list
     ## run plugin with timeout
-    - TMPDIR=${CI_PROJECT_DIR}/tmp ${CI_PROJECT_DIR}/trivy --cache-dir .trivycache/ --timeout 45m --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json scan2html image ${IMAGE} index.html
+    - TMPDIR=${CI_PROJECT_DIR}/tmp ${CI_PROJECT_DIR}/trivy --cache-dir .trivycache/ --timeout 45m scan2html image ${IMAGE} index.html
   artifacts:
     paths: 
       - public
