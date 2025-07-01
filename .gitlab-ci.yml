@@ -54,7 +54,7 @@ build:image:
     - export IMAGE_TAG=${IMAGE_TAG:latest} 
     - apk add --no-cache docker-compose
     - echo "register to $CI_REGISTRY with user $CI_REGISTRY_USER "  
-    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin  
+    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin  
   script: 
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
     - docker info
@@ -80,7 +80,7 @@ pages:
     - echo $TRIVY_VERSION
     # connect to forgemia docker registry 
     - echo "register to $CI_REGISTRY with user $CI_REGISTRY_USER "  
-    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin  
+    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin  
     # install requirements for trivy
     - apk update
     - apk upgrade
