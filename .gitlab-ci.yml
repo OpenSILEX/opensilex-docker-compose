@@ -47,7 +47,7 @@ container_scanning:
 
 # create an docker image 
 build:image: 
-  image: docker:26.0.2-dind
+  image: 28.3.0-dind
   stage: build
   services:
     - docker:dind
@@ -96,19 +96,19 @@ pages:
     # pull docker registry image 
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
     - docker image pull  $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
-    - mkdir -p ${CI_PROJECT_DIR}/public && mkdir -p ${CI_PROJECT_DIR}/tmp
+    - mkdir -p ${CI_PROJECT_DIR}/public && mkdir -p ${CI_PROJECT_DIR}/tmp && mkdir -p ${CI_PROJECT_DIR}/cache
     # install plugin to create html
     - ./trivy plugin install github.com/fatihtokus/scan2html
     # test install
     - ./trivy plugin list
     ## run plugin with timeout
-    - TMPDIR=${CI_PROJECT_DIR}/tmp ./trivy --debug --cache-dir .trivycache/ --timeout 45m --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json scan2html image ${IMAGE} --output ${CI_PROJECT_DIR}/public/index.html
+    - TMPDIR=${CI_PROJECT_DIR}/tmp ./trivy --debug --cache-dir ${CI_PROJECT_DIR}/cache --timeout 45m --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json scan2html image ${IMAGE} --output index.html
   artifacts:
     paths: 
       - public
   cache:  # Cache libraries in between jobs
     key: $CI_COMMIT_REF_SLUG
     paths:
-      - .trivycache/
+      - ${CI_PROJECT_DIR}/cache
   
  
