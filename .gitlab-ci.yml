@@ -53,7 +53,8 @@ build:image:
   before_script:
     - export IMAGE_TAG=${IMAGE_TAG:latest} 
     - apk add --no-cache docker-compose
-    - docker login -u $CI_REGISTRY_USER --password-stdin $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "register to $CI_REGISTRY with user $CI_REGISTRY_USER "  
+    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin  
   script: 
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
     - docker info
@@ -78,7 +79,8 @@ pages:
     - export TRIVY_VERSION=$(wget -qO - "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
     - echo $TRIVY_VERSION
     # connect to forgemia docker registry 
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - echo "register to $CI_REGISTRY with user $CI_REGISTRY_USER "  
+    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin  
     # install requirements for trivy
     - apk update
     - apk upgrade
