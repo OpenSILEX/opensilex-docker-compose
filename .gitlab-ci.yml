@@ -38,7 +38,7 @@ include:
 container_scanning:
   stage: test 
   variables:
-    CS_IMAGE: $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_NAME:latest
+    CS_IMAGE: $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_PUBLISH:latest
   artifacts:
     reports:
       container_scanning: gl-container-scanning-report.json
@@ -59,8 +59,8 @@ build:image:
     - docker info
     - ls
     - docker compose --env-file opensilex.env build --build-arg UID=999 --build-arg GID=999 opensilex
-    - docker tag docker.io/library/opensilex-stack-opensilex $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_NAME:$IMAGE_TAG
-    - docker push $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_NAME:$IMAGE_TAG
+    - docker tag docker.io/library/opensilex-stack-opensilex $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
+    - docker push $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
   when: manual
  
 
@@ -71,7 +71,7 @@ pages:
     - docker:dind
   variables:
     # XDG_DATA_HOME: ${CI_PROJECT_DIR}
-    IMAGE: $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_NAME:$IMAGE_TAG
+    IMAGE: $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
   # https://github.com/fatihtokus/scan2html/issues/32#top for alpine 
   before_script:
     # retreive trivy
@@ -90,7 +90,7 @@ pages:
   script:
     # pull docker registry image 
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
-    - docker image pull  $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_NAME:$IMAGE_TAG
+    - docker image pull  $DOCKER_REGISTRY/opensilex/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
     - mkdir -p ${CI_PROJECT_DIR}/public && mkdir -p public
     # install plugin to create html
     - ./trivy plugin install github.com/fatihtokus/scan2html
