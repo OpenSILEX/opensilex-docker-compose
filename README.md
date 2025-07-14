@@ -76,13 +76,13 @@ Following commands should work from everywhere in your system without errors:
 
 - Mandatory softwares :
 
-  - RDF4J - 5.1.2
-  - MongoDB - 7.0.17
-  - OpenSILEX - 1.4.7
+  - RDF4J - 5.1.3
+  - MongoDB - 8.0.11
+  - OpenSILEX - 1.4.9
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.2-20
-  - haproxy (web server used as reverse proxy) - 3.0.3
+  - haproxy (web server used as reverse proxy) - 3.2
 
 ## Contributing to the project
 
@@ -90,14 +90,14 @@ If you want to contibute to the project by declaring a bug or submit a new fonct
 
 ## Installation steps
 
-This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.4.7" target="_blank">1.4.7 OpenSILEX version</a>
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.4.9" target="_blank">1.4.9 OpenSILEX version</a>
 
 ### Fresh new install 
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.4.7 https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.4.9 https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
@@ -195,7 +195,163 @@ OPENSILEX_RELEASE_TAG=1.2.0
 # construct opensilex docker container
 docker compose --env-file opensilex.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g) opensilex
 # restart opensilex service
-docker compose --env-file=opensilex.env up --force-recreate --no-deps opensilex -d
+docker compose --env-file=opensilex.env up --force-recreate --no-Ctrl
++
+K
+20+
+Squads
+Public Squads
+
+    joindevops's logoDevOps
+    devtools's logoDev Tools
+    lpython's logoLearn Python
+    nuxtandvue's logoVuejs&Nuxtjs
+
+    Discover
+
+Contribute
+Manage
+Bookmarks
+History
+
+Docs
+Changelog
+
+    Feedback
+
+meghdev's profile
+devtools's profile
+Dev Tools
+Megh•
+Jul 07
+Pattern Craft: Beautiful backgrounds for your next big thing
+Post Cover image
+community's profile
+facebook/relay: Relay is a JavaScript framework for building data-driven React applications.
+#javascript
+#react
++2 tags
+Jul 02
+•2m read time
+Post Cover image
+Review requests, book clients, and get paid with Squarespace.
+Ad imageAd image background
+Promoted by Carbon
+antonz's profile
+JSON evolution in Go: from v1 to v2
+#performance
++2 tags
+Jun 22
+•11m read time
+Post Cover image
+awego's profile
+Best Programming Language for 2026
+#javascript
+#python
++3 tags
+Jun 26
+•5m read time
+Post Cover image
+duckdb's profile
+DuckLake 0.2
+#database
+#sql
++3 tags
+Jul 04
+•6m read time
+Post Cover image
+chiefbrob's profile
+phpdev's profile
+PHP Dev
+Brian Obare•
+Jun 30
+Laravel & PHP Top this week
+Post Cover image
+simon125q's profile
+linuxcom's profile
+Linux Community
+Szymon Omieciński•
+Jun 28
+
+Omarchy is out
+Shared Post Cover image
+jobayerhossen's profile
+randomresource's profile
+Random Resource 🧰
+Jobayer Hossen•
+Jul 09
+
+Design with AI
+Shared Post Cover image
+fabidick22's profile
+platformai's profile
+Platform & AI
+Dickson A.•
+Jun 30
+
+siyuan-note/siyuan: A privacy-first, self-hosted, fully open source personal knowledge management software, written in typescript and golang.
+Shared Post Cover image
+mouad_dadda's profile
+webcraft's profile
+WebCraft
+Mouad Dadda•
+Jun 28
+prompts.chat
+Post Cover image
+amityadav's profile
+vibecode's profile
+Vibe Code
+Amit yadav•
+Jun 30
+
+The #1 Open-Source CRM
+Shared Post Cover image
+smitbhalodiya's profile
+alllaravel's profile
+All Laravel
+Smit Bhalodiya•
+Jul 03
+
+Laravel Shortcuts: 5 Simple Functions to Speed Up Your Coding Workflow
+Shared Post Cover image
+ln's profile
+The Pipe Operator is Coming to PHP 8.5
+#php
++1 tags
+Jul 07
+•2m read time
+Post Cover image
+audreydev's profile
+audreyddev's profile
+AudreyD.Dev
+Audrey Delgado•
+May 11
+
+How to Turn GitHub Projects Into Real Money
+Shared Post Cover image
+astro_source's profile
+Astro 5.10
+#cloudflare
+#astro
+Jun 19
+•7m read time
+Post Cover image
+tds's profile
+Building A Modern Dashboard with Python and Taipy
+#python
++2 tags
+Jun 23
+•13m read time
+Post Cover image
+ashikurrahman65's profile
+laraveldev's profile
+Laravel Dev
+Ashikur Rahman•
+May 12
+
+How to Improve Performance of Your Database?
+Shared Post Cover image
+deps opensilex -d
 ```
 
 ## Stop opensilex docker

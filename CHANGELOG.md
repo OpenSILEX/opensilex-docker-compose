@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.4.9] - 2025-05-15
+
+- Update Opensilex version to 1.4.9.  
+  - See the [1.4.9 version changelog](https://github.com/OpenSILEX/opensilex/releases/tag/1.4.9)
+  - See the [1.4.8 version changelog](https://github.com/OpenSILEX/opensilex/releases/tag/1.4.8)
+- Update contributing documentation
+- Update Mongo docker from 7.0.28 to 8.0.11
+- Update Haproxy docker from 3.1.5 to 3.2
+- Update RDF4J docker from 5.1.2 to 5.1.3-tomcat
+- Update Opensilex docker base image from `9.0.99-jre11-temurin-jammy`
+  to `tomcat:9.0.107-jre17-temurin-noble`
+
 ## [1.4.7] - 2025-05-15
 
 - Update Opensilex version to 1.4.7. See the [1.4.7 version changelog](https://github.com/OpenSILEX/opensilex/releases/tag/1.4.7)

@@ -1,6 +1,26 @@
 
 # Major migration
 
+## From 1.4.6 version to 1.4.9
+ 
+1. We recommend to [Export mongo and rdf4j data](README.md#export-data)
+
+2. Stop docker containers
+```bash
+docker compose --env-file opensilex.env down  
+```
+3. Update opensilex.env or get the configuration of latest version
+
+4. Start stack
+
+```bash
+docker compose --env-file opensilex.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g)
+docker compose --env-file opensilex.env up start_opensilex_stack -d
+```
+if necessary : 
+
+[Import mongo and rdf4j saved data](README.md#import-data) 
+
 ## From 1.4.4 version to 1.4.6
  
 1. We recommend to [Export mongo and rdf4j data](README.md#export-data)
