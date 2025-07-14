@@ -156,7 +156,7 @@ Docker volumes are persistent until you remove them. You only need to create onc
 ```bash
 docker exec -it opensilex-docker-opensilexapp ./bin/opensilex.sh user add --admin --email=admin@opensilex.org --lang=fr --firstName=firstName --lastName=lastName --password=admin
 ```
-
+ 
 After opensilex start you will be able to access to the application on port <a href="http://localhost:28081/sandbox/app" target="_blank">localhost:28081/sandbox/app</a>.
 
 By default, different available services can be found at these adresses :

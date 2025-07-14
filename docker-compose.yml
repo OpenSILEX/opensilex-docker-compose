@@ -24,7 +24,7 @@ services:
     ports:
       - "$MONGO_EXPOSED_PORT:27017"
     healthcheck:
-      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'opensilex',members:[{_id:0,host:'opensilex-docker-mongodb:27017'}]}) }" | mongosh --port 27017 --quiet
+      test: echo "try { rs.status() } catch (err) { rs.initiate({_id:'opensilex',members:[{_id:0,host:'$MONGO_DOCKER_NAME:27017'}]}) }" | mongosh --port 27017 --quiet
       interval: 5s
       timeout: 30s
       start_period: 0s
