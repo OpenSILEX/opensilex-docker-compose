@@ -101,8 +101,12 @@ pages:
     - ./trivy plugin install github.com/fatihtokus/scan2html
     # test install
     - ./trivy plugin list
-    ## run plugin with timeout
-    - TMPDIR=${CI_PROJECT_DIR}/tmp ./trivy --debug --cache-dir ${CI_PROJECT_DIR}/cache --timeout 45m --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json scan2html image ${IMAGE} --output index.html
+  # Create the temporary JSON report first
+    - echo "Creating temporary JSON report..."
+    - TMPDIR=${CI_PROJECT_DIR}/tmp ./trivy --debug --cache-dir ${CI_PROJECT_DIR}/cache --timeout 45m --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json image $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
+    # Generate HTML report from the JSON
+    - echo "Generating HTML report..."
+    - ./trivy scan2html --input ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json --output ${CI_PROJECT_DIR}/public/index.html
   artifacts:
     paths: 
       - public
