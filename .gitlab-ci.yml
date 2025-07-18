@@ -105,7 +105,7 @@ pages:
     - TMPDIR=${CI_PROJECT_DIR}/tmp ./trivy --debug --cache-dir ${CI_PROJECT_DIR}/cache --timeout 45m --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json image $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
     # Generate HTML report from the JSON
     - echo "Generating HTML report..."
-    - ./trivy --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json  scan2html --from ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json --output index.html
+    - ./trivy scan2html generate --from ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json --output index.html
   artifacts:
     paths: 
       - public
@@ -113,13 +113,3 @@ pages:
     key: $CI_COMMIT_REF_SLUG
     paths:
       - ${CI_PROJECT_DIR}/cache
-
-trivy_scan:
-  stage: scan
-  image: aquasec/trivy:latest
-  script:
-    - mkdir -p "${CI_PROJECT_DIR}/tmp"
-    - trivy --format json \
-        --output "${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json" \
-        --cache-dir .trivycache/ \
-        --timeout 45m scan2html image "${IMAGE}" index.html
