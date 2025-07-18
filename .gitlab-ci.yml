@@ -17,7 +17,8 @@
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
 
 
- 
+variables:
+  DOCKER_IMAGE_VERSION: docker:28.3.2-dind
 
 
 stages:
@@ -47,7 +48,7 @@ container_scanning:
 
 # create an docker image 
 build:image: 
-  image: docker:26.0.2-dind
+  image: $DOCKER_IMAGE_VERSION
   stage: build
   services:
     - docker:dind
@@ -66,10 +67,10 @@ build:image:
     - echo "Using docker  push $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG " 
     - docker push $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
   when: manual
- 
+
 pages:
   stage: pages
-  image: docker:26.0.2-dind
+  image: $DOCKER_IMAGE_VERSION
   services:
     - docker:dind
   variables:
