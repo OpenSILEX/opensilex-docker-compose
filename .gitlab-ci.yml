@@ -1,116 +1,101 @@
-# This file is a template, and might need editing before it works on your project.
-# This is a sample GitLab CI/CD configuration file that should run without any modifications.
-# It demonstrates a basic 3 stage CI/CD pipeline. Instead of real tests or scripts,
-# it uses echo commands to simulate the pipeline execution.
-#
-# A pipeline is composed of independent jobs that run scripts, grouped into stages.
-# Stages run in sequential order, but jobs within stages run in parallel.
-#
-# For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
-#
-# You can copy and paste this template into a new `.gitlab-ci.yml` file.
-# You should not add this template to an existing `.gitlab-ci.yml` file by using the `include:` keyword.
-#
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/ee/development/cicd/templates.html
-# This specific template is located at:
-# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
-
-
+# You can override the included template(s) by including variable overrides
+# SAST customization: https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Secret Detection customization: https://docs.gitlab.com/ee/user/application_security/secret_detection/pipeline/#customization
+# Dependency Scanning customization: https://docs.gitlab.com/ee/user/application_security/dependency_scanning/#customizing-the-dependency-scanning-settings
+# Container Scanning customization: https://docs.gitlab.com/ee/user/application_security/container_scanning/#customizing-the-container-scanning-settings
+# Note that environment variables can be set in several places
+# See https://docs.gitlab.com/ee/ci/variables/#cicd-variable-precedence
 variables:
   DOCKER_IMAGE_VERSION: docker:28.3.2-dind
-
-
 stages:
-  - build
-  - test
-  - pages
-  - scan
-  - integration
-
+- build
+- test
+- pages
+- scan
+- integration
 integration-job:
   stage: integration
   script:
-    - git fetch origin pull/${CI_MERGE_REQUEST_IID}/head:pr-${CI_MERGE_REQUEST_IID}
-    - git checkout pr-${CI_MERGE_REQUEST_IID} 
-    - echo "Exécution des tests..." 
+  - git fetch origin pull/${CI_MERGE_REQUEST_IID}/head:pr-${CI_MERGE_REQUEST_IID}
+  - git checkout pr-${CI_MERGE_REQUEST_IID}
+  - echo "Exécution des tests..."
   rules:
-    - if: $GITHUB_ACCESS == "$GITHUB_ACCESS_VALUE"
-
+  - if: $GITHUB_ACCESS == "$GITHUB_ACCESS_VALUE"
 include:
-  - template: Jobs/Container-Scanning.gitlab-ci.yml
-  - template: Security/Container-Scanning.gitlab-ci.yml
+- template: Jobs/Container-Scanning.gitlab-ci.yml
+- template: Security/Container-Scanning.gitlab-ci.yml
+- template: Security/SAST.gitlab-ci.yml
 container_scanning:
-  stage: test 
+  stage: test
   variables:
-    CS_IMAGE: $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:latest 
-    
-
-# create an docker image 
-build:image: 
-  image: $DOCKER_IMAGE_VERSION
+    CS_IMAGE: "$DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:latest"
+build:image:
+  image: "$DOCKER_IMAGE_VERSION"
   stage: build
   services:
-    - docker:dind
+  - docker:dind
   before_script:
-    - export IMAGE_TAG=${IMAGE_TAG:latest} 
-    - apk add --no-cache docker-compose
-    - echo "register to $CI_REGISTRY with user $CI_REGISTRY_USER "  
-    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin  
-  script: 
-    - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
-    - docker info
-    - ls
-    - docker compose --env-file opensilex.env build --build-arg UID=999 --build-arg GID=999 opensilex
-    - echo "Using docker tag  docker.io/library/$DOCKER_COMPOSE_STACK_NAME $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG "
-    - docker tag docker.io/library/$DOCKER_COMPOSE_STACK_NAME $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
-    - echo "Using docker  push $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG " 
-    - docker push $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
+  - export IMAGE_TAG=${IMAGE_TAG:latest}
+  - apk add --no-cache docker-compose
+  - echo "register to $CI_REGISTRY with user $CI_REGISTRY_USER "
+  - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+  script:
+  - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will
+    be used"; IMAGE_TAG=latest ; fi
+  - docker info
+  - ls
+  - docker compose --env-file opensilex.env build --build-arg UID=999 --build-arg
+    GID=999 opensilex
+  - echo "Using docker tag  docker.io/library/$DOCKER_COMPOSE_STACK_NAME $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
+    "
+  - docker tag docker.io/library/$DOCKER_COMPOSE_STACK_NAME $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
+  - echo "Using docker  push $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
+    "
+  - docker push $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
   when: manual
-
 pages:
   stage: pages
-  image: $DOCKER_IMAGE_VERSION
+  image: "$DOCKER_IMAGE_VERSION"
   services:
-    - docker:dind
+  - docker:dind
   variables:
-    XDG_DATA_HOME: ${CI_PROJECT_DIR}/plugins
-    IMAGE: $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
-  # https://github.com/fatihtokus/scan2html/issues/32#top for alpine 
+    XDG_DATA_HOME: "${CI_PROJECT_DIR}/plugins"
+    IMAGE: "$DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG"
   before_script:
-    # retreive trivy
-    - export TRIVY_VERSION=$(wget -qO - "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
-    - echo $TRIVY_VERSION
-    # connect to forgemia docker registry 
-    - echo "register to $CI_REGISTRY with user $CI_REGISTRY_USER "  
-    - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin  
-    # install requirements for trivy
-    - apk update
-    - apk upgrade
-    - apk add bash
-    - apk add curl
-    - apk --no-cache add ca-certificates git
-    - curl -s -L -o - https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz | tar -xz
+  - export TRIVY_VERSION=$(wget -qO - "https://api.github.com/repos/aquasecurity/trivy/releases/latest"
+    | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
+  - echo $TRIVY_VERSION
+  - echo "register to $CI_REGISTRY with user $CI_REGISTRY_USER "
+  - echo $CI_REGISTRY_PASSWORD | docker login $CI_REGISTRY -u $CI_REGISTRY_USER --password-stdin
+  - apk update
+  - apk upgrade
+  - apk add bash
+  - apk add curl
+  - apk --no-cache add ca-certificates git
+  - curl -s -L -o - https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz
+    | tar -xz
   allow_failure: true
   script:
-    # pull docker registry image 
-    - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
-    - docker image pull  $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
-    - mkdir -p ${CI_PROJECT_DIR}/public && mkdir -p ${CI_PROJECT_DIR}/tmp && mkdir -p ${CI_PROJECT_DIR}/cache
-    # install plugin to create html
-    - ./trivy plugin install github.com/fatihtokus/scan2html
-    # test install
-    - ./trivy plugin list
-  # Create the temporary JSON report first
-    - echo "Creating temporary JSON report..."
-    - TMPDIR=${CI_PROJECT_DIR}/tmp ./trivy --debug --cache-dir ${CI_PROJECT_DIR}/cache --timeout 45m --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json image $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
-    # Generate HTML report from the JSON
-    - echo "Generating HTML report..."
-    - ./trivy scan2html generate --from ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json --output public/index.html
+  - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will
+    be used"; IMAGE_TAG=latest ; fi
+  - docker image pull  $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
+  - mkdir -p ${CI_PROJECT_DIR}/public && mkdir -p ${CI_PROJECT_DIR}/tmp && mkdir -p
+    ${CI_PROJECT_DIR}/cache
+  - "./trivy plugin install github.com/fatihtokus/scan2html"
+  - "./trivy plugin list"
+  - echo "Creating temporary JSON report..."
+  - TMPDIR=${CI_PROJECT_DIR}/tmp ./trivy --debug --cache-dir ${CI_PROJECT_DIR}/cache
+    --timeout 45m --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json
+    image $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
+  - echo "Generating HTML report..."
+  - "./trivy scan2html generate --from ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json
+    --output public/index.html"
   artifacts:
-    paths: 
-      - public
-  cache:  # Cache libraries in between jobs
-    key: $CI_COMMIT_REF_SLUG
     paths:
-      - ${CI_PROJECT_DIR}/cache
+    - public
+  cache:
+    key: "$CI_COMMIT_REF_SLUG"
+    paths:
+    - "${CI_PROJECT_DIR}/cache"
+sast:
+  stage: test
