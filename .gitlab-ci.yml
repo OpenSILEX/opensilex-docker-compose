@@ -74,10 +74,11 @@ pages:
   services:
     - docker:dind
   variables:
-    # XDG_DATA_HOME: ${CI_PROJECT_DIR}
+    XDG_DATA_HOME: ${CI_PROJECT_DIR}/plugins
     IMAGE: $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
   # https://github.com/fatihtokus/scan2html/issues/32#top for alpine 
   before_script:
+    - mkdir -p ${CI_PROJECT_DIR}/plugins
     # retreive trivy
     - export TRIVY_VERSION=$(wget -qO - "https://api.github.com/repos/aquasecurity/trivy/releases/latest" | grep '"tag_name":' | sed -E 's/.*"v([^"]+)".*/\1/')
     - echo $TRIVY_VERSION
