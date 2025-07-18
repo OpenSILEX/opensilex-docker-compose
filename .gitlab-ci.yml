@@ -23,8 +23,8 @@
 stages:
   - build
   - test
-  - scan
   - pages
+  - scan
   - integration
 
 integration-job:
@@ -119,7 +119,7 @@ trivy_scan:
   image: aquasec/trivy:latest
   script:
     - mkdir -p "${CI_PROJECT_DIR}/tmp"
-    - ./trivy --format json \
+    - trivy --format json \
         --output "${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json" \
         --cache-dir .trivycache/ \
         --timeout 45m scan2html image "${IMAGE}" index.html
