@@ -105,7 +105,7 @@ pages:
     - TMPDIR=${CI_PROJECT_DIR}/tmp ./trivy --debug --cache-dir ${CI_PROJECT_DIR}/cache --timeout 45m --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json image $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
     # Generate HTML report from the JSON
     - echo "Generating HTML report..."
-    - ./trivy scan2html --from ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json --output public/index.html
+    - ./trivy --input ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json scan2html --from ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json --output public/index.html
   artifacts:
     paths: 
       - public
