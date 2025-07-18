@@ -73,8 +73,8 @@ pages:
   services:
     - docker:dind
   variables:
-    # XDG_DATA_HOME: ${CI_PROJECT_DIR}
-    IMAGE: $DOCKER_REGISTRY/opensilex/opensilex-docker-compose:$IMAGE_TAG
+    XDG_DATA_HOME: ${CI_PROJECT_DIR}/plugins
+    IMAGE: $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
   # https://github.com/fatihtokus/scan2html/issues/32#top for alpine 
   before_script:
     # retreive trivy
@@ -95,22 +95,31 @@ pages:
     # pull docker registry image 
     - if [ -z "$IMAGE_TAG" ]; then echo "Missing IMAGE_TAG variable latest tag will be used"; IMAGE_TAG=latest ; fi 
     - docker image pull  $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
-    - mkdir -p ${CI_PROJECT_DIR}/public && ${CI_PROJECT_DIR}/tmp && mkdir -p public
+    - mkdir -p ${CI_PROJECT_DIR}/public && mkdir -p ${CI_PROJECT_DIR}/tmp && mkdir -p ${CI_PROJECT_DIR}/cache
     # install plugin to create html
     - ./trivy plugin install github.com/fatihtokus/scan2html
     # test install
     - ./trivy plugin list
-    ## run plugin with timeout
-    - ./trivy --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json --cache-dir .trivycache/ --timeout 45m scan2html image ${IMAGE} index.html
-    - cp index.html ${CI_PROJECT_DIR}/public
-    - cp index.html public
+  # Create the temporary JSON report first
+    - echo "Creating temporary JSON report..."
+    - TMPDIR=${CI_PROJECT_DIR}/tmp ./trivy --debug --cache-dir ${CI_PROJECT_DIR}/cache --timeout 45m --format json --output ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json image $DOCKER_REGISTRY/$DOCKER_COMPOSE_STACK_PUBLISH:$IMAGE_TAG
+    # Generate HTML report from the JSON
+    - echo "Generating HTML report..."
+    - ./trivy scan2html --input ${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json --output public/index.html
   artifacts:
     paths: 
       - public
   cache:  # Cache libraries in between jobs
     key: $CI_COMMIT_REF_SLUG
     paths:
-      - .trivycache/
+      - ${CI_PROJECT_DIR}/cache
 
-  
- 
+trivy_scan:
+  stage: scan
+  image: aquasec/trivy:latest
+  script:
+    - mkdir -p "${CI_PROJECT_DIR}/tmp"
+    - ./trivy --format json \
+        --output "${CI_PROJECT_DIR}/tmp/scan2html-temp-report.json" \
+        --cache-dir .trivycache/ \
+        --timeout 45m scan2html image "${IMAGE}" index.html
