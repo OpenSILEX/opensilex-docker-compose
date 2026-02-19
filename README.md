@@ -154,7 +154,7 @@ INFO: Starting ProtocolHandler ["http-nio-8081"]
 Docker volumes are persistent until you remove them. You only need to create once an user.
 
 ```bash
-docker exec -it opensilex-docker-opensilexapp ./bin/opensilex.sh user add --admin --email=admin@opensilex.org --lang=fr --firstName=firstName --lastName=lastName --password=admin
+docker exec -it sandbox-opensilex-docker-opensilexapp ./bin/opensilex.sh user add --admin --email=admin@opensilex.org --lang=fr --firstName=firstName --lastName=lastName --password=admin
 ```
  
 After opensilex start you will be able to access to the application on port <a href="http://localhost:28081/sandbox/app" target="_blank">localhost:28081/sandbox/app</a>.
@@ -195,7 +195,7 @@ OPENSILEX_RELEASE_TAG=1.2.0
 # construct opensilex docker container
 docker compose --env-file opensilex.env build --build-arg UID=$(id -u) --build-arg GID=$(id -g) opensilex
 # restart opensilex service
-docker compose --env-file=opensilex.env up --force-recreate --no-Ctrl
+docker compose --env-file=opensilex.env up --force-recreate --no-deps opensilex -d
 ```
 
 ## Stop opensilex docker
