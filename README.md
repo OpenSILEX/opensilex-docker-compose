@@ -76,9 +76,9 @@ Following commands should work from everywhere in your system without errors:
 
 - Mandatory softwares :
 
-  - RDF4J - 5.1.3
+  - RDF4J - 5.3.2
   - MongoDB - 8.0.11
-  - OpenSILEX - 1.4.9
+  - OpenSILEX - 1.5.2
 
 - Other managements softwares :
   - mongo-express (A web based gui for mongo) - 1.0.2-20
@@ -90,14 +90,14 @@ If you want to contibute to the project by declaring a bug or submit a new fonct
 
 ## Installation steps
 
-This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.4.9" target="_blank">1.4.9 OpenSILEX version</a>
+This docker version is related to <a href="https://github.com/OpenSILEX/opensilex/releases/tag/1.5.2" target="_blank">1.5.2 OpenSILEX version</a>
 
 ### Fresh new install 
 
 Clone the repository to in order to get the project.
 
 ```bash
-git clone --branch 1.4.9 https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose
+git clone --branch 1.5.2 https://forgemia.inra.fr/OpenSILEX/opensilex-docker-compose
 cd opensilex-docker-compose
 ```
 
