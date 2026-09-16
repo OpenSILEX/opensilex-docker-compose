@@ -43,6 +43,8 @@ services:
     volumes:
       - persist_rdf4j_data:/var/rdf4j
       - persist_rdf4j_logs:/usr/local/tomcat/logs
+    environment:
+    - JAVA_OPTS='-Xss8m'
     ports:
       - "$RDF4J_EXPOSED_PORT:8080"
 
